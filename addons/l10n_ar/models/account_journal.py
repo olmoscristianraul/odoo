@@ -118,7 +118,9 @@ class AccountJournal(models.Model):
         expo_codes = ['19', '20', '21']
         if self.type != 'sale':
             return []
-        elif self.l10n_ar_afip_pos_system in ['RAW_MAW', 'RLI_RLM', 'II_IM']:
+        elif self.l10n_ar_afip_pos_system == 'II_IM':
+            return usual_codes + receipt_codes + expo_codes
+        elif self.l10n_ar_afip_pos_system in ['RAW_MAW', 'RLI_RLM']:
             return usual_codes + receipt_codes
         elif self.l10n_ar_afip_pos_system in ['BFERCEL', 'BFEWS']:
             return usual_codes
