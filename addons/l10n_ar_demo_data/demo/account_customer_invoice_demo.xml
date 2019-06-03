@@ -12,13 +12,10 @@
     </record>
 
         <record id="demo_invoice_line_1_1" model="account.invoice.line">
-            <field name="name">Support Services</field>
             <field name="invoice_id" ref="demo_invoice_1"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">642.0</field>
             <field name="quantity">1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.filtered(lambda x: x.company_id == obj().env.ref('base.main_company')).ids)]"/>
         </record>
 
         <function model="account.invoice" name="compute_taxes">
@@ -36,33 +33,24 @@
     </record>
 
         <record id="demo_invoice_line_2_1" model="account.invoice.line">
-            <field name="name">Laptop Customized (IVA 21)</field>
             <field name="invoice_id" ref="demo_invoice_2"/>
             <field name="product_id" ref="product.product_product_27"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_27').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">642.0</field>
             <field name="quantity">5</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_27').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_2_2" model="account.invoice.line">
-            <field name="name">Servicio de telefonía (IVA 27)</field>
             <field name="invoice_id" ref="demo_invoice_2"/>
             <field name="product_id" ref="product_product_telefonia"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('l10n_ar_demo_data.product_product_telefonia').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">250.0</field>
             <field name="quantity">1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('l10n_ar_demo_data.product_product_telefonia').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_2_3" model="account.invoice.line">
-            <field name="name">Laptop E5023 (IVA 10,5)</field>
             <field name="invoice_id" ref="demo_invoice_2"/>
             <field name="product_id" ref="product.product_product_25"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_25').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">3245.0</field>
             <field name="quantity">2</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_25').taxes_id.ids)]"/>
         </record>
 
         <function model="account.invoice" name="compute_taxes">
@@ -80,23 +68,17 @@
     </record>
 
         <record id="demo_invoice_line_3_1" model="account.invoice.line">
-            <field name="name">Laptop Customized (IVA 21)</field>
             <field name="invoice_id" ref="demo_invoice_3"/>
             <field name="product_id" ref="product.product_product_27"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_27').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">642.0</field>
             <field name="quantity">5</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_27').taxes_id.filtered(lambda x: x.company_id == obj().env.ref('base.main_company')).ids)]"/>
         </record>
 
         <record id="demo_invoice_line_3_2" model="account.invoice.line">
-            <field name="name">Animales y vegetales no industrializados (IVA cero)</field>
             <field name="invoice_id" ref="demo_invoice_3"/>
             <field name="product_id" ref="product_product_cero"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('l10n_ar_demo_data.product_product_cero').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">200.0</field>
             <field name="quantity">1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('l10n_ar_demo_data.product_product_cero').taxes_id.filtered(lambda x: x.company_id == obj().env.ref('base.main_company')).ids)]"/>
         </record>
 
         <function model="account.invoice" name="compute_taxes">
@@ -114,23 +96,17 @@
     </record>
 
         <record id="demo_invoice_line_4_1" model="account.invoice.line">
-            <field name="name">Laptop Customized (IVA 21)</field>
             <field name="invoice_id" ref="demo_invoice_4"/>
             <field name="product_id" ref="product.product_product_27"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_27').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">642.0</field>
             <field name="quantity">5</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_27').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_4_2" model="account.invoice.line">
-            <field name="name">Libro "Desarrollo en Odoo" (IVA exento)</field>
             <field name="invoice_id" ref="demo_invoice_4"/>
             <field name="product_id" ref="product_product_exento"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('l10n_ar_demo_data.product_product_exento').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">100.0</field>
             <field name="quantity">1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('l10n_ar_demo_data.product_product_exento').taxes_id.ids)]"/>
         </record>
 
         <function model="account.invoice" name="compute_taxes">
@@ -148,63 +124,45 @@
     </record>
 
         <record id="demo_invoice_line_5_1" model="account.invoice.line">
-            <field name="name">Laptop Customized (IVA 21)</field>
             <field name="invoice_id" ref="demo_invoice_5"/>
             <field name="product_id" ref="product.product_product_27"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_27').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">642.0</field>
             <field name="quantity">5</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_27').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_5_2" model="account.invoice.line">
-            <field name="name">Servicio de telefonía (IVA 27)</field>
             <field name="invoice_id" ref="demo_invoice_5"/>
             <field name="product_id" ref="product_product_telefonia"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('l10n_ar_demo_data.product_product_telefonia').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">250.0</field>
             <field name="quantity">1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('l10n_ar_demo_data.product_product_telefonia').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_5_3" model="account.invoice.line">
-            <field name="name">Laptop E5023 (IVA 10,5)</field>
             <field name="invoice_id" ref="demo_invoice_5"/>
             <field name="product_id" ref="product.product_product_25"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_25').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">3245.0</field>
             <field name="quantity">2</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_25').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_5_4" model="account.invoice.line">
-            <field name="name">Conceptos no gravados (IVA NG)</field>
             <field name="invoice_id" ref="demo_invoice_5"/>
             <field name="product_id" ref="product_product_no_gravado"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('l10n_ar_demo_data.product_product_no_gravado').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">50.0</field>
             <field name="quantity">10</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('l10n_ar_demo_data.product_product_no_gravado').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_5_5" model="account.invoice.line">
-            <field name="name">Animales y vegetales no industrializados (IVA cero)</field>
             <field name="invoice_id" ref="demo_invoice_5"/>
             <field name="product_id" ref="product_product_cero"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('l10n_ar_demo_data.product_product_cero').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">200.0</field>
             <field name="quantity">1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('l10n_ar_demo_data.product_product_cero').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_5_6" model="account.invoice.line">
-            <field name="name">Libro "Desarrollo en Odoo" (IVA exento)</field>
             <field name="invoice_id" ref="demo_invoice_5"/>
             <field name="product_id" ref="product_product_exento"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('l10n_ar_demo_data.product_product_exento').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">100.0</field>
             <field name="quantity">1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('l10n_ar_demo_data.product_product_exento').taxes_id.ids)]"/>
         </record>
 
         <function model="account.invoice" name="compute_taxes">
@@ -222,13 +180,10 @@
     </record>
 
         <record id="demo_invoice_line_8_1" model="account.invoice.line">
-            <field name="name">Support Services</field>
             <field name="invoice_id" ref="demo_invoice_8"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">642.0</field>
             <field name="quantity">1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <function model="account.invoice" name="compute_taxes">
@@ -247,13 +202,10 @@
     </record>
 
         <record id="demo_invoice_line_10_1" model="account.invoice.line">
-            <field name="name">Laptop Customized (IVA 21)</field>
             <field name="invoice_id" ref="demo_invoice_10"/>
             <field name="product_id" ref="product.product_product_27"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_27').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">1000.0</field>
             <field name="quantity">5</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_27').taxes_id.ids)]"/>
         </record>
 
         <function model="account.invoice" name="compute_taxes">
@@ -274,40 +226,32 @@
             <field name="name">Support Services 1</field>
             <field name="invoice_id" ref="demo_invoice_11"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">1.12</field>
             <field name="quantity">1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_11_2" model="account.invoice.line">
             <field name="name">Support Services 2</field>
             <field name="invoice_id" ref="demo_invoice_11"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">1.12</field>
             <field name="quantity">1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_11_3" model="account.invoice.line">
             <field name="name">Support Services 3</field>
             <field name="invoice_id" ref="demo_invoice_11"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">1.12</field>
             <field name="quantity">1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_11_4" model="account.invoice.line">
             <field name="name">Support Services 4</field>
             <field name="invoice_id" ref="demo_invoice_11"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">1.12</field>
             <field name="quantity">1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <function model="account.invoice" name="compute_taxes">
@@ -328,40 +272,32 @@
             <field name="name">Support Services 1</field>
             <field name="invoice_id" ref="demo_invoice_12"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">15.7076</field>
             <field name="quantity">1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_12_2" model="account.invoice.line">
             <field name="name">Support Services 2</field>
             <field name="invoice_id" ref="demo_invoice_12"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">5.3076</field>
             <field name="quantity">2</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_12_3" model="account.invoice.line">
             <field name="name">Support Services 3</field>
             <field name="invoice_id" ref="demo_invoice_12"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">3.5384</field>
             <field name="quantity">2</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_12_4" model="account.invoice.line">
             <field name="name">Support Services 4</field>
             <field name="invoice_id" ref="demo_invoice_12"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">1.6376</field>
             <field name="quantity">2</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <function model="account.invoice" name="compute_taxes">
@@ -383,80 +319,64 @@
             <field name="name">Support Services 1</field>
             <field name="invoice_id" ref="demo_invoice_13"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">24.3</field>
             <field name="quantity">3</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_13_2" model="account.invoice.line">
             <field name="name">Support Services 2</field>
             <field name="invoice_id" ref="demo_invoice_13"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">260.59</field>
             <field name="quantity">-1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_13_3" model="account.invoice.line">
             <field name="name">Support Services 3</field>
             <field name="invoice_id" ref="demo_invoice_13"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">48.72</field>
             <field name="quantity">1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_13_4" model="account.invoice.line">
             <field name="name">Support Services 4</field>
             <field name="invoice_id" ref="demo_invoice_13"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">13.666</field>
             <field name="quantity">1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_13_5" model="account.invoice.line">
             <field name="name">Support Services 54</field>
             <field name="invoice_id" ref="demo_invoice_13"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">11.329</field>
             <field name="quantity">2</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_13_6" model="account.invoice.line">
             <field name="name">Support Services 6</field>
             <field name="invoice_id" ref="demo_invoice_13"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">68.9408</field>
             <field name="quantity">1</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_13_7" model="account.invoice.line">
             <field name="name">Support Services 7</field>
             <field name="invoice_id" ref="demo_invoice_13"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">4.7881</field>
             <field name="quantity">2</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_13_8" model="account.invoice.line">
             <field name="name">Support Services 8</field>
             <field name="invoice_id" ref="demo_invoice_13"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">12.0625</field>
             <field name="quantity">2</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <function model="account.invoice" name="compute_taxes">
@@ -477,11 +397,9 @@
             <field name="name">Support Services 1</field>
             <field name="invoice_id" ref="demo_invoice_17"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">24.3</field>
             <field name="quantity">3</field>
             <field name="discount">100.0</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <function model="account.invoice" name="compute_taxes">
@@ -503,36 +421,51 @@
             <field name="name">Support Services 1</field>
             <field name="invoice_id" ref="demo_invoice_18"/>
             <field name="product_id" ref="product.product_product_2"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_2').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">24.3</field>
             <field name="quantity">3</field>
             <field name="discount">100.0</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_2').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_18_2" model="account.invoice.line">
-            <field name="name">Servicio de telefonía (IVA 27)</field>
             <field name="invoice_id" ref="demo_invoice_18"/>
             <field name="product_id" ref="product_product_telefonia"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('l10n_ar_demo_data.product_product_telefonia').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">250.0</field>
             <field name="quantity">1</field>
             <field name="discount">100.0</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('l10n_ar_demo_data.product_product_telefonia').taxes_id.ids)]"/>
         </record>
 
         <record id="demo_invoice_line_18_3" model="account.invoice.line">
-            <field name="name">Laptop E5023 (IVA 10,5)</field>
             <field name="invoice_id" ref="demo_invoice_18"/>
             <field name="product_id" ref="product.product_product_25"/>
-            <field name="account_id" model="account.invoice.line" eval="obj().env.ref('product.product_product_25').categ_id.property_account_income_categ_id.id"/>
             <field name="price_unit">3245.0</field>
             <field name="quantity">0</field>
-            <field name="invoice_line_tax_ids" model="account.tax" eval="[(6, 0, obj().env.ref('product.product_product_25').taxes_id.ids)]"/>
         </record>
 
         <function model="account.invoice" name="compute_taxes">
             <value eval="[ref('demo_invoice_18')]"/>
+        </function>
+
+    <!-- comprobante de ticket z -->
+    <record id="demo_invoice_9" model="account.invoice">
+        <field name="partner_id" ref="l10n_ar.par_cfa"/>
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="payment_term_id" ref="account.account_payment_term"/>
+        <field name="type">out_invoice</field>
+        <field name="l10n_latam_document_number">0001-00000001</field>
+        <field name="date_invoice" eval="time.strftime('%Y-%m')+'-13'"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+        <record id="demo_invoice_line_18_1" model="account.invoice.line">
+            <field name="name">Support Services</field>
+            <field name="invoice_id" ref="demo_invoice_9"/>
+            <field name="product_id" ref="product.product_product_2"/>
+            <field name="price_unit">24.3</field>
+            <field name="quantity">3</field>
+        </record>
+
+        <function model="account.invoice" name="compute_taxes">
+            <value eval="[ref('demo_invoice_9')]"/>
         </function>
 
 </odoo>
