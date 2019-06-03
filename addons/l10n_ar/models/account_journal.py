@@ -168,10 +168,9 @@ class AccountJournal(models.Model):
         documents = self.env['l10n_latam.document.type'].search(domain)
         sequence_obj = self.env['ir.sequence']
         for document in documents:
-            if self.l10n_ar_share_sequences:
-                letter_sequence = sequence_obj.search([
-                    ('l10n_ar_letter', '=', document.l10n_ar_letter)])
-                if letter_sequence:
+            if self.l10n_ar_share_sequences and \
+               self.l10n_ar_sequence_ids.filtered(
+                   lambda x: x.l10n_ar_letter == document.l10n_ar_letter):
                     continue
 
             sequences |= self.env['ir.sequence'].create(
@@ -179,7 +178,8 @@ class AccountJournal(models.Model):
         return sequences
 
     @api.constrains('type', 'l10n_ar_afip_pos_system',
-                    'l10n_ar_afip_pos_number', 'l10n_ar_share_sequences')
+                    'l10n_ar_afip_pos_number', 'l10n_ar_share_sequences',
+                    'l10n_latam_use_documents')
     def check_afip_configurations(self):
         """ IF AFIP Configuration change try to review if this can be done
         and then create / update the document sequences """
