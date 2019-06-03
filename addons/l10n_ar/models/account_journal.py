@@ -127,6 +127,10 @@ class AccountJournal(models.Model):
             return usual_codes
         elif self.l10n_ar_afip_pos_system in ['FEERCEL', 'FEEWS', 'FEERCELP']:
             return expo_codes
+        elif self.l10n_ar_afip_pos_system == 'CF':
+            return [
+                '81', '82', '83', '110', '111', '112', '113', '114', '115',
+                '116', '117', '118', '119', '120']
 
     def get_document_type_sequence(self, invoice):
         """ Return the match sequences for the given journal and invoice
@@ -148,7 +152,7 @@ class AccountJournal(models.Model):
         self.ensure_one()
         if self.company_id.country_id != self.env.ref('base.ar'):
             return super().create_document_type_sequences()
-        if not self.type == 'sale':
+        if not self.type == 'sale' or self.l10n_ar_afip_pos_system == 'CF':
             return False
         if not self.l10n_latam_use_documents:
             return False
