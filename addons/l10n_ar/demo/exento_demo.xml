@@ -26,23 +26,14 @@
         <field name="l10n_ar_afip_start_date" eval="time.strftime('%Y-%m')+'-1'"/>
     </record>
 
-    <record id="base.user_root" model="res.users">
-        <field name="company_ids" eval="[(4,ref('company_exento'))]"/>
-        <field name="company_id" ref="company_exento"/>
-    </record>
+    <function model="res.users" name="write">
+        <value eval="[ref('base.user_root'), ref('base.user_admin'), ref('base.user_demo')]"/>
+        <value eval="{'company_ids': [(4, ref('l10n_ar.company_exento'))]}"/>
+    </function>
 
-    <record id="base.user_admin" model="res.users">
-        <field name="company_ids" eval="[(4,ref('company_exento'))]"/>
-        <field name="company_id" ref="company_exento"/>
-    </record>
-
-    <record id="base.user_demo" model="res.users">
-        <field name="company_ids" eval="[(4,ref('company_exento'))]"/>
-        <field name="company_id" ref="company_exento"/>
-    </record>
-
-    <function model="account.chart.template" name="try_loading_for_current_company">
+    <function model="account.chart.template" name="try_loading_for_company">
         <value eval="[ref('l10n_ar.l10nar_ex_chart_template')]"/>
+        <value model="res.company" eval="obj().env.ref('l10n_ar.company_exento')"/>
     </function>
 
 </odoo>
