@@ -181,6 +181,8 @@
         <field name="invoice_user_id" ref="base.user_demo"/>
         <field name="invoice_payment_term_id" ref="account.account_payment_term"/>
         <field name="type">in_invoice</field>
+        <!-- as we create lines separatelly we need to set journal, if not, misc journal is selected -->
+        <field name="journal_id" model="account.journal" search="[('type', '=', 'purchase'), ('company_id', '=', obj().env.company.id)]"/>
         <field name="invoice_date" eval="time.strftime('%Y-%m')+'-13'"/>
         <field name="company_id" ref="company_ri"/>
     </record>
