@@ -40,7 +40,7 @@ class ResPartner(models.Model):
         found."""
         for rec in self:
             commercial_partner = rec.commercial_partner_id
-            if rec.l10n_latam_identification_type_id.l10n_ar_afip_code == 80:
+            if rec.l10n_latam_identification_type_id.l10n_ar_afip_code == '80':
                 rec.l10n_ar_cuit = rec.vat
             # If the partner is outside Argentina then we return the defined
             # country cuit defined by AFIP for that specific partner
@@ -62,9 +62,9 @@ class ResPartner(models.Model):
 
     def _get_validation_module(self):
         self.ensure_one()
-        if self.l10n_latam_identification_type_id.l10n_ar_afip_code in [80, 86]:
+        if self.l10n_latam_identification_type_id.l10n_ar_afip_code in ['80', '86']:
             return stdnum.ar.cuit
-        elif self.l10n_latam_identification_type_id.l10n_ar_afip_code == 96:
+        elif self.l10n_latam_identification_type_id.l10n_ar_afip_code == '96':
             return stdnum.ar.dni
 
     def l10n_ar_identification_validation(self):
