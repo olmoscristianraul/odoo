@@ -8,9 +8,11 @@ class ResCompany(models.Model):
 
     l10n_ar_country_code = fields.Char(related='country_id.code', string='Country Code')
     l10n_ar_gross_income_number = fields.Char(
-        related='partner_id.l10n_ar_gross_income_number', string='Gross Income Number', readonly=False)
+        related='partner_id.l10n_ar_gross_income_number', string='Gross Income Number', readonly=False,
+        help="This field is required in order to print the invoice report properly")
     l10n_ar_gross_income_type = fields.Selection(
-        related='partner_id.l10n_ar_gross_income_type', string='Gross Income', readonly=False)
+        related='partner_id.l10n_ar_gross_income_type', string='Gross Income', readonly=False,
+        help="This field is required in order to print the invoice report properly")
     l10n_ar_afip_responsability_type_id = fields.Many2one(
         domain="[('code', 'in', [1, 4, 6])]",
         related='partner_id.l10n_ar_afip_responsability_type_id', readonly=False)
