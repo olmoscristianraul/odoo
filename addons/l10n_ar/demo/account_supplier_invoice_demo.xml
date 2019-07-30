@@ -24,6 +24,12 @@
     <record id="demo_sup_invoice_1" model="account.move">
         <field name="l10n_latam_document_number">0001-00000008</field>
     </record>
+    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
+        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_sup_invoice_1'))]).ids"/>
+    </function>
+    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+        <value eval="[ref('demo_sup_invoice_1')]"/>
+    </function>
 
     <!-- Invoice from Asustek with vat 21, 27 and 10,5 -->
     <record id="demo_sup_invoice_2" model="account.move">
@@ -42,6 +48,12 @@
     <record id="demo_sup_invoice_2" model="account.move">
         <field name="l10n_latam_document_number">0002-00000123</field>
     </record>
+    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
+        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_sup_invoice_2'))]).ids"/>
+    </function>
+    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+        <value eval="[ref('demo_sup_invoice_2')]"/>
+    </function>
 
     <!-- Invoice from Asustek with vat cero and 21 -->
     <record id="demo_sup_invoice_3" model="account.move">
@@ -59,6 +71,12 @@
     <record id="demo_sup_invoice_3" model="account.move">
         <field name="l10n_latam_document_number">0003-00000312</field>
     </record>
+    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
+        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_sup_invoice_3'))]).ids"/>
+    </function>
+    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+        <value eval="[ref('demo_sup_invoice_3')]"/>
+    </function>
 
     <!-- Invoice to Asustek with vat exempt and 21 -->
     <record id="demo_sup_invoice_4" model="account.move">
@@ -76,6 +94,12 @@
     <record id="demo_sup_invoice_4" model="account.move">
         <field name="l10n_latam_document_number">0001-00000200</field>
     </record>
+    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
+        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_sup_invoice_4'))]).ids"/>
+    </function>
+    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+        <value eval="[ref('demo_sup_invoice_4')]"/>
+    </function>
 
     <!-- Invoice to Asustek with all type of taxes  -->
     <record id="demo_sup_invoice_5" model="account.move">
@@ -97,6 +121,12 @@
     <record id="demo_sup_invoice_5" model="account.move">
         <field name="l10n_latam_document_number">0001-00000222</field>
     </record>
+    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
+        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_sup_invoice_5'))]).ids"/>
+    </function>
+    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+        <value eval="[ref('demo_sup_invoice_5')]"/>
+    </function>
 
     <!-- Importacion de servicios a odoo, fiscal position changes tax to no corresponde -->
     <record id="demo_sup_invoice_6" model="account.move">
@@ -114,6 +144,12 @@
     <record id="demo_sup_invoice_6" model="account.move">
         <field name="l10n_latam_document_number">0001-00000333</field>
     </record>
+    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
+        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_sup_invoice_6'))]).ids"/>
+    </function>
+    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+        <value eval="[ref('demo_sup_invoice_6')]"/>
+    </function>
 
     <!-- Factura simil dhl con linea no corresponde en negativo -->
     <record id="demo_sup_invoice_7" model="account.move">
@@ -132,6 +168,12 @@
     <record id="demo_sup_invoice_7" model="account.move">
         <field name="l10n_latam_document_number">0001-00000334</field>
     </record>
+    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
+        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_sup_invoice_7'))]).ids"/>
+    </function>
+    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+        <value eval="[ref('demo_sup_invoice_7')]"/>
+    </function>
 
 <!-- creamos despacho de importación -->
     <record id="demo_despacho_1" model="account.move">
@@ -141,25 +183,77 @@
         <field name="type">in_invoice</field>
         <field name="invoice_date" eval="time.strftime('%Y-%m')+'-13'"/>
         <field name="company_id" ref="company_ri"/>
-        <field name="invoice_line_ids" eval="[
-            (0, 0, {'product_id': ref('l10n_ar.product_product_quote_despacho'), 'price_unit': 5064.98, 'quantity': 1}),
-            (0, 0, {'product_id': ref('l10n_ar.product_product_tasa_estadistica'), 'price_unit': 152.08, 'quantity': 1}),
-            (0, 0, {'product_id': ref('l10n_ar.product_product_arancel'), 'price_unit': 10.0, 'quantity': 1}),
-            (0, 0, {'product_id': ref('l10n_ar.product_product_servicio_de_guarda'), 'price_unit': 28.00, 'quantity': 1}),
-            (0, 0, {'price_unit': 28936.06, 'quantity': 1, 'name': 'FOB Total'}),
-            (0, 0, {'price_unit': 1350.00, 'quantity': 1, 'name': 'Flete'}),
-            (0, 0, {'price_unit': 130.21, 'quantity': 1, 'name': 'Seguro'}),
-        ]"/>
     </record>
     <record id="demo_despacho_1" model="account.move">
         <field name="l10n_latam_document_number">16052IC04000605L</field>
     </record>
-    <!-- create this lines manually to force diffent tax -->
+    <!-- create this lines manually to set taxes and prices -->
+    <record id="demo_despacho_1_line_1" model="account.move.line" context="{'check_move_validity': False}">
+        <field name="move_id" ref="demo_despacho_1"/>
+        <field name="price_unit">5064.98</field>
+        <field name="name">[AFIP_DESPACHO] Despacho de importación</field>
+        <field name="quantity">1</field>
+        <field name="product_id" ref="l10n_ar.product_product_quote_despacho"/>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras 21%'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+    </record>
+    <record id="demo_despacho_1_line_2" model="account.move.line" context="{'check_move_validity': False}">
+        <field name="move_id" ref="demo_despacho_1"/>
+        <field name="price_unit">152.08</field>
+        <field name="name">[AFIP_TASA_EST] Tasa Estadística</field>
+        <field name="quantity">1</field>
+        <field name="product_id" ref="l10n_ar.product_product_tasa_estadistica"/>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras 21%'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+    </record>
+    <record id="demo_despacho_1_line_3" model="account.move.line" context="{'check_move_validity': False}">
+        <field name="move_id" ref="demo_despacho_1"/>
+        <field name="price_unit">10.0</field>
+        <field name="name">[AFIP_ARANCEL] Arancel</field>
+        <field name="quantity">1</field>
+        <field name="product_id" ref="l10n_ar.product_product_arancel"/>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras No Gravado'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+    </record>
+    <record id="demo_despacho_1_line_4" model="account.move.line" context="{'check_move_validity': False}">
+        <field name="move_id" ref="demo_despacho_1"/>
+        <field name="price_unit">28.00</field>
+        <field name="name">[AFIP_SERV_GUARDA] Servicio de Guarda</field>
+        <field name="quantity">1</field>
+        <field name="product_id" ref="l10n_ar.product_product_servicio_de_guarda"/>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras No Gravado'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+    </record>
+    <record id="demo_despacho_1_line_5" model="account.move.line" context="{'check_move_validity': False}">
+        <field name="name">FOB Total</field>
+        <field name="move_id" ref="demo_despacho_1"/>
+        <field name="price_unit">28936.06</field>
+        <field name="quantity">1</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras 21%'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+    </record>
+    <record id="demo_despacho_1_line_6" model="account.move.line" context="{'check_move_validity': False}">
+        <field name="name">Flete</field>
+        <field name="move_id" ref="demo_despacho_1"/>
+        <field name="price_unit">1350.00</field>
+        <field name="quantity">1</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras 21%'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+    </record>
+    <record id="demo_despacho_1_line_7" model="account.move.line" context="{'check_move_validity': False}">
+        <field name="name">Seguro</field>
+        <field name="move_id" ref="demo_despacho_1"/>
+        <field name="price_unit">130.21</field>
+        <field name="quantity">1</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras 21%'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+    </record>
     <record id="demo_despacho_1_line_8" model="account.move.line" context="{'check_move_validity': False}">
         <field name="name">-FOB Total</field>
         <field name="move_id" ref="demo_despacho_1"/>
         <field name="price_unit">-28936.06</field>
         <field name="quantity">1</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras No Gravado'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
     </record>
     <record id="demo_despacho_1_line_9" model="account.move.line" context="{'check_move_validity': False}">
@@ -167,6 +261,7 @@
         <field name="move_id" ref="demo_despacho_1"/>
         <field name="price_unit">-1350.00</field>
         <field name="quantity">1</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras No Gravado'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
     </record>
     <record id="demo_despacho_1_line_10" model="account.move.line" context="{'check_move_validity': False}">
@@ -174,11 +269,14 @@
         <field name="move_id" ref="demo_despacho_1"/>
         <field name="price_unit">-130.21</field>
         <field name="quantity">1</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras No Gravado'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
     </record>
+
     <!-- recompute for lines added directly on move.line -->
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_despacho_1')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- TODO add this once odoo tell us how manual taxes are encoded -->

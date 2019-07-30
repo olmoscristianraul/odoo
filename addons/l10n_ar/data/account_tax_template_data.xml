@@ -6,6 +6,7 @@
         <field name="name">Percepción IVA Aplicada</field>
         <field name="description">Perc IVA A</field>
         <field name="sequence">4</field>
+        <field name="active" eval="False"/>
         <field name="amount_type">fixed</field>
         <field eval="0.0" name="amount"/>
         <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -42,6 +43,7 @@
         <field name="name">Percepción Ganancias Aplicada</field>
         <field name="description">Perc Ganancias A</field>
         <field name="sequence">4</field>
+        <field name="active" eval="False"/>
         <field name="amount_type">fixed</field>
         <field eval="0.0" name="amount"/>
         <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -78,6 +80,7 @@
         <field name="name">Percepción Ganancias Sufrida</field>
         <field name="description">Perc Ganancias S</field>
         <field name="sequence">4</field>
+        <field name="active" eval="False"/>
         <field name="amount_type">fixed</field>
         <field eval="0.0" name="amount"/>
         <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -113,6 +116,7 @@
         <field name="name">Percepción IIBB CABA Sufrida</field>
         <field name="description">Perc IIBB CABA S</field>
         <field name="sequence">4</field>
+        <field name="active" eval="False"/>
         <field name="amount_type">fixed</field>
         <field eval="0.0" name="amount"/>
         <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -149,6 +153,7 @@
         <field name="name">Percepción IIBB ARBA Sufrida</field>
         <field name="description">Perc IIBB ARBA S</field>
         <field name="sequence">4</field>
+        <field name="active" eval="False"/>
         <field name="amount_type">fixed</field>
         <field eval="0.0" name="amount"/>
         <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -185,6 +190,7 @@
         <field name="name">Percepción IIBB Córdoba Sufrida</field>
         <field name="description">Perc IIBB Córdoba S</field>
         <field name="sequence">4</field>
+        <field name="active" eval="False"/>
         <field name="amount_type">fixed</field>
         <field eval="0.0" name="amount"/>
         <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -221,6 +227,7 @@
         <field name="name">Percepción IIBB Santa Fé Sufrida</field>
         <field name="description">Perc IIBB Santa Fé S</field>
         <field name="sequence">4</field>
+        <field name="active" eval="False"/>
         <field name="amount_type">fixed</field>
         <field eval="0.0" name="amount"/>
         <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -257,6 +264,7 @@
         <field name="name">Percepción IIBB Aplicada</field>
         <field name="description">Perc IIBB A</field>
         <field name="sequence">4</field>
+        <field name="active" eval="False"/>
         <field name="amount_type">fixed</field>
         <field eval="0.0" name="amount"/>
         <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -785,6 +793,7 @@
         <field name="name">IVA Ventas 2,5%</field>
         <field name="description">IVA 2,5%</field>
         <field name="sequence">9</field>
+        <field name="active" eval="False"/>
         <field eval="2.5" name="amount"/>
         <field name="amount_type">percent</field>
         <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -820,6 +829,7 @@
         <field name="name">IVA Compras 2,5%</field>
         <field name="description">IVA 2,5%</field>
         <field name="sequence">9</field>
+        <field name="active" eval="False"/>
         <field eval="2.5" name="amount"/>
         <field name="amount_type">percent</field>
         <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -855,6 +865,7 @@
         <field name="name">IVA Ventas 5%</field>
         <field name="description">IVA 5%</field>
         <field name="sequence">10</field>
+        <field name="active" eval="False"/>
         <field eval="5" name="amount"/>
         <field name="amount_type">percent</field>
         <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -890,6 +901,7 @@
         <field name="name">IVA Compras 5%</field>
         <field name="description">IVA 5%</field>
         <field name="sequence">10</field>
+        <field name="active" eval="False"/>
         <field eval="5" name="amount"/>
         <field name="amount_type">percent</field>
         <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),

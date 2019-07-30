@@ -77,17 +77,17 @@ class AccountMove(models.Model):
         # eg to validate invoices on afif. Does not include afip_code [0, 1, 2] because their are not taxes
         # themselves: VAT Exempt, VAT Untaxed and VAT Not applicable
         vat_taxables = vat_taxes.filtered(
-            lambda r: r.tax_line_id.tax_group_id.l10n_ar_afip_code not in [0, 1, 2] and r.tax_base_amount)
+            lambda r: r.tax_line_id.tax_group_id.l10n_ar_afip_code not in ['0', '1', '2'] and r.tax_base_amount)
 
         # vat exempt values (are the ones with code 2)
         vat_exempt_taxes = tax_lines.filtered(
             lambda r: r.tax_line_id.tax_group_id.l10n_ar_type == 'tax' and r.tax_line_id.tax_group_id.l10n_ar_tax == 'vat' and
-            r.tax_line_id.tax_group_id.l10n_ar_afip_code == 2)
+            r.tax_line_id.tax_group_id.l10n_ar_afip_code == '2')
 
         # vat untaxed values / no gravado (are the ones with code 1)
         vat_untaxed_taxes = tax_lines.filtered(
             lambda r: r.tax_line_id.tax_group_id.l10n_ar_type == 'tax' and r.tax_line_id.tax_group_id.l10n_ar_tax == 'vat' and
-            r.tax_line_id.tax_group_id.l10n_ar_afip_code == 1)
+            r.tax_line_id.tax_group_id.l10n_ar_afip_code == '1')
 
         # other taxes values
         not_vat_taxes = tax_lines - vat_taxes
@@ -156,7 +156,7 @@ class AccountMove(models.Model):
         # facturas que no debería tener ningún iva y tienen
         not_zero_alicuot = self.filtered(
             lambda x: x.type in ['in_invoice', 'in_refund'] and x.l10n_latam_document_type_id.purchase_alicuots == 'zero'
-            and any([t.tax_line_id.tax_group_id.l10n_ar_afip_code != 0
+            and any([t.tax_line_id.tax_group_id.l10n_ar_afip_code != '0'
                      for t in x._get_argentina_amounts()['vat_tax_ids']]))
         if not_zero_alicuot:
             raise UserError(_(
@@ -167,7 +167,7 @@ class AccountMove(models.Model):
         zero_alicuot = self.filtered(
             lambda x: x.type in ['in_invoice', 'in_refund']
             and x.l10n_latam_document_type_id.purchase_alicuots == 'not_zero' and
-            any([t.tax_line_id.tax_group_id.l10n_ar_afip_code == 0
+            any([t.tax_line_id.tax_group_id.l10n_ar_afip_code == '0'
                  for t in x._get_argentina_amounts()['vat_tax_ids']]))
         if zero_alicuot:
             raise UserError(_(
