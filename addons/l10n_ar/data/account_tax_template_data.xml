@@ -112,7 +112,7 @@
     </record>
 
     <record id="ri_tax_percepcion_iibb_caba_sufrida" model="account.tax.template">
-        <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+        <field name="chart_template_id" ref="l10nar_base_chart_template"/>
         <field name="name">Percepción IIBB CABA Sufrida</field>
         <field name="description">Perc IIBB CABA S</field>
         <field name="sequence">4</field>
@@ -149,7 +149,7 @@
     </record>
 
     <record id="ri_tax_percepcion_iibb_ba_sufrida" model="account.tax.template">
-        <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+        <field name="chart_template_id" ref="l10nar_base_chart_template"/>
         <field name="name">Percepción IIBB ARBA Sufrida</field>
         <field name="description">Perc IIBB ARBA S</field>
         <field name="sequence">4</field>
@@ -186,7 +186,7 @@
     </record>
 
     <record id="ri_tax_percepcion_iibb_co_sufrida" model="account.tax.template">
-        <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+        <field name="chart_template_id" ref="l10nar_base_chart_template"/>
         <field name="name">Percepción IIBB Córdoba Sufrida</field>
         <field name="description">Perc IIBB Córdoba S</field>
         <field name="sequence">4</field>
@@ -223,7 +223,7 @@
     </record>
 
     <record id="ri_tax_percepcion_iibb_sf_sufrida" model="account.tax.template">
-        <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+        <field name="chart_template_id" ref="l10nar_base_chart_template"/>
         <field name="name">Percepción IIBB Santa Fé Sufrida</field>
         <field name="description">Perc IIBB Santa Fé S</field>
         <field name="sequence">4</field>
