@@ -6,7 +6,7 @@
     <!-- Invoice from gritti support service, auto fiscal position set tax no corresponde -->
     <record id="demo_sup_invoice_1" model="account.move">
         <field name="partner_id" ref="res_partner_gritti_agrimensura"/>
-        <field name="fiscal_position_id" model="account.fiscal.position" eval="obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras no corresponde')], limit=1).id"/>
+        <field name="fiscal_position_id" model="account.fiscal.position" eval="obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA no corresponde')], limit=1).id"/>
         <field name="invoice_user_id" ref="base.user_demo"/>
         <field name="invoice_payment_term_id" ref="account.account_payment_term"/>
         <field name="type">in_invoice</field>
@@ -132,7 +132,7 @@
     <record id="demo_sup_invoice_6" model="account.move">
         <field name="partner_id" ref="res_partner_odoo"/>
         <field name="invoice_user_id" ref="base.user_demo"/>
-        <field name="fiscal_position_id" model="account.fiscal.position" eval="obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras no corresponde')], limit=1).id"/>
+        <field name="fiscal_position_id" model="account.fiscal.position" eval="obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA no corresponde')], limit=1).id"/>
         <field name="invoice_payment_term_id" ref="account.account_payment_term"/>
         <field name="type">in_invoice</field>
         <field name="invoice_date" eval="time.strftime('%Y-%m')+'-26'"/>
@@ -155,7 +155,7 @@
     <record id="demo_sup_invoice_7" model="account.move">
         <field name="partner_id" ref="res_partner_odoo"/>
         <field name="invoice_user_id" ref="base.user_demo"/>
-        <field name="fiscal_position_id" model="account.fiscal.position" eval="obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras no corresponde')], limit=1).id"/>
+        <field name="fiscal_position_id" model="account.fiscal.position" eval="obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA no corresponde')], limit=1).id"/>
         <field name="invoice_payment_term_id" ref="account.account_payment_term"/>
         <field name="type">in_invoice</field>
         <field name="invoice_date" eval="time.strftime('%Y-%m')+'-27'"/>
@@ -195,7 +195,7 @@
         <field name="quantity">1</field>
         <field name="product_id" ref="l10n_ar.product_product_quote_despacho"/>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
-        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras 21%'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA 21%'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
     </record>
     <record id="demo_despacho_1_line_2" model="account.move.line" context="{'check_move_validity': False}">
         <field name="move_id" ref="demo_despacho_1"/>
@@ -204,7 +204,7 @@
         <field name="quantity">1</field>
         <field name="product_id" ref="l10n_ar.product_product_tasa_estadistica"/>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
-        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras 21%'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA 21%'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
     </record>
     <record id="demo_despacho_1_line_3" model="account.move.line" context="{'check_move_validity': False}">
         <field name="move_id" ref="demo_despacho_1"/>
@@ -213,7 +213,7 @@
         <field name="quantity">1</field>
         <field name="product_id" ref="l10n_ar.product_product_arancel"/>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
-        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras No Gravado'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA No Gravado'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
     </record>
     <record id="demo_despacho_1_line_4" model="account.move.line" context="{'check_move_validity': False}">
         <field name="move_id" ref="demo_despacho_1"/>
@@ -222,7 +222,7 @@
         <field name="quantity">1</field>
         <field name="product_id" ref="l10n_ar.product_product_servicio_de_guarda"/>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
-        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras No Gravado'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA No Gravado'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
     </record>
     <record id="demo_despacho_1_line_5" model="account.move.line" context="{'check_move_validity': False}">
         <field name="name">FOB Total</field>
@@ -230,7 +230,7 @@
         <field name="price_unit">28936.06</field>
         <field name="quantity">1</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
-        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras 21%'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA 21%'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
     </record>
     <record id="demo_despacho_1_line_6" model="account.move.line" context="{'check_move_validity': False}">
         <field name="name">Flete</field>
@@ -238,7 +238,7 @@
         <field name="price_unit">1350.00</field>
         <field name="quantity">1</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
-        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras 21%'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA 21%'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
     </record>
     <record id="demo_despacho_1_line_7" model="account.move.line" context="{'check_move_validity': False}">
         <field name="name">Seguro</field>
@@ -246,7 +246,7 @@
         <field name="price_unit">130.21</field>
         <field name="quantity">1</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
-        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras 21%'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA 21%'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
     </record>
     <record id="demo_despacho_1_line_8" model="account.move.line" context="{'check_move_validity': False}">
         <field name="name">-FOB Total</field>
@@ -254,7 +254,7 @@
         <field name="price_unit">-28936.06</field>
         <field name="quantity">1</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
-        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras No Gravado'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA No Gravado'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
     </record>
     <record id="demo_despacho_1_line_9" model="account.move.line" context="{'check_move_validity': False}">
         <field name="name">-Flete</field>
@@ -262,7 +262,7 @@
         <field name="price_unit">-1350.00</field>
         <field name="quantity">1</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
-        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras No Gravado'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA No Gravado'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
     </record>
     <record id="demo_despacho_1_line_10" model="account.move.line" context="{'check_move_validity': False}">
         <field name="name">-Seguro</field>
@@ -270,7 +270,7 @@
         <field name="price_unit">-130.21</field>
         <field name="quantity">1</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
-        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Compras No Gravado'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
+        <field name="tax_ids" model="account.tax" eval="[(6, 0, obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA No Gravado'), ('type_tax_use', '=', 'purchase')], limit=1).ids)]"/>
     </record>
 
     <!-- recompute for lines added directly on move.line -->
