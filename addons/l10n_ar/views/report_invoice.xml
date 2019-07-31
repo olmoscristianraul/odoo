@@ -3,7 +3,7 @@
 
     <template id="report_invoice_document" inherit_id="l10n_latam_document.report_invoice_document">
         <div t-if="o.partner_id.vat" position="after">
-            <span>VAT Cond.: </span><span t-field="o.l10n_ar_afip_responsability_type_id"/>
+            <span>VAT Cond.: </span><span t-field="o.l10n_ar_afip_responsibility_type_id"/>
             <t t-if="o.invoice_incoterm_id">
                 <br/><span>Incoterm: </span><span t-field="o.invoice_incoterm_id.name"/>
             </t>
@@ -19,7 +19,7 @@
     </template>
 
     <template id="argentinian_extra_info">
-        <li t-if="company.l10n_ar_afip_responsability_type_id" class="list-inline-item">VAT Cond.: <span t-field="company.l10n_ar_afip_responsability_type_id"/></li>
+        <li t-if="company.l10n_ar_afip_responsibility_type_id" class="list-inline-item">VAT Cond.: <span t-field="company.l10n_ar_afip_responsibility_type_id"/></li>
         <li class="list-inline-item">Gross Income: <span t-esc="company.l10n_ar_gross_income_type == 'no_liquida' and 'Exento' or company.l10n_ar_gross_income_number"/></li>
         <li t-if="company.l10n_ar_afip_start_date" class="list-inline-item">Activities Start Date: <span t-field="company.l10n_ar_afip_start_date"/></li>
     </template>

@@ -11,7 +11,7 @@ class L10nLatamDocumentType(models.Model):
         string='Letters',
         help='Letters defined by the AFIP that can be used to identify the'
         ' documents presented to the goverment and that depends on the'
-        ' operation type, the responsability of both the issuer and the'
+        ' operation type, the responsibility of both the issuer and the'
         ' receptor of the document')
     purchase_alicuots = fields.Selection(
         [('not_zero', 'Nor Zero'), ('zero', 'Zero')], help='Zero or No Zero as required by the CITI purchase statement')

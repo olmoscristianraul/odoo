@@ -19,8 +19,8 @@ class AccountMove(models.Model):
             point_of_sale, invoice_number = document_number.split('-')
         return {'invoice_number': int(invoice_number), 'point_of_sale': int(point_of_sale)}
 
-    l10n_ar_afip_responsability_type_id = fields.Many2one(
-        'l10n_ar.afip.responsability.type', string='AFIP Responsability Type', help='Defined by AFIP to'
+    l10n_ar_afip_responsibility_type_id = fields.Many2one(
+        'l10n_ar.afip.responsibility.type', string='AFIP Responsibility Type', help='Defined by AFIP to'
         ' identify the type of responsabilities that a person or a legal entity could have and that impacts in the'
         ' type of operations and requirements they need.')
     # TODO make it editable, we have to change move creation method
@@ -138,13 +138,13 @@ class AccountMove(models.Model):
                     'There must be one and only one VAT tax per line. Verify lines with product') + ' "%s"' % (
                         inv_line.product_id.name))
 
-        # check partner has responsability so it will be assigned on invoice validate
-        without_responsability = self.filtered(
-            lambda x: not x.partner_id.l10n_ar_afip_responsability_type_id)
-        if without_responsability:
+        # check partner has responsibility so it will be assigned on invoice validate
+        without_responsibility = self.filtered(
+            lambda x: not x.partner_id.l10n_ar_afip_responsibility_type_id)
+        if without_responsibility:
             raise UserError(_(
-                'The following invoices has a partner without AFIP responsability') + ':<br/>%s' % ('<br/>'.join(
-                    ['[%i] %s' % (i.id, i.display_name) for i in without_responsability])))
+                'The following invoices has a partner without AFIP responsibility') + ':<br/>%s' % ('<br/>'.join(
+                    ['[%i] %s' % (i.id, i.display_name) for i in without_responsibility])))
 
         # verificamos facturas de compra que deben reportar cuit y no lo tienen configurado
         without_cuit = self.filtered(
@@ -188,12 +188,12 @@ class AccountMove(models.Model):
                 rec.write(vals)
 
     @api.onchange('partner_id')
-    def check_afip_responsability_set(self):
+    def check_afip_responsibility_set(self):
         if self.company_id.country_id == self.env.ref('base.ar') and self.l10n_latam_use_documents and self.partner_id \
-           and not self.partner_id.l10n_ar_afip_responsability_type_id:
+           and not self.partner_id.l10n_ar_afip_responsibility_type_id:
             return {'warning': {
                 'title': 'Missing Partner Configuration',
-                'message': 'Please configure the AFIP Responsability for "%s" in order to continue' % (
+                'message': 'Please configure the AFIP Responsibility for "%s" in order to continue' % (
                     self.partner_id.name)}}
 
     def get_document_type_sequence(self):
@@ -215,8 +215,8 @@ class AccountMove(models.Model):
     def _onchange_partner_journal(self):
         expo_journals = ['FEERCEL', 'FEEWS', 'FEERCELP']
         for rec in self.filtered(lambda x: x.company_id.country_id == self.env.ref('base.ar') and x.journal_id.type == 'sale'
-                                 and x.l10n_latam_use_documents and x.partner_id.l10n_ar_afip_responsability_type_id):
-            res_code = rec.partner_id.l10n_ar_afip_responsability_type_id.code
+                                 and x.l10n_latam_use_documents and x.partner_id.l10n_ar_afip_responsibility_type_id):
+            res_code = rec.partner_id.l10n_ar_afip_responsibility_type_id.code
             domain = [('company_id', '=', rec.company_id.id), ('l10n_latam_use_documents', '=', True), ('type', '=', 'sale')]
             journal = self.env['account.journal']
             if res_code in ['8', '9', '10'] and rec.journal_id.l10n_ar_afip_pos_system not in expo_journals:
@@ -231,7 +231,7 @@ class AccountMove(models.Model):
     def post(self):
         ar_invoices = self.filtered(lambda x: x.company_id.country_id == self.env.ref('base.ar') and x.l10n_latam_use_documents)
         for rec in ar_invoices:
-            rec.l10n_ar_afip_responsability_type_id = rec.commercial_partner_id.l10n_ar_afip_responsability_type_id.id
+            rec.l10n_ar_afip_responsibility_type_id = rec.commercial_partner_id.l10n_ar_afip_responsibility_type_id.id
             if rec.company_id.currency_id == rec.currency_id:
                 l10n_ar_currency_rate = 1.0
             else:

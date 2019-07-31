@@ -47,7 +47,7 @@
 
     <!-- Invoice to ADHOC with vat cero and 21 (citi needs to guess operation type) -->
     <record id="demo_invoice_3" model="account.move">
-        <field name="partner_id" ref="l10n_ar_base.res_partner_adhoc"/>
+        <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
         <field name="invoice_user_id" ref="base.user_demo"/>
         <field name="invoice_payment_term_id" ref="account.account_payment_term"/>
         <field name="type">out_invoice</field>
@@ -68,7 +68,7 @@
 
     <!-- Invoice to ADHOC with vat exempt and 21 (citi needs to guess operation type) -->
     <record id="demo_invoice_4" model="account.move">
-        <field name="partner_id" ref="l10n_ar_base.res_partner_adhoc"/>
+        <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
         <field name="invoice_user_id" ref="base.user_demo"/>
         <field name="invoice_payment_term_id" ref="account.account_payment_term"/>
         <field name="type">out_invoice</field>
@@ -89,7 +89,7 @@
 
     <!-- Invoice to ADHOC with all type of taxes (citi needs to guess operation type)  -->
     <record id="demo_invoice_5" model="account.move">
-        <field name="partner_id" ref="l10n_ar_base.res_partner_adhoc"/>
+        <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
         <field name="invoice_user_id" ref="base.user_demo"/>
         <field name="invoice_payment_term_id" ref="account.account_payment_term"/>
         <field name="type">out_invoice</field>
@@ -134,7 +134,7 @@
 
     <!-- Invoice to ADHOC in USD and vat 21 -->
     <record id="demo_invoice_10" model="account.move">
-        <field name="partner_id" ref="l10n_ar_base.res_partner_adhoc"/>
+        <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
         <field name="invoice_user_id" ref="base.user_demo"/>
         <field name="invoice_payment_term_id" ref="account.account_payment_term"/>
         <field name="type">out_invoice</field>
@@ -155,7 +155,7 @@
 
     <!-- Invoice to ADHOC con muchas lineas para probar rounding "ERROR 1" (ver readme), con 4 ya daria error (precision decimal de monedas y producto en 2) -->
     <record id="demo_invoice_11" model="account.move">
-        <field name="partner_id" ref="l10n_ar_base.res_partner_adhoc"/>
+        <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
         <field name="invoice_user_id" ref="base.user_demo"/>
         <field name="invoice_payment_term_id" ref="account.account_payment_term"/>
         <field name="type">out_invoice</field>
@@ -178,7 +178,7 @@
 
     <!-- Invoice to ADHOC con muchas lineas para probar rounding "ERROR 2" (ver readme), (se requiere usar precision decimal de precio producto en 4 para que de el error) -->
     <record id="demo_invoice_12" model="account.move">
-        <field name="partner_id" ref="l10n_ar_base.res_partner_adhoc"/>
+        <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
         <field name="invoice_user_id" ref="base.user_demo"/>
         <field name="invoice_payment_term_id" ref="account.account_payment_term"/>
         <field name="type">out_invoice</field>
@@ -202,7 +202,7 @@
     <!-- Invoice to ADHOC con muchas lineas para probar factura en cero y rounding "ERROR 3" (ver readme), (se requiere usar precision decimal de precio producto en 4 para que de el error y cambiar el 260.59 por 260.60)
    # TODO mejorar este caso demo porque con dos decimales queda en negativo (citi needs to guess operation type) -->
     <record id="demo_invoice_13" model="account.move">
-        <field name="partner_id" ref="l10n_ar_base.res_partner_adhoc"/>
+        <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
         <field name="invoice_user_id" ref="base.user_demo"/>
         <field name="invoice_payment_term_id" ref="account.account_payment_term"/>
         <field name="type">out_invoice</field>
@@ -229,7 +229,7 @@
 
     <!-- Invoice to ADHOC con 100% de descuento (para testear citi, citi needs to guess operation type) -->
     <record id="demo_invoice_17" model="account.move">
-        <field name="partner_id" ref="l10n_ar_base.res_partner_adhoc"/>
+        <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
         <field name="invoice_user_id" ref="base.user_demo"/>
         <field name="invoice_payment_term_id" ref="account.account_payment_term"/>
         <field name="type">out_invoice</field>
@@ -250,7 +250,7 @@
     <!-- Invoice to ADHOC con 100% de descuento en ivas distintos (para testear citi)
    y con linea de importe -->
     <record id="demo_invoice_18" model="account.move">
-        <field name="partner_id" ref="l10n_ar_base.res_partner_adhoc"/>
+        <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
         <field name="invoice_user_id" ref="base.user_demo"/>
         <field name="invoice_payment_term_id" ref="account.account_payment_term"/>
         <field name="type">out_invoice</field>

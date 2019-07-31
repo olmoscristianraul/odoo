@@ -31,7 +31,7 @@ class AccountJournal(models.Model):
         ]
 
     def get_journal_letter(self, counterpart_partner=False):
-        """ Regarding the AFIP responsability of the company and the type of journal (sale/purchase), get the allowed
+        """ Regarding the AFIP responsibility of the company and the type of journal (sale/purchase), get the allowed
         letters. Optionally, receive the counterpart partner (customer/supplier) and get the allowed letters to work
         with him. This method is used to populate document types on journals and also to filter document types on
         specific invoices to/from customer/supplier
@@ -61,22 +61,22 @@ class AccountJournal(models.Model):
                 '13': ['B', 'C', 'I'],
             },
         }
-        if not self.company_id.l10n_ar_afip_responsability_type_id:
+        if not self.company_id.l10n_ar_afip_responsibility_type_id:
             action = self.env.ref('base.action_res_company_form')
             msg = _(
-                'Can not create chart of account until you configure your company AFIP Responsability and VAT.')
+                'Can not create chart of account until you configure your company AFIP Responsibility and VAT.')
             raise RedirectWarning(msg, action.id, _('Go to Companies'))
 
         letters = letters_data['issued' if self.type == 'sale' else 'received'][
-            self.company_id.l10n_ar_afip_responsability_type_id.code]
+            self.company_id.l10n_ar_afip_responsibility_type_id.code]
         if not counterpart_partner:
             return letters
 
-        if not counterpart_partner.l10n_ar_afip_responsability_type_id:
+        if not counterpart_partner.l10n_ar_afip_responsibility_type_id:
             letters = []
         else:
             counterpart_letters = letters_data['issued' if self.type == 'purchase' else 'received'][
-                counterpart_partner.l10n_ar_afip_responsability_type_id.code]
+                counterpart_partner.l10n_ar_afip_responsibility_type_id.code]
             letters = list(set(letters) & set(counterpart_letters))
         return letters
 
