@@ -65,6 +65,7 @@ Follow the next configuration steps
         'views/l10n_latam_document_type_view.xml',
         'views/ir_sequence_view.xml',
         'views/report_invoice.xml',
+        'report/invoice_report_view.xml',
     ],
     'demo': [
         # we create demo data on different companies (not main_company) to
