@@ -20,7 +20,7 @@
         <field name='l10n_latam_identification_type_id' ref="l10n_ar.it_cuit"/>
         <field name='vat'>30714295698</field>
         <field name="image" type="base64" file="l10n_ar/demo/adhoc_logo.png"/>
-        <field name='l10n_ar_afip_responsability_type_id' ref="l10n_ar.res_IVARI"/>
+        <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_IVARI"/>
     </record>
 
     <!-- Gritti Agrimensura -->
@@ -41,7 +41,7 @@
         <field name='l10n_latam_identification_type_id' ref="l10n_ar.it_cuit"/>
         <field name='vat'>27320732811</field>
         <field name="image" type="base64" file="l10n_ar/demo/gritti_logo.png"/>
-        <field name='l10n_ar_afip_responsability_type_id' ref="l10n_ar.res_RM"/>
+        <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_RM"/>
     </record>
 
     <!-- Consejo Municipal Rosario -->
@@ -60,7 +60,7 @@
         <field name='l10n_latam_identification_type_id' ref="l10n_ar.it_cuit"/>
         <field name='vat'>30684679372</field>
         <field name="image" type="base64" file="l10n_ar/demo/cmr_logo.jpg"/>
-        <field name='l10n_ar_afip_responsability_type_id' ref="l10n_ar.res_IVAE"/>
+        <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_IVAE"/>
     </record>
 
     <!-- Odoo -->
@@ -78,7 +78,7 @@
         <field name='l10n_latam_identification_type_id' ref="l10n_latam_base.it_fid"/>
         <field name='vat'>111222333444</field>
         <field name="image" type="base64" file="l10n_ar/demo/odoo_logo.jpg"/>
-        <field name='l10n_ar_afip_responsability_type_id' ref="l10n_ar.res_EXT"/>
+        <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_EXT"/>
     </record>
 
     <!-- Telecom -->
@@ -88,7 +88,7 @@
         <field name="is_company">1</field>
         <field name='l10n_latam_identification_type_id' ref="l10n_ar.it_cuit"/>
         <field name='vat'>30639453738</field>
-        <field name='l10n_ar_afip_responsability_type_id' ref="l10n_ar.res_IVARI"/>
+        <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_IVARI"/>
     </record>
 
     <!-- Odoo -->
@@ -106,7 +106,7 @@
         <field name='l10n_latam_identification_type_id' ref="l10n_latam_base.it_fid"/>
         <field name='vat'>2222333344445555</field>
         <field name="image" type="base64" file="l10n_ar/demo/expresso_logo.png"/>
-        <field name='l10n_ar_afip_responsability_type_id' ref="l10n_ar.res_CLI_EXT"/>
+        <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_CLI_EXT"/>
     </record>
 
     <!-- Paseo del Fuego -->
@@ -124,7 +124,7 @@
         <field name='l10n_latam_identification_type_id' ref="l10n_ar.it_cuit"/>
         <field name='vat'>27333333339</field>
         <field name="image" type="base64" file="l10n_ar/demo/cerrocastor_logo.png"/>
-        <field name='l10n_ar_afip_responsability_type_id' ref="l10n_ar.res_IVA_LIB"/>
+        <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_IVA_LIB"/>
     </record>
 
 <!-- Default Partners -->
@@ -139,28 +139,28 @@
     <record id="base.res_partner_1" model="res.partner">
         <field name='l10n_latam_identification_type_id' ref="l10n_ar.it_cuit"/>
         <field name='vat'>30222222229</field>
-        <field name='l10n_ar_afip_responsability_type_id' ref="l10n_ar.res_IVARI"/>
+        <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_IVARI"/>
     </record>
 
         <!-- Agrolait - Customer -->
     <record id="base.res_partner_2" model="res.partner">
         <field name='l10n_latam_identification_type_id' ref="l10n_ar.it_cuit"/>
         <field name='vat'>30111111126</field>
-        <field name='l10n_ar_afip_responsability_type_id' ref="l10n_ar.res_IVARI"/>
+        <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_IVARI"/>
     </record>
 
         <!-- Camptocamp - Supplier/Customer -->
     <record id="base.res_partner_12" model="res.partner">
         <field name='l10n_latam_identification_type_id' ref="l10n_ar.it_cuit"/>
         <field name='vat'>30888888884</field>
-        <field name='l10n_ar_afip_responsability_type_id' ref="l10n_ar.res_IVARI"/>
+        <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_IVARI"/>
     </record>
 
         <!-- Global Solutions  - cliente exterior -->
     <record id="base.res_partner_4" model="res.partner">
         <field name='l10n_latam_identification_type_id' ref="l10n_latam_base.it_fid"/>
         <field name='vat'>12345678</field>
-        <field name='l10n_ar_afip_responsability_type_id' ref="l10n_ar.res_CLI_EXT"/>
+        <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_CLI_EXT"/>
     </record>
 
 </odoo>

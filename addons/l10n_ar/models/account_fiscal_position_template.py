@@ -6,6 +6,6 @@ class AccountFiscalPositionTemplate(models.Model):
 
     _inherit = 'account.fiscal.position.template'
 
-    l10n_ar_afip_responsability_type_ids = fields.Many2many(
-        'l10n_ar.afip.responsability.type', 'l10n_ar_afip_reponsability_type_fiscal_pos_temp_rel',
-        string='AFIP Responsability Types')
+    l10n_ar_afip_responsibility_type_ids = fields.Many2many(
+        'l10n_ar.afip.responsibility.type', 'l10n_ar_afip_reponsibility_type_fiscal_pos_temp_rel',
+        string='AFIP Responsibility Types')

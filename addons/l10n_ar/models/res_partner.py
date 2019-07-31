@@ -19,8 +19,8 @@ class ResPartner(models.Model):
     l10n_ar_gross_income_type = fields.Selection(
         [('multilateral', 'Multilateral'), ('local', 'Local'), ('no_liquida', 'No Liquida')],
         'Gross Income Type', help='Type of gross income: exempt, local, multilateral')
-    l10n_ar_afip_responsability_type_id = fields.Many2one(
-        'l10n_ar.afip.responsability.type', string='AFIP Responsability Type', index=True, help='Defined by AFIP to'
+    l10n_ar_afip_responsibility_type_id = fields.Many2one(
+        'l10n_ar.afip.responsibility.type', string='AFIP Responsibility Type', index=True, help='Defined by AFIP to'
         ' identify the type of responsabilities that a person or a legal entity could have and that impacts in the'
         ' type of operations and requirements they need.')
     l10n_ar_special_purchase_document_type_ids = fields.Many2many(
@@ -64,7 +64,7 @@ class ResPartner(models.Model):
 
     @api.model
     def _commercial_fields(self):
-        return super()._commercial_fields() + ['l10n_ar_afip_responsability_type_id']
+        return super()._commercial_fields() + ['l10n_ar_afip_responsibility_type_id']
 
     def ensure_cuit(self):
         """ This method is a helper that returns the cuit number is this one is defined if not raise an UserError.

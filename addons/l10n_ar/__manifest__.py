@@ -29,7 +29,7 @@ Argentinian Accounting
 
 Follow the next configuration steps
 
-1. Go to your company and configure your CUIT number and AFIP Responsability
+1. Go to your company and configure your CUIT number and AFIP Responsibility
 2. Go to Invoicing / Configuration and set the Chart of Account you will like
    to use.
 3. Create your sale journals taking into account AFIP info if needed.
@@ -44,7 +44,7 @@ Follow the next configuration steps
     'data': [
         'security/ir.model.access.csv',
         'data/l10n_latam_identification_type_data.xml',
-        'data/l10n_ar_afip_responsability_type_data.xml',
+        'data/l10n_ar_afip_responsibility_type_data.xml',
         'data/account_account_tag_data.xml',
         'data/account_group_data.xml',
         'data/account_chart_template_data.xml',
@@ -65,7 +65,7 @@ Follow the next configuration steps
         'views/res_company_view.xml',
         'views/res_country_view.xml',
         'views/afip_menuitem.xml',
-        'views/l10n_ar_afip_responsability_type_view.xml',
+        'views/l10n_ar_afip_responsibility_type_view.xml',
         'views/res_currency_view.xml',
         'views/account_fiscal_position_view.xml',
         'views/uom_uom_view.xml',

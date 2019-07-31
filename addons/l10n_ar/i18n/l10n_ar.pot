@@ -73,27 +73,27 @@ msgstr ""
 
 #. module: l10n_ar
 #: model_terms:ir.ui.view,arch_db:l10n_ar.base_view_partner_form
-msgid "AFIP Responsability"
+msgid "AFIP Responsibility"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model,name:l10n_ar.model_l10n_ar_afip_responsability_type
-#: model:ir.model.fields,field_description:l10n_ar.field_account_move__l10n_ar_afip_responsability_type_id
-#: model:ir.model.fields,field_description:l10n_ar.field_res_company__l10n_ar_afip_responsability_type_id
-#: model:ir.model.fields,field_description:l10n_ar.field_res_partner__l10n_ar_afip_responsability_type_id
-#: model:ir.model.fields,field_description:l10n_ar.field_res_users__l10n_ar_afip_responsability_type_id
+#: model:ir.model,name:l10n_ar.model_l10n_ar_afip_responsibility_type
+#: model:ir.model.fields,field_description:l10n_ar.field_account_move__l10n_ar_afip_responsibility_type_id
+#: model:ir.model.fields,field_description:l10n_ar.field_res_company__l10n_ar_afip_responsibility_type_id
+#: model:ir.model.fields,field_description:l10n_ar.field_res_partner__l10n_ar_afip_responsibility_type_id
+#: model:ir.model.fields,field_description:l10n_ar.field_res_users__l10n_ar_afip_responsibility_type_id
 #: model_terms:ir.ui.view,arch_db:l10n_ar.view_account_move_filter
 #: model_terms:ir.ui.view,arch_db:l10n_ar.view_res_partner_filter
-#: model_terms:ir.ui.view,arch_db:l10n_ar.view_afip_responsability_type_form
-#: model_terms:ir.ui.view,arch_db:l10n_ar.view_afip_responsability_type_tree
-msgid "AFIP Responsability Type"
+#: model_terms:ir.ui.view,arch_db:l10n_ar.view_afip_responsibility_type_form
+#: model_terms:ir.ui.view,arch_db:l10n_ar.view_afip_responsibility_type_tree
+msgid "AFIP Responsibility Type"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.fields,field_description:l10n_ar.field_account_fiscal_position__l10n_ar_afip_responsability_type_ids
-#: model:ir.model.fields,field_description:l10n_ar.field_account_fiscal_position_template__l10n_ar_afip_responsability_type_ids
-#: model:ir.actions.act_window,name:l10n_ar.action_afip_responsability_type
-msgid "AFIP Responsability Types"
+#: model:ir.model.fields,field_description:l10n_ar.field_account_fiscal_position__l10n_ar_afip_responsibility_type_ids
+#: model:ir.model.fields,field_description:l10n_ar.field_account_fiscal_position_template__l10n_ar_afip_responsibility_type_ids
+#: model:ir.actions.act_window,name:l10n_ar.action_afip_responsibility_type
+msgid "AFIP Responsibility Types"
 msgstr ""
 
 #. module: l10n_ar
@@ -117,7 +117,7 @@ msgid "Accounting Documents"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsability_type__active
+#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsibility_type__active
 msgid "Active"
 msgstr ""
 
@@ -178,7 +178,7 @@ msgstr ""
 #, python-format
 msgid ""
 "Can not create chart of account until you configure your company AFIP "
-"Responsability and VAT."
+"Responsibility and VAT."
 msgstr ""
 
 #. module: l10n_ar
@@ -197,13 +197,13 @@ msgid "Cod"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsability_type__code
+#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsibility_type__code
 msgid "Code"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.constraint,message:l10n_ar.constraint_l10n_ar_afip_responsability_type_code
-#: sql_constraint:l10n_ar.afip.responsability.type:0
+#: model:ir.model.constraint,message:l10n_ar.constraint_l10n_ar_afip_responsibility_type_code
+#: sql_constraint:l10n_ar.afip.responsibility.type:0
 msgid "Code must be unique!"
 msgstr ""
 
@@ -239,12 +239,12 @@ msgid "Country Code"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsability_type__create_uid
+#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsibility_type__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsability_type__create_date
+#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsibility_type__create_date
 msgid "Created on"
 msgstr ""
 
@@ -280,10 +280,10 @@ msgid "There must be one and only one VAT tax per line. Verify lines with produc
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.fields,help:l10n_ar.field_account_move__l10n_ar_afip_responsability_type_id
-#: model:ir.model.fields,help:l10n_ar.field_res_company__l10n_ar_afip_responsability_type_id
-#: model:ir.model.fields,help:l10n_ar.field_res_partner__l10n_ar_afip_responsability_type_id
-#: model:ir.model.fields,help:l10n_ar.field_res_users__l10n_ar_afip_responsability_type_id
+#: model:ir.model.fields,help:l10n_ar.field_account_move__l10n_ar_afip_responsibility_type_id
+#: model:ir.model.fields,help:l10n_ar.field_res_company__l10n_ar_afip_responsibility_type_id
+#: model:ir.model.fields,help:l10n_ar.field_res_partner__l10n_ar_afip_responsibility_type_id
+#: model:ir.model.fields,help:l10n_ar.field_res_users__l10n_ar_afip_responsibility_type_id
 msgid ""
 "Defined by AFIP to identify the type of responsabilities that a person or a "
 "legal entity could have and that impacts in the type of operations and "
@@ -297,7 +297,7 @@ msgid "Import Clearance"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsability_type__display_name
+#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsibility_type__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -355,7 +355,7 @@ msgid "Gross Income:"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsability_type__id
+#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsibility_type__id
 msgid "ID"
 msgstr ""
 
@@ -452,17 +452,17 @@ msgid "The following partners do not have CUIT configured"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsability_type____last_update
+#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsibility_type____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsability_type__write_uid
+#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsibility_type__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsability_type__write_date
+#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsibility_type__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -484,7 +484,7 @@ msgstr ""
 #. module: l10n_ar
 #: model:ir.model.fields,help:l10n_ar.field_l10n_latam_document_type__l10n_ar_letter
 msgid ""
-"Letters defined by the AFIP that can be used to identify the documents presented to the goverment and that depends on the operation type, the responsability of both the issuer and the receptor of the document"
+"Letters defined by the AFIP that can be used to identify the documents presented to the goverment and that depends on the operation type, the responsibility of both the issuer and the receptor of the document"
 msgstr ""
 
 #. module: l10n_ar
@@ -494,7 +494,7 @@ msgid "Book \"Development in Odoo\" (VAT Exempt)"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.fields,help:l10n_ar.field_account_fiscal_position__l10n_ar_afip_responsability_type_ids
+#: model:ir.model.fields,help:l10n_ar.field_account_fiscal_position__l10n_ar_afip_responsibility_type_ids
 msgid ""
 "List of AFIP responsabilities where this fiscal position should be auto-"
 "detected"
@@ -516,13 +516,13 @@ msgid "Municipal Taxes"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsability_type__name
+#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsibility_type__name
 msgid "Name"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.constraint,message:l10n_ar.constraint_l10n_ar_afip_responsability_type_name
-#: sql_constraint:l10n_ar.afip.responsability.type:0
+#: model:ir.model.constraint,message:l10n_ar.constraint_l10n_ar_afip_responsibility_type_name
+#: sql_constraint:l10n_ar.afip.responsibility.type:0
 msgid "Name must be unique!"
 msgstr ""
 
@@ -631,8 +631,8 @@ msgid "Purchase Cuit Required"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.ui.menu,name:l10n_ar.menu_afip_responsability_type
-msgid "Responsability Types"
+#: model:ir.ui.menu,name:l10n_ar.menu_afip_responsibility_type
+msgid "Responsibility Types"
 msgstr ""
 
 #. module: l10n_ar
@@ -657,7 +657,7 @@ msgstr ""
 
 #. module: l10n_ar
 #: model:ir.model,name:l10n_ar.model_ir_sequence
-#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsability_type__sequence
+#: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsibility_type__sequence
 #: model_terms:ir.ui.view,arch_db:l10n_ar.view_account_journal_form
 msgid "Sequence"
 msgstr ""
@@ -719,7 +719,7 @@ msgstr ""
 #: code:addons/l10n_ar/models/account_move.py:155
 #, python-format
 msgid ""
-"The following invoices has a partner without AFIP responsability"
+"The following invoices has a partner without AFIP responsibility"
 msgstr ""
 
 #. module: l10n_ar
