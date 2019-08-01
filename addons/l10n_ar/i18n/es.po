@@ -184,12 +184,12 @@ msgid "Can not create chart of account until you configure your company AFIP Res
 msgstr "No puede crear el plan de cuentas hasta que configure la Responsabilidad AFIP y CUIT en su compañía."
 
 #. module: l10n_ar
-#: selection:l10n_latam.document.type,purchase_alicuots:0
+#: selection:l10n_latam.document.type,purchase_aliquots:0
 msgid "Zero"
 msgstr "Cero"
 
 #. module: l10n_ar
-#: model:ir.model.fields,help:l10n_ar.field_l10n_latam_document_type__purchase_alicuots
+#: model:ir.model.fields,help:l10n_ar.field_l10n_latam_document_type__purchase_aliquots
 msgid "Zero or No Zero as required by the CITI purchase statement"
 msgstr "Cero o No cero según lo requiere la declaración del CITI compras"
 
@@ -551,7 +551,7 @@ msgid "Next Number"
 msgstr "Próximo número"
 
 #. module: l10n_ar
-#: selection:l10n_latam.document.type,purchase_alicuots:0
+#: selection:l10n_latam.document.type,purchase_aliquots:0
 msgid "Not Zero"
 msgstr "No Cero"
 
@@ -634,8 +634,8 @@ msgid "Provincial Taxes"
 msgstr "Impuestos Provinciales"
 
 #. module: l10n_ar
-#: model:ir.model.fields,field_description:l10n_ar.field_l10n_latam_document_type__purchase_alicuots
-msgid "Purchase Alicuots"
+#: model:ir.model.fields,field_description:l10n_ar.field_l10n_latam_document_type__purchase_aliquots
+msgid "Purchase Aliquots"
 msgstr "Alícuotas de Compra"
 
 #. module: l10n_ar

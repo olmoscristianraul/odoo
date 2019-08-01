@@ -9,8 +9,8 @@ class ResPartner(models.Model):
     l10n_latam_identification_type_id = fields.Many2one('l10n_latam.identification.type',
         string="Identification Type", index=True, auto_join=True,
         default=lambda self: self.env.ref('l10n_latam_base.it_vat', raise_if_not_found=False),
-        help="The type of identification",)
-    vat = fields.Char(string='Identification Number', help="Identification Number for selected type.")
+        help="The type of identification")
+    vat = fields.Char(string='Identification Number', help="Identification Number for selected type")
 
     @api.model
     def _commercial_fields(self):

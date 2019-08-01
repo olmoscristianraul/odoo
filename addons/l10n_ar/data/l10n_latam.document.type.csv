@@ -1,4 +1,4 @@
-id,sequence,code,name,l10n_ar_letter,report_name,internal_type,doc_code_prefix,country_id/id,purchase_alicuots,active
+id,sequence,code,name,l10n_ar_letter,report_name,internal_type,doc_code_prefix,country_id/id,purchase_aliquots,active
 dc_a_f,10,1,FACTURAS A,A,FACTURA,invoice,FA-A,base.ar,not_zero,True
 dc_a_nd,20,2,NOTAS DE DEBITO A,A,NOTA DE DEBITO,debit_note,ND-A,base.ar,not_zero,True
 dc_a_nc,30,3,NOTAS DE CREDITO A,A,NOTA DE CREDITO,credit_note,NC-A,base.ar,not_zero,True

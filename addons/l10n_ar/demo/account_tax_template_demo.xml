@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <!-- para datos demo agregamos alicuotas a las percepciones aplicadas y sufridas -->
+    <!-- for demo data we add aliquots to the perceptions applied and suffered -->
 
     <record id="l10n_ar.ri_tax_percepcion_iva_aplicada" model="account.tax.template">
         <field eval="0.1" name="amount"/>

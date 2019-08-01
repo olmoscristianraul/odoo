@@ -12,8 +12,7 @@ class AccountMoveLine(models.Model):
     l10n_latam_price_unit = fields.Monetary(compute='compute_l10n_latam_prices_and_taxes')
     l10n_latam_price_subtotal = fields.Monetary(compute='compute_l10n_latam_prices_and_taxes')
     l10n_latam_price_net = fields.Monetary(compute='compute_l10n_latam_prices_and_taxes')
-    l10n_latam_tax_ids = fields.One2many(
-        compute="compute_l10n_latam_prices_and_taxes", comodel_name='account.tax')
+    l10n_latam_tax_ids = fields.One2many(compute="compute_l10n_latam_prices_and_taxes", comodel_name='account.tax')
 
     @api.depends('price_unit', 'price_subtotal', 'move_id.l10n_latam_document_type_id')
     def compute_l10n_latam_prices_and_taxes(self):

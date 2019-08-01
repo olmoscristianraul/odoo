@@ -182,12 +182,12 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar
-#: selection:l10n_latam.document.type,purchase_alicuots:0
+#: selection:l10n_latam.document.type,purchase_aliquots:0
 msgid "Zero"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.fields,help:l10n_ar.field_l10n_latam_document_type__purchase_alicuots
+#: model:ir.model.fields,help:l10n_ar.field_l10n_latam_document_type__purchase_aliquots
 msgid "Zero or No Zero as required by the CITI purchase statement"
 msgstr ""
 
@@ -537,7 +537,7 @@ msgid "Next Number"
 msgstr ""
 
 #. module: l10n_ar
-#: selection:l10n_latam.document.type,purchase_alicuots:0
+#: selection:l10n_latam.document.type,purchase_aliquots:0
 msgid "Not Zero"
 msgstr ""
 
@@ -621,8 +621,8 @@ msgid "Provincial Taxes"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.fields,field_description:l10n_ar.field_l10n_latam_document_type__purchase_alicuots
-msgid "Purchase Alicuots"
+#: model:ir.model.fields,field_description:l10n_ar.field_l10n_latam_document_type__purchase_aliquots
+msgid "Purchase Aliquots"
 msgstr ""
 
 #. module: l10n_ar

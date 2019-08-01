@@ -12,7 +12,7 @@ This module is intended to be extended by localizations (like Argentina and
 Chile) in order to manage the document types that need to be reported to the
 government required by this countries.
 
-In order to do that we add a new model named l10n_ar_document_type and we create
+In order to do that we add a new model named Document Topes and we create
 links between this new model and another Odoo's models.
 """,
     "depends": [

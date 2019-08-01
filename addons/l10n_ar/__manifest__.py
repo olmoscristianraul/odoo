@@ -8,7 +8,7 @@ Argentinian Accounting
 ======================
 
 * Activate ARS currency.
-* Create new model AFIP Responsibility to identifiy the partners fiscal responsibility.
+* Create new model AFIP Responsibility to identify the partners fiscal responsibility.
 * Add the Identification Types valid in Argentina.
 * Define Argentinian chart of accounts:
 
@@ -27,12 +27,11 @@ Argentinian Accounting
     * Product Unit of Measure
     * Tax Group
 
-Follow the next configuration steps
+Follow the next Settings steps
 
-1. Go to your company and configure your CUIT number and AFIP Responsibility
-2. Go to Invoicing / Configuration and set the Chart of Account you will like
-   to use.
-3. Create your sale journals taking into account AFIP info if needed.
+1. Go to your company and configure your VAT number and AFIP Responsibility
+2. Go to Invoicing / Settings and set the Chart of Account you will like to use.
+3. Create your sale journals taking into account AFIP Point of Sales info if needed.
 """,
     'author': 'ADHOC SA',
     'category': 'Localization',
@@ -97,4 +96,3 @@ Follow the next configuration steps
     'auto_install': False,
     'application': False,
 }
-

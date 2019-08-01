@@ -13,10 +13,10 @@ class AccountMove(models.Model):
     l10n_latam_amount_tax = fields.Monetary(compute='_compute_l10n_latam_amount_and_taxes')
     l10n_latam_amount_untaxed = fields.Monetary(compute='_compute_l10n_latam_amount_and_taxes')
     l10n_latam_tax_ids = fields.One2many(compute="_compute_l10n_latam_amount_and_taxes", comodel_name='account.move.line')
-    l10n_latam_available_document_type_ids = fields.Many2many(
-        'l10n_latam.document.type', compute='_compute_l10n_latam_documents')
+    l10n_latam_available_document_type_ids = fields.Many2many('l10n_latam.document.type', compute='_compute_l10n_latam_documents')
     l10n_latam_document_type_id = fields.Many2one(
-        'l10n_latam.document.type', string='Document Type', copy=False, readonly=True, auto_join=True, index=True, states={'posted': [('readonly', True)]})
+        'l10n_latam.document.type', string='Document Type', copy=False, readonly=True, auto_join=True, index=True,
+        states={'posted': [('readonly', True)]})
     l10n_latam_sequence_id = fields.Many2one('ir.sequence', compute='_compute_l10n_latam_sequence')
     l10n_latam_document_number = fields.Char(
         compute='_compute_l10n_latam_document_number', inverse='_inverse_l10n_latam_document_number',
@@ -44,8 +44,7 @@ class AccountMove(models.Model):
             if not rec.l10n_latam_document_number:
                 rec.name = '/'
             else:
-                l10n_latam_document_number = rec.l10n_latam_document_type_id._format_document_number(
-                    rec.l10n_latam_document_number)
+                l10n_latam_document_number = rec.l10n_latam_document_type_id._format_document_number(rec.l10n_latam_document_number)
                 if rec.l10n_latam_document_number != l10n_latam_document_number:
                     rec.l10n_latam_document_number = l10n_latam_document_number
                 rec.name = "%s %s" % (rec.l10n_latam_document_type_id.doc_code_prefix, l10n_latam_document_number)
@@ -85,7 +84,7 @@ class AccountMove(models.Model):
     def post(self):
         for rec in self.filtered(lambda x: x.l10n_latam_use_documents and not x.l10n_latam_document_number):
             if not rec.l10n_latam_sequence_id:
-                raise UserError(_('No sequence or document number linked to invoice id %s') %  rec.id)
+                raise UserError(_('No sequence or document number linked to invoice id %s') % rec.id)
             rec.l10n_latam_document_number = rec.l10n_latam_sequence_id.next_by_id()
         return super().post()
 
@@ -167,10 +166,9 @@ class AccountMove(models.Model):
 
     @api.constrains('name', 'partner_id', 'company_id')
     def _check_unique_vendor_number(self):
-        """ The constraint _check_unique_sequence_number is valid for customer
-        bills but not valid for us on vendor bills because the uniqueness
-        must be per partner and also because we want to validate on entry
-        creation and not on entry validation """
+        """ The constraint _check_unique_sequence_number is valid for customer bills but not valid for us on vendor
+        bills because the uniqueness must be per partner and also because we want to validate on entry creation and
+        not on entry validation """
         for rec in self.filtered(lambda x: x.is_purchase_document() and x.l10n_latam_use_documents and x.l10n_latam_document_number):
             domain = [
                 ('type', '=', rec.type),

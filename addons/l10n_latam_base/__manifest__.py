@@ -8,16 +8,15 @@
     'description': """
 Base Module for LATAM Localizations
 ===================================
-A lot of Latin American countries need to verify
 
 * Add Identification Type model to represent valid identifications types in different countries: for AFIP (AR), SII (CL), ...
-* Add Countries code defined by AFIP/... to identify legal entities and natural persons of foreign countries.""",
+* Add Countries code defined by government to identify legal entities and natural persons of foreign countries.""",
     'depends': [
         'contacts',
         'base_vat',
     ],
     'data': [
-        'data/l10n_latam_identification_type_data.xml',
+        'data/l10n_latam.identification.type.csv',
         'views/res_partner_view.xml',
         'views/l10n_latam_identification_type_view.xml',
         'security/ir.model.access.csv',

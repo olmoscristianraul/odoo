@@ -20,14 +20,13 @@ class AccountJournal(models.Model):
 
     def _get_l10n_ar_afip_pos_types_selection(self):
         """ Return the list of values of the selection field. """
-        # TODO add liquido producto
         return [
-            ('II_IM', 'Factura Pre-impresa'),
-            ('RLI_RLM', 'Factura en Linea'),
-            ('BFERCEL', 'Bonos Fiscales Electrónicos - Factura en Linea'),
-            ('FEERCELP', 'Comprobantes de Exportacion - Facturador Plus'),
-            ('FEERCEL', 'Comprobantes de Exportacion - Factura en Linea'),
-            ('CPERCEL', 'Codificación de Producto - Comprobantes en Línea'),
+            ('II_IM', 'Pre-printed Invoice'),
+            ('RLI_RLM', 'Online Invoice'),
+            ('BFERCEL', 'Electronic Fiscal Bonds - Online Invoice'),
+            ('FEERCELP', 'Export Vouchers - Billing Plus'),
+            ('FEERCEL', 'Export Vouchers - Online Invoice'),
+            ('CPERCEL', 'Product Coding - Online Vouchers'),
         ]
 
     def get_journal_letter(self, counterpart_partner=False):
@@ -63,8 +62,7 @@ class AccountJournal(models.Model):
         }
         if not self.company_id.l10n_ar_afip_responsibility_type_id:
             action = self.env.ref('base.action_res_company_form')
-            msg = _(
-                'Can not create chart of account until you configure your company AFIP Responsibility and VAT.')
+            msg = _('Can not create chart of account until you configure your company AFIP Responsibility and VAT.')
             raise RedirectWarning(msg, action.id, _('Go to Companies'))
 
         letters = letters_data['issued' if self.type == 'sale' else 'received'][
@@ -84,23 +82,23 @@ class AccountJournal(models.Model):
         self.ensure_one()
         usual_codes = ['1', '2', '3', '6', '7', '8', '11', '12', '13']
         mipyme_codes = ['201', '202', '203', '206', '207', '208', '211', '212', '213']
-        factura_m_codes = ['51', '52', '53']
+        invoice_m_code = ['51', '52', '53']
         receipt_m_code = ['54']
         receipt_codes = ['4', '9', '15']
         expo_codes = ['19', '20', '21']
         if self.type != 'sale':
             return []
         elif self.l10n_ar_afip_pos_system == 'II_IM':
-            # factura pre impresa
-            return usual_codes + receipt_codes + expo_codes + factura_m_codes + receipt_m_code
+            # pre-printed invoice
+            return usual_codes + receipt_codes + expo_codes + invoice_m_code + receipt_m_code
         elif self.l10n_ar_afip_pos_system in ['RAW_MAW', 'RLI_RLM']:
-            # factura electronica/online
-            return usual_codes + receipt_codes + factura_m_codes + receipt_m_code + mipyme_codes
+            # electronic/online invoice
+            return usual_codes + receipt_codes + invoice_m_code + receipt_m_code + mipyme_codes
         elif self.l10n_ar_afip_pos_system in ['CPERCEL', 'CPEWS']:
-            # factura con detalle
-            return usual_codes + factura_m_codes
+            # invoice with detail
+            return usual_codes + invoice_m_code
         elif self.l10n_ar_afip_pos_system in ['BFERCEL', 'BFEWS']:
-            # factura bono
+            # Bonds invoice
             return usual_codes + mipyme_codes
         elif self.l10n_ar_afip_pos_system in ['FEERCEL', 'FEEWS', 'FEERCELP']:
             return expo_codes
@@ -158,7 +156,7 @@ class AccountJournal(models.Model):
         documents = self.env['l10n_latam.document.type'].search(domain)
         for document in documents:
             if self.l10n_ar_share_sequences and self.l10n_ar_sequence_ids.filtered(
-                lambda x: x.l10n_ar_letter == document.l10n_ar_letter):
+               lambda x: x.l10n_ar_letter == document.l10n_ar_letter):
                 continue
 
             sequences |= self.env['ir.sequence'].create(document.get_document_sequence_vals(self))
@@ -173,7 +171,7 @@ class AccountJournal(models.Model):
 
     @api.onchange('l10n_ar_afip_pos_system')
     def _onchange_l10n_ar_afip_pos_system(self):
-        """ On 'Factura Pre-impresa' the usual is to share sequences. On other types, do not share """
+        """ On 'Pre-printed Invoice' the usual is to share sequences. On other types, do not share """
         self.l10n_ar_share_sequences = bool(self.l10n_ar_afip_pos_system == 'II_IM')
 
     @api.onchange('company_id')
@@ -187,7 +185,7 @@ class AccountJournal(models.Model):
     def _onchange_set_short_name(self):
         """ Will define the AFIP POS Address field domain taking into account the company configured in the journal
         The short code of the journal only admit 5 characters, so depending on the size of the pos_number (also max 5)
-        we add or not a prefix to indetify sales journal.
+        we add or not a prefix to identify sales journal.
         """
         if self.type == 'sale' and self.l10n_ar_afip_pos_number:
             pos_num = str(self.l10n_ar_afip_pos_number)
