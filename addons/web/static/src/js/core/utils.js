@@ -351,7 +351,7 @@ var utils = {
      * @param {Number} size number of bytes
      */
     human_size: function (size) {
-        var units = _t("Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb").split(',');
+        var units = _t("Bytes|Kb|Mb|Gb|Tb|Pb|Eb|Zb|Yb").split('|');
         var i = 0;
         while (size >= 1024) {
             size /= 1024;
@@ -771,7 +771,18 @@ var utils = {
         }
         return curr;
     },
-
+    /**
+     * Returns the domain targeting assets files.
+     *
+     * @returns {Array} Domain of assets files
+     */
+    assetsDomain: function () {
+        return [
+            '&',
+            ['res_model', '=', 'ir.ui.view'],
+            ['name', 'like', 'assets_']
+        ];
+    },
 };
 
 return utils;

@@ -44,13 +44,15 @@ class ResConfigSettings(models.TransientModel):
     paperformat_id = fields.Many2one(related="company_id.paperformat_id", string='Paper format', readonly=False)
     external_report_layout_id = fields.Many2one(related="company_id.external_report_layout_id", readonly=False)
     show_effect = fields.Boolean(string="Show Effect", config_parameter='base_setup.show_effect')
+    company_count = fields.Integer('Number of Companies', readonly=True, compute="_compute_company_count")
+    language_count = fields.Integer('Number of Languages', compute="_compute_language_count")
 
     @api.model
     def get_values(self):
         res = super(ResConfigSettings, self).get_values()
-        res.update(
-            company_share_partner=not self.env.ref('base.res_partner_rule').active,
-        )
+        res.update({
+            'company_share_partner': not self.env.ref('base.res_partner_rule').active,
+        })
         return res
 
     def set_values(self):
@@ -87,16 +89,18 @@ class ResConfigSettings(models.TransientModel):
             return False
         return self._prepare_report_view_action(self.external_report_layout_id.key)
 
-    def change_report_template(self):
-        self.ensure_one()
-        template = self.env.ref('base.view_company_document_template_form')
-        return {
-            'name': _('Choose Your Document Layout'),
-            'type': 'ir.actions.act_window',
-            'view_mode': 'form',
-            'res_id': self.env.company.id,
-            'res_model': 'res.company',
-            'views': [(template.id, 'form')],
-            'view_id': template.id,
-            'target': 'new',
-        }
+    # NOTE: These fields depend on the context, if we want them to be computed
+    # we have to make them depend on a field. This is because we are on a TransientModel.
+    @api.depends('company_id')
+    def _compute_company_count(self):
+        company_count = self.env['res.company'].sudo().search_count([])
+        for record in self:
+            record.company_count = company_count
+
+    @api.depends('company_id')
+    def _compute_language_count(self):
+        language_count = self.env['res.lang'].search_count([
+            ('active', '=', True),
+        ])
+        for record in self:
+            record.language_count = language_count

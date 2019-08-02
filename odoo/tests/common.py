@@ -459,6 +459,10 @@ class SavepointCase(SingleTransactionCase):
         super(SavepointCase, self).tearDown()
 
 
+class ChromeBrowserException(Exception):
+    pass
+
+
 class ChromeBrowser():
     """ Helper object to control a Chrome headless process. """
 
@@ -775,23 +779,20 @@ class ChromeBrowser():
             if res and res.get('id', -1) == code_id:
                 self._logger.info('Code start result: %s', res)
                 if res.get('result', {}).get('result').get('subtype', '') == 'error':
-                    self._logger.error("Running code returned an error")
-                    return False
+                    raise ChromeBrowserException("Running code returned an error: %s" % res)
             elif res and res.get('method') == 'Runtime.exceptionThrown':
                 exception_details = res.get('params', {}).get('exceptionDetails', {})
-                self._logger.error(exception_details)
                 self.take_screenshot()
                 self._save_screencast()
-                return False
+                raise ChromeBrowserException(exception_details)
             elif res and res.get('method') == 'Runtime.consoleAPICalled' and res.get('params', {}).get('type') in ('log', 'error', 'trace'):
                 logs = res.get('params', {}).get('args')
                 log_type = res.get('params', {}).get('type')
                 content = " ".join([str(log.get('value', '')) for log in logs])
                 if log_type == 'error':
-                    self._logger.error(content)
                     self.take_screenshot()
                     self._save_screencast()
-                    return False
+                    raise ChromeBrowserException(content)
                 else:
                     self._logger.info('console log: %s', content)
                     if 'test successful' in content:
@@ -810,9 +811,9 @@ class ChromeBrowser():
                     })
             elif res:
                 self._logger.debug('chrome devtools protocol event: %s', res)
-        self._logger.error('Script timeout exceeded : %s', (time.time() - start_time))
         self.take_screenshot()
-        return False
+        raise ChromeBrowserException('Script timeout exceeded : %s' % (time.time() - start_time))
+
 
     def navigate_to(self, url, wait_stop=False):
         self._logger.info('Navigating to: "%s"', url)
@@ -883,11 +884,11 @@ class HttpCase(TransactionCase):
         self.opener = requests.Session()
         self.opener.cookies['session_id'] = self.session_id
 
-    def url_open(self, url, data=None, timeout=10, headers=None):
+    def url_open(self, url, data=None, files=None, timeout=10, headers=None):
         if url.startswith('/'):
             url = "http://%s:%s%s" % (HOST, PORT, url)
-        if data:
-            return self.opener.post(url, data=data, timeout=timeout, headers=headers)
+        if data or files:
+            return self.opener.post(url, data=data, files=files, timeout=timeout, headers=headers)
         return self.opener.get(url, timeout=timeout, headers=headers)
 
     def _wait_remaining_requests(self):
@@ -976,11 +977,19 @@ class HttpCase(TransactionCase):
             # code = ""
             ready = ready or "document.readyState === 'complete'"
             self.assertTrue(self.browser._wait_ready(ready), 'The ready "%s" code was always falsy' % ready)
-            if code:
-                message = 'The test code "%s" failed' % code
-            else:
-                message = "Some js test failed"
-            self.assertTrue(self.browser._wait_code_ok(code, timeout), message)
+
+            error = False
+            try:
+                self.browser._wait_code_ok(code, timeout)
+            except ChromeBrowserException as chrome_browser_exception:
+                error = chrome_browser_exception
+            if error:  # dont keep initial traceback, keep that outside of except
+                if code:
+                    message = 'The test code "%s" failed' % code
+                else:
+                    message = "Some js test failed"
+                self.fail('%s\n%s' % (message, error))
+
         finally:
             # clear browser to make it stop sending requests, in case we call
             # the method several times in a test method
@@ -1431,7 +1440,7 @@ class Form(object):
         fields = self._view['fields']
         for f in fields:
             v = self._values[f]
-            if self._get_modifier(f, 'required'):
+            if self._get_modifier(f, 'required') and not fields[f]['type'] == 'boolean':
                 assert v is not False, "{} is a required field".format(f)
 
             # skip unmodified fields

@@ -74,6 +74,10 @@ class SerialDriver(Driver):
         self._status = {'status': self.STATUS_CONNECTING, 'message_title': '', 'message_body': ''}
         self._set_name()
 
+    @property
+    def device_identifier(self):
+        return self.dev['identifier']
+
     def _get_raw_response(connection):
         pass
 
@@ -104,7 +108,7 @@ class SerialDriver(Driver):
 
         try:
             with self._device_lock:
-                self._actions[data]()
+                self._actions[data['action']](data)
                 time.sleep(self._protocol.commandDelay)
         except Exception:
             msg = _('An error occured while performing action %s on %s') % (data, self.device_name)
@@ -122,7 +126,7 @@ class SerialDriver(Driver):
         if self._connection and self._connection.isOpen():
             self._do_action(data)
         else:
-            with serial_connection(self.dev.device, self._protocol) as connection:
+            with serial_connection(self.dev['identifier'], self._protocol) as connection:
                 self._connection = connection
                 self._do_action(data)
 
@@ -130,7 +134,7 @@ class SerialDriver(Driver):
         """Continuously gets new measures from the device."""
 
         try:
-            with serial_connection(self.dev.device, self._protocol) as connection:
+            with serial_connection(self.dev['identifier'], self._protocol) as connection:
                 self._connection = connection
                 self._status['status'] = self.STATUS_CONNECTED
                 self._push_status()

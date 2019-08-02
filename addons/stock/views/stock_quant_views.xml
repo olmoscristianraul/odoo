@@ -98,13 +98,13 @@
                 <field name="owner_id" groups="stock.group_tracking_owner"
                        attrs="{'readonly': [('id', '!=', False)]}"
                        options="{'no_create': True}"/>
-                <field name="reserved_quantity"/>
                 <field name="quantity" string="On Hand Quantity"
                        invisible="1"/>
                 <field name="inventory_quantity" string="On Hand Quantity"
                        readonly="0"/>
+                <field name="reserved_quantity" optional="hide"/>
                 <field name="product_uom_id" groups="uom.group_uom"/>
-                <field name='company_id' groups="base.group_multi_company"/>
+                <field name='company_id' groups="base.group_multi_company" optional="show"/>
             </tree>
         </field>
     </record>
@@ -118,7 +118,8 @@
                   create="0" delete="0" decoration-danger="quantity &lt; 0">
                 <field name="product_id" invisible="context.get('single_product', False)"/>
                 <field name="location_id" invisible="context.get('hide_location', False)"/>
-                <field name="lot_id" groups="stock.group_production_lot"/>
+                <field name="lot_id" groups="stock.group_production_lot"
+                       invisible="context.get('hide_lot', False)"/>
                 <field name="package_id" groups="stock.group_tracking_lot"/>
                 <field name="owner_id" groups="stock.group_tracking_owner"/>
                 <field name="reserved_quantity" string="Reserved"/>
