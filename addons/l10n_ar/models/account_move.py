@@ -149,7 +149,7 @@ class AccountMove(models.Model):
         without_vat = self.filtered(
             lambda x: x.type in ['in_invoice', 'in_refund'] and not x.commercial_partner_id.l10n_ar_vat)
         if without_vat:
-            raise UserError(_('The following partners do not have CUIT configured') + ': %s' % (', '.join(
+            raise UserError(_('The following partners do not have VAT configured') + ': %s' % (', '.join(
                 without_vat.mapped('commercial_partner_id.name'))))
 
         # Invoices that should not have any VAT and have

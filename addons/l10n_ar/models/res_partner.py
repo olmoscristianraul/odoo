@@ -17,7 +17,7 @@ class ResPartner(models.Model):
 
     l10n_ar_gross_income_number = fields.Char('Gross Income Number')
     l10n_ar_gross_income_type = fields.Selection(
-        [('multilateral', 'Multilateral'), ('local', 'Local'), ('no_liquida', 'No Liquida')],
+        [('multilateral', 'Multilateral'), ('local', 'Local'), ('exempt', 'Exempt')],
         'Gross Income Type', help='Type of gross income: exempt, local, multilateral')
     l10n_ar_afip_responsibility_type_id = fields.Many2one(
         'l10n_ar.afip.responsibility.type', string='AFIP Responsibility Type', index=True, help='Defined by AFIP to'
