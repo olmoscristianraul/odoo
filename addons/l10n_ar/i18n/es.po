@@ -42,7 +42,7 @@ msgstr "AFIP"
 #: model:ir.model.fields,field_description:l10n_ar.field_res_country__l10n_ar_afip_code
 #: model:ir.model.fields,field_description:l10n_ar.field_res_currency__l10n_ar_afip_code
 #: model:ir.model.fields,field_description:l10n_ar.field_uom_uom__l10n_ar_afip_code
-field_description:l10n_ar.field_l10n_latam_identification_type__l10n_ar_afip_code
+#: model:ir.model.fields,field_description:l10n_ar.field_l10n_latam_identification_type__l10n_ar_afip_code
 msgid "AFIP Code"
 msgstr "Código AFIP"
 
