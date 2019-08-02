@@ -6,16 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-02 16:33+0000\n"
-"PO-Revision-Date: 2019-08-02 13:38-0300\n"
+"POT-Creation-Date: 2019-08-02 20:49+0000\n"
+"PO-Revision-Date: 2019-08-02 20:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"Language: es\n"
-"X-Generator: Poedit 2.0.6\n"
 
 #. module: l10n_latam_document
 #: model:ir.model,name:l10n_latam_document.model_account_chart_template
@@ -37,13 +35,13 @@ msgstr "Activo"
 #: model:ir.model.fields,help:l10n_latam_document.field_l10n_latam_document_type__internal_type
 msgid ""
 "Analog to odoo account.move.type but with more options allowing to identify "
-"the kind of document we are working with. (not only related to account.move, "
-"could be for documents of other models like stock.picking)"
+"the kind of document we are working with. (not only related to account.move,"
+" could be for documents of other models like stock.picking)"
 msgstr ""
 "Análogo a al campo Tipo en la factura pero con mas opciones permitiendo "
 "indentificar el tipo de documento con el que estamos trabajando (no solo "
-"relacionado a la factura, puede ser para documentos de otros modelos como los "
-"movimientos de inventario)."
+"relacionado a la factura, puede ser para documentos de otros modelos como "
+"los movimientos de inventario)."
 
 #. module: l10n_latam_document
 #: model_terms:ir.ui.view,arch_db:l10n_latam_document.view_document_type_filter
@@ -154,13 +152,13 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_latam_document.field_account_move__l10n_latam_use_documents
 #: model:ir.model.fields,help:l10n_latam_document.field_account_move_reversal__l10n_latam_use_documents
 msgid ""
-"If active: will be using for legal invoicing (invoices, debit/credit notes). "
-"If not set means that will be used to register accounting entries not related "
-"to invoicing legal documents. For Example: Receipts, Tax Payments, Register "
-"journal entries"
+"If active: will be using for legal invoicing (invoices, debit/credit notes)."
+" If not set means that will be used to register accounting entries not "
+"related to invoicing legal documents. For Example: Receipts, Tax Payments, "
+"Register journal entries"
 msgstr ""
-"Si esta activo: será utilizado para facturación (facturas, notas de débito y "
-"crédito). SI esta desactivado significa que que será usado para registrar "
+"Si esta activo: será utilizado para facturación (facturas, notas de débito y"
+" crédito). SI esta desactivado significa que que será usado para registrar "
 "movimientos contables que no están relacionas con facturación como tal. Por "
 "ejemplo: Recibos, Pagos de Impuestos, Registrar asientos contables"
 
@@ -293,16 +291,17 @@ msgstr "No hay secuencia o número de documento vinculado a la factura %s"
 #: code:addons/l10n_latam_document/models/account_move.py:102
 #, python-format
 msgid "Please set the document number on the following invoices %s."
-msgstr "Por favor asigne el número de documento en las siguientes facturas %s."
+msgstr ""
+"Por favor asigne el número de documento en las siguientes facturas %s."
 
 #. module: l10n_latam_document
 #: model:ir.model.fields,help:l10n_latam_document.field_l10n_latam_document_type__doc_code_prefix
 msgid ""
-"Prefix for Documents Codes on Invoices and Account Moves. For eg. 'FA ' will "
-"build 'FA 0001-0000001' Document Number"
+"Prefix for Documents Codes on Invoices and Account Moves. For eg. 'FA ' will"
+" build 'FA 0001-0000001' Document Number"
 msgstr ""
-"Prefijo para Códigos de Documentos en Facturas y Asientos. Por eje: 'FA ' será "
-"construirá 'FA 0001-0000001' como el numero de documento"
+"Prefijo para Códigos de Documentos en Facturas y Asientos. Por eje: 'FA ' "
+"será construirá 'FA 0001-0000001' como el numero de documento"
 
 #. module: l10n_latam_document
 #: model:ir.model,name:l10n_latam_document.model_ir_sequence
@@ -336,8 +335,8 @@ msgstr "El nombre del documento"
 #: code:addons/l10n_latam_document/models/account_move.py:97
 #, python-format
 msgid ""
-"The journal require a document type but not document type has been selected on "
-"invoices %s."
+"The journal require a document type but not document type has been selected "
+"on invoices %s."
 msgstr ""
 "El diario requiere un tipo de documento pero no hay tipo de documento "
 "seleccionado en las facturas %s."
@@ -348,8 +347,8 @@ msgid ""
 "To set in which order show the documents type taking into account the most "
 "commonly used first"
 msgstr ""
-"Para seleccionar en que orden deben mostrar los tipos de documento teniendo en "
-"cuenta los más usados comunmente"
+"Para seleccionar en que orden deben mostrar los tipos de documento teniendo "
+"en cuenta los más usados comunmente"
 
 #. module: l10n_latam_document
 #: model:ir.model.fields,field_description:l10n_latam_document.field_account_journal__l10n_latam_use_documents
@@ -386,4 +385,5 @@ msgstr "No puedes utilizar el tipo de documento %s en una factura"
 #: code:addons/l10n_latam_document/models/account_move.py:111
 #, python-format
 msgid "You can not use a %s document type with a refund invoice"
-msgstr "No puedes utilizar el tipo de documento %s en una factura de reembolso"
+msgstr ""
+"No puedes utilizar el tipo de documento %s en una factura de reembolso"
