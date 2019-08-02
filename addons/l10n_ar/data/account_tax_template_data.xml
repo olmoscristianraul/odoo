@@ -31,7 +31,6 @@
                 'factor_percent': 100,
                 'repartition_type': 'tax',
                 'account_id': ref('ri_percepcion_iva_aplicada'),
-                'tag_ids': [ref('l10n_ar.tag_ret_perc_sicore_aplicada')],
             }),
         ]"/>
         <field name="type_tax_use">sale</field>
@@ -68,7 +67,6 @@
                 'factor_percent': 100,
                 'repartition_type': 'tax',
                 'account_id': ref('ri_percepcion_ganancias_aplicada'),
-                'tag_ids': [ref('l10n_ar.tag_ret_perc_sicore_aplicada')],
             }),
         ]"/>
         <field name="type_tax_use">sale</field>
@@ -289,7 +287,6 @@
                 'factor_percent': 100,
                 'repartition_type': 'tax',
                 'account_id': ref('ri_percepcion_iibb_aplicada'),
-                'tag_ids': [ref('l10n_ar.tag_ret_perc_iibb_aplicada')],
             }),
         ]"/>
         <field name="type_tax_use">sale</field>
