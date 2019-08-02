@@ -14,7 +14,7 @@ class L10nLatamDocumentType(models.Model):
         ' operation type, the responsibility of both the issuer and the'
         ' receptor of the document')
     purchase_alicuots = fields.Selection(
-        [('not_zero', 'Nor Zero'), ('zero', 'Zero')], help='Zero or No Zero as required by the CITI purchase statement')
+        [('not_zero', 'Not Zero'), ('zero', 'Zero')], help='Indicates if this type of documents has VAT or Not')
 
     def _get_l10n_ar_letters(self):
         """ Return the list of values of the selection field. """
