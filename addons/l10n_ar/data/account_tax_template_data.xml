@@ -139,7 +139,6 @@
                 'factor_percent': 100,
                 'repartition_type': 'tax',
                 'account_id': ref('base_percepcion_iibb_caba_sufrida'),
-                'tag_ids': [ref('l10n_ar.tax_tag_a_cuenta_iibb')],
             }),
         ]"/>
         <field name="type_tax_use">purchase</field>
@@ -176,7 +175,6 @@
                 'factor_percent': 100,
                 'repartition_type': 'tax',
                 'account_id': ref('base_percepcion_iibb_ba_sufrida'),
-                'tag_ids': [ref('l10n_ar.tax_tag_a_cuenta_iibb')],
             }),
         ]"/>
         <field name="type_tax_use">purchase</field>
@@ -213,7 +211,6 @@
                 'factor_percent': 100,
                 'repartition_type': 'tax',
                 'account_id': ref('base_percepcion_iibb_co_sufrida'),
-                'tag_ids': [ref('l10n_ar.tax_tag_a_cuenta_iibb')],
             }),
         ]"/>
         <field name="type_tax_use">purchase</field>
@@ -250,7 +247,6 @@
                 'factor_percent': 100,
                 'repartition_type': 'tax',
                 'account_id': ref('base_percepcion_iibb_sf_sufrida'),
-                'tag_ids': [ref('l10n_ar.tax_tag_a_cuenta_iibb')],
             }),
         ]"/>
         <field name="type_tax_use">purchase</field>
