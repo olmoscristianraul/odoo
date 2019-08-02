@@ -49,7 +49,7 @@
     </record>
 
     <record id="product_product_cero" model="product.product">
-        <field name="name">Non-industrialized animals and vegetables (zero VAT</field>
+        <field name="name">Non-industrialized animals and vegetables (VAT Zero)</field>
         <field name="categ_id" ref="product.product_category_5"/>
         <field name="standard_price">200.0</field>
         <field name="list_price">160.0</field>
@@ -61,7 +61,7 @@
         <field name="supplier_taxes_id" search="[('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', 'VAT 0%')]"/>
     </record>
     <record id="product_product_no_gravado" model="product.product">
-        <field name="name">Untaxed concepts (VAT NG)</field>
+        <field name="name">Untaxed concepts (VAT NT)</field>
         <field name="categ_id" ref="product.product_category_5"/>
         <field name="standard_price">50.0</field>
         <field name="list_price">40.0</field>

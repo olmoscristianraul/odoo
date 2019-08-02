@@ -2,7 +2,7 @@
 <odoo>
 
     <record id="partner_ri" model="res.partner">
-        <field name='name'>(AR) Responsabile Inscripto</field>
+        <field name='name'>(AR) Responsable Inscripto</field>
         <field name='l10n_ar_afip_responsibility_type_id' ref="res_IVARI"/>
         <field name='l10n_latam_identification_type_id' ref="l10n_ar.it_cuit"/>
         <field name='vat'>20222222223</field>
@@ -22,7 +22,7 @@
         <field name='currency_id' ref='base.ARS'/>
         <field name='partner_id' ref='partner_ri'/>
         <field name='name'>(AR) Responsable Inscripto</field>
-        <field name='l10n_ar_gross_income_type'>no_liquida</field>
+        <field name='l10n_ar_gross_income_type'>exempt</field>
     </record>
 
     <function model="res.users" name="write">

@@ -14,7 +14,7 @@ class ResPartnerBank(models.Model):
     @api.model
     def _get_supported_account_types(self):
         """ Add new account type named cbu used in Argentina """
-        res = super(ResPartnerBank, self)._get_supported_account_types()
+        res = super()._get_supported_account_types()
         res.append(('cbu', _('CBU')))
         return res
 
@@ -23,5 +23,5 @@ class ResPartnerBank(models.Model):
         try:
             validate_cbu(acc_number)
         except Exception:
-            return super(ResPartnerBank, self).retrieve_acc_type(acc_number)
+            return super().retrieve_acc_type(acc_number)
         return 'cbu'

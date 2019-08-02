@@ -13,7 +13,7 @@
                 <label for="l10n_ar_gross_income_number" string="Gross Income" attrs="{'invisible': [('l10n_ar_country_code', '!=', 'AR')]}"/>
                 <div attrs="{'invisible': [('l10n_ar_country_code', '!=', 'AR')]}" name="gross_income">
                     <field name="l10n_ar_gross_income_type" class="oe_inline"/>
-                    <field name="l10n_ar_gross_income_number" placeholder="Number..." class="oe_inline" attrs="{'invisible': [('l10n_ar_gross_income_type', 'in', [False, 'no_liquida'])], 'required': [('l10n_ar_gross_income_type', 'not in', [False, 'no_liquida'])]}"/>
+                    <field name="l10n_ar_gross_income_number" placeholder="Number..." class="oe_inline" attrs="{'invisible': [('l10n_ar_gross_income_type', 'in', [False, 'exempt'])], 'required': [('l10n_ar_gross_income_type', 'not in', [False, 'exempt'])]}"/>
                 </div>
                 <field name="l10n_ar_afip_start_date" attrs="{'invisible': [('l10n_ar_country_code', '!=', 'AR')]}"/>
             </field>

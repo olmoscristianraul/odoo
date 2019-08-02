@@ -10,10 +10,10 @@ class L10nLatamDocumentType(models.Model):
         selection='_get_l10n_ar_letters',
         string='Letters',
         help='Letters defined by the AFIP that can be used to identify the'
-        ' documents presented to the goverment and that depends on the'
+        ' documents presented to the government and that depends on the'
         ' operation type, the responsibility of both the issuer and the'
         ' receptor of the document')
-    purchase_alicuots = fields.Selection(
+    purchase_aliquots = fields.Selection(
         [('not_zero', 'Not Zero'), ('zero', 'Zero')], help='Indicates if this type of documents has VAT or Not')
 
     def _get_l10n_ar_letters(self):
@@ -46,17 +46,14 @@ class L10nLatamDocumentType(models.Model):
         return values
 
     def _filter_taxes_included(self, taxes):
-        """ In argentina we include taxes depending on document letter
-        """
+        """ In argentina we include taxes depending on document letter """
         self.ensure_one()
         if self.country_id == self.env.ref('base.ar') and self.l10n_ar_letter in ['B', 'C', 'X', 'R']:
-            return taxes.filtered(
-                lambda x: x.tax_group_id.l10n_ar_tax == 'vat' and x.tax_group_id.l10n_ar_type == 'tax')
+            return taxes.filtered(lambda x: x.tax_group_id.l10n_ar_tax == 'vat' and x.tax_group_id.l10n_ar_type == 'tax')
         return super()._filter_taxes_included(taxes)
 
     def _format_document_number(self, document_number):
-        """ Method to be inherited by different localizations. The purpose of this method is to allow:
-
+        """ Make validation of Import Dispatch Number
           * making validations on the document_number. If it is wrong it should raise an exception
           * format the document_number against a pattern and return it
         """
@@ -69,11 +66,10 @@ class L10nLatamDocumentType(models.Model):
 
         msg = "'%s' " + _("is not a valid value for") + " '%s'.<br/>%s"
 
-        # Import Dispatch Validator
+        # Import Dispatch Number Validator
         if self.code in ['66', '67']:
             if len(document_number) != 16:
-                raise UserError(msg % (document_number, self.name, (
-                    'El número de despacho de importación debe tener 16 caractéres')))
+                raise UserError(msg % (document_number, self.name, ('The number of import Dispatch must be 16 characters')))
             return document_number
 
         # Invoice Number Validator (For Eg: 123-123)
@@ -89,8 +85,9 @@ class L10nLatamDocumentType(models.Model):
                 failed = True
             document_number = '{:>04s}-{:>08s}'.format(pos, number)
         if failed:
-            raise UserError(msg % (document_number, self.name, (
-                'El número de documento debe ingresarse con un guión (-) y máximo 5 caracteres para la primer parte'
-                ' y 8 para la segunda. Los siguientes son ejemplos de números válidos:\n* 1-1\n* 0001-00000001'
+            raise UserError(msg % (document_number, self.name, _(
+                'The document number must be entered with a dash (-) and a maximum of 5 characters for the first part'
+                'and 8 for the second. The following are examples of valid numbers:\n* 1-1\n* 0001-00000001'
                 '\n* 00001-00000001')))
+
         return document_number
