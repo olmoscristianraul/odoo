@@ -13,7 +13,8 @@ class L10nLatamDocumentType(models.Model):
         ' documents presented to the government and that depends on the'
         ' operation type, the responsibility of both the issuer and the'
         ' receptor of the document')
-    purchase_aliquots = fields.Selection([('not_zero', 'Not Zero'), ('zero', 'Zero')])
+    purchase_aliquots = fields.Selection(
+        [('not_zero', 'Not Zero'), ('zero', 'Zero')], help='Indicates if this type of documents has VAT or Not')
 
     def _get_l10n_ar_letters(self):
         """ Return the list of values of the selection field. """
