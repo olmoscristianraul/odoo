@@ -36,4 +36,6 @@ class AccountJournal(models.Model):
     def _search(self, args, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
         if self._context.get('default_type') in ('out_receipt', 'in_receipt'):
             args += [('l10n_latam_use_documents', '=', False)]
+        elif self._context.get('default_type') in self.env['account.move'].get_invoice_types():
+            args += [('l10n_latam_use_documents', '=', True)]
         return super()._search(args, offset, limit, order, count=count, access_rights_uid=access_rights_uid)

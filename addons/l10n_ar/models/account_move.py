@@ -255,26 +255,3 @@ class AccountMove(models.Model):
                 'l10n_ar_afip_service_end': move.l10n_ar_afip_service_end,
             })
         return super()._reverse_moves(default_values_list=default_values_list, cancel=cancel)
-
-    @api.model
-    def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
-        """ Overwrite in order to filter the journals visible in the account move taking into account the type of
-        the move
-            * invoices and refunds: Show only journals that use documents
-            * receipts: Show journals that NOT use documents
-            * entry: Show all journals
-        """
-        res = super().fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
-        if view_type == 'form':
-            doc = etree.XML(res['arch'])
-            for node in doc.xpath("//field[@name='journal_id']"):
-                domain = node.get('domain', '')
-                if domain:
-                    default_type = self._context.get('default_type')
-                    if default_type and default_type != 'entry':
-                        company_use_doc = True
-                        use_doc = False if default_type in ('out_receipt', 'in_receipt') else company_use_doc
-                        domain = domain[:-1] + ", ('l10n_latam_use_documents', '=', " + str(use_doc) + ")" + domain[-1]
-                        node.set('domain', domain)
-            res['arch'] = etree.tostring(doc, encoding='unicode')
-        return res
