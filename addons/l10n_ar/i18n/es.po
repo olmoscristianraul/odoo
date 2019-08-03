@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-02 19:53+0000\n"
-"PO-Revision-Date: 2019-08-02 19:53+0000\n"
+"POT-Creation-Date: 2019-08-03 16:16+0000\n"
+"PO-Revision-Date: 2019-08-03 16:16+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 #. module: l10n_ar
 #: model_terms:ir.ui.view,arch_db:l10n_ar.report_invoice_document
 msgid "<br/><span>Incoterm: </span>"
-msgstr "<br/><span>Incoterm: </span>"
+msgstr ""
 
 #. module: l10n_ar
 #: model_terms:ir.ui.view,arch_db:l10n_ar.report_invoice_document
@@ -37,7 +37,7 @@ msgstr ""
 #. module: l10n_ar
 #: model:ir.ui.menu,name:l10n_ar.menu_afip_config
 msgid "AFIP"
-msgstr "AFIP"
+msgstr ""
 
 #. module: l10n_ar
 #: model:ir.model.fields,field_description:l10n_ar.field_account_tax_group__l10n_ar_afip_code
@@ -109,9 +109,19 @@ msgid "AN"
 msgstr ""
 
 #. module: l10n_ar
+#: model_terms:ir.ui.view,arch_db:l10n_ar.view_account_invoice_report_search_inherit
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: l10n_ar
 #: model:ir.model,name:l10n_ar.model_account_chart_template
 msgid "Account Chart Template"
 msgstr "Plantilla de Plan de Cuentas"
+
+#. module: l10n_ar
+#: model:ir.model.fields,field_description:l10n_ar.field_account_invoice_report__date
+msgid "Accounting Date"
+msgstr "Fecha contable"
 
 #. module: l10n_ar
 #: model_terms:ir.ui.view,arch_db:l10n_ar.view_partner_property_form
@@ -167,12 +177,6 @@ msgstr "Tipo Argentino"
 #: model:ir.model,name:l10n_ar.model_res_partner_bank
 msgid "Bank Accounts"
 msgstr "Cuentas bancarias"
-
-#. module: l10n_ar
-#: model:product.product,name:l10n_ar.product_product_exento
-#: model:product.template,name:l10n_ar.product_product_exento_product_template
-msgid "Book \"Development in Odoo\" (VAT Exempt)"
-msgstr "Libro \"Desarrollo en Odoo\" (IVA Exento)"
 
 #. module: l10n_ar
 #: model:l10n_latam.identification.type,name:l10n_ar.it_CBA
@@ -431,30 +435,6 @@ msgid "DNI"
 msgstr ""
 
 #. module: l10n_ar
-#: model:res.company,overdue_msg:l10n_ar.company_exento
-#: model:res.company,overdue_msg:l10n_ar.company_mono
-#: model:res.company,overdue_msg:l10n_ar.company_ri
-msgid ""
-"Dear Sir/Madam,\n"
-"\n"
-"Our records indicate that some payments on your account are still due. Please find details below.\n"
-"If the amount has already been paid, please disregard this notice. Otherwise, please forward us the total amount stated below.\n"
-"If you have any queries regarding your account, Please contact us.\n"
-"\n"
-"Thank you in advance for your cooperation.\n"
-"Best Regards,"
-msgstr ""
-"Estimado/a Señor/Señora,\n"
-"\n"
-"Nuestros registros indican que tiene pagos pendientes de su cuenta. Encontrará los detalles a continuación.\n"
-"Si ya ha pagado la cantidad, por favor ignore este aviso.\n"
-"De lo contrario, por favor envíe la cantidad total que se indica a continuación.\n"
-"Si tiene cualquier pregunta relacionada con su cuenta, por favor póngase en contacto con nosotros.\n"
-"\n"
-"Gracias de antemano por su colaboración.\n"
-"Atentamente,"
-
-#. module: l10n_ar
 #: model:ir.model.fields,help:l10n_ar.field_account_move__l10n_ar_afip_responsibility_type_id
 #: model:ir.model.fields,help:l10n_ar.field_res_company__l10n_ar_afip_responsibility_type_id
 #: model:ir.model.fields,help:l10n_ar.field_res_partner__l10n_ar_afip_responsibility_type_id
@@ -565,15 +545,21 @@ msgid "Gross Income:"
 msgstr "Ingreso Bruto:"
 
 #. module: l10n_ar
-#: model:product.product,name:l10n_ar.product_product_servicio_de_guarda
-#: model:product.template,name:l10n_ar.product_product_servicio_de_guarda_product_template
-msgid "Guard Service"
-msgstr "Servicio de Guarda"
-
-#. module: l10n_ar
 #: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsibility_type__id
 msgid "ID"
 msgstr ""
+
+#. module: l10n_ar
+#: model:ir.actions.act_window,name:l10n_ar.action_iibb_purchases_by_state_and_account_pivot
+#: model:ir.ui.menu,name:l10n_ar.menu_iibb_purchases_by_state_and_account
+msgid "IIBB - Purchases by jurisdiction"
+msgstr "IIBB - Compras por Jurisdicción"
+
+#. module: l10n_ar
+#: model:ir.actions.act_window,name:l10n_ar.action_iibb_sales_by_state_and_account_pivot
+#: model:ir.ui.menu,name:l10n_ar.menu_iibb_sales_by_state_and_account
+msgid "IIBB - Sales by jurisdiction"
+msgstr "IIBB - Ventas por Jurisdicción"
 
 #. module: l10n_ar
 #: model:ir.model,name:l10n_ar.model_l10n_latam_identification_type
@@ -585,6 +571,11 @@ msgstr "Tipos de Identificación"
 #: model:product.template,name:l10n_ar.product_product_quote_despacho_product_template
 msgid "Import Clearance"
 msgstr "Despacho de importación"
+
+#. module: l10n_ar
+#: model:ir.model.fields,help:l10n_ar.field_l10n_latam_document_type__purchase_aliquots
+msgid "Indicates if this type of documents has VAT or Not"
+msgstr ""
 
 #. module: l10n_ar
 #: selection:account.tax.group,l10n_ar_application:0
@@ -603,6 +594,11 @@ msgstr "Longitud invalida para \"%s\""
 #, python-format
 msgid "Invoices"
 msgstr "Facturas"
+
+#. module: l10n_ar
+#: model:ir.model,name:l10n_ar.model_account_invoice_report
+msgid "Invoices Statistics"
+msgstr "Estadísticas de facturas"
 
 #. module: l10n_ar
 #: model:ir.model,name:l10n_ar.model_account_journal
@@ -724,12 +720,6 @@ msgstr "Próximo número"
 #, python-format
 msgid "No VAT configured for partner [%i] %s"
 msgstr "No hay CUIT configurado para el contacto [%i] %s"
-
-#. module: l10n_ar
-#: model:product.product,name:l10n_ar.product_product_cero
-#: model:product.template,name:l10n_ar.product_product_cero_product_template
-msgid "Non-industrialized animals and vegetables (VAT Zero)"
-msgstr "Animales y vegetales no industrializados (IVA Cero)"
 
 #. module: l10n_ar
 #: selection:l10n_latam.document.type,purchase_aliquots:0
@@ -884,10 +874,10 @@ msgid "Sigd"
 msgstr ""
 
 #. module: l10n_ar
-#: model:product.product,name:l10n_ar.product_product_tasa_estadistica
-#: model:product.template,name:l10n_ar.product_product_tasa_estadistica_product_template
-msgid "Statistics Rate"
-msgstr ""
+#: model:ir.model.fields,field_description:l10n_ar.field_account_invoice_report__l10n_ar_state_id
+#: model_terms:ir.ui.view,arch_db:l10n_ar.view_account_invoice_report_search_inherit
+msgid "State"
+msgstr "Estado"
 
 #. module: l10n_ar
 #: selection:account.tax.group,l10n_ar_type:0
@@ -895,21 +885,9 @@ msgid "TAX"
 msgstr "IMPUESTO"
 
 #. module: l10n_ar
-#: model:product.product,name:l10n_ar.product_product_arancel
-#: model:product.template,name:l10n_ar.product_product_arancel_product_template
-msgid "Tariff"
-msgstr "Arancel"
-
-#. module: l10n_ar
 #: model:ir.model,name:l10n_ar.model_account_tax_group
 msgid "Tax Group"
 msgstr "Grupo de impuestos"
-
-#. module: l10n_ar
-#: model:product.product,name:l10n_ar.product_product_telefonia
-#: model:product.template,name:l10n_ar.product_product_telefonia_product_template
-msgid "Telephone service (VAT 27)"
-msgstr "Servicio de telefonía (IVA 27)"
 
 #. module: l10n_ar
 #: model:ir.model,name:l10n_ar.model_account_fiscal_position_template
@@ -926,7 +904,7 @@ msgstr ""
 "Puede utilizar este campo para la búsqueda rápida."
 
 #. module: l10n_ar
-#: code:addons/l10n_ar/models/l10n_latam_document_type.py:87
+#: code:addons/l10n_ar/models/l10n_latam_document_type.py:88
 #, python-format
 msgid ""
 "The document number must be entered with a dash (-) and a maximum of 5 characters for the first partand 8 for the second. The following are examples of valid numbers:\n"
@@ -1127,6 +1105,11 @@ msgid "VAT Untaxed"
 msgstr "IVA No Gravado"
 
 #. module: l10n_ar
+#: model_terms:ir.ui.view,arch_db:l10n_ar.view_account_invoice_report_search_inherit
+msgid "With Document"
+msgstr ""
+
+#. module: l10n_ar
 #: selection:account.tax.group,l10n_ar_type:0
 msgid "Withholding"
 msgstr "Retención"
@@ -1157,7 +1140,7 @@ msgid "Zero"
 msgstr "Cero"
 
 #. module: l10n_ar
-#: code:addons/l10n_ar/models/l10n_latam_document_type.py:66
+#: code:addons/l10n_ar/models/l10n_latam_document_type.py:67
 #, python-format
 msgid "is not a valid value for"
 msgstr "no es un valor valido para"
