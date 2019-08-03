@@ -6,8 +6,6 @@
     <record id="res_partner_adhoc" model="res.partner">
         <field name="name">ADHOC SA</field>
         <field eval="[(6, 0, [ref('base.res_partner_category_8'), ref('base.res_partner_category_11')])]" name="category_id"/>
-        <field eval="1" name="supplier"/>
-        <field eval="1" name="customer"/>
         <field name="is_company">1</field>
         <field name="city">Rosario</field>
         <field name="zip">2000</field>
@@ -27,8 +25,6 @@
     <record id="res_partner_gritti_agrimensura" model="res.partner">
         <field name="name">Gritti Agrimensura</field>
         <field eval="[(6, 0, [ref('base.res_partner_category_8'), ref('base.res_partner_category_11')])]" name="category_id"/>
-        <field eval="1" name="supplier"/>
-        <field eval="1" name="customer"/>
         <field name="is_company">1</field>
         <field name="city">Rosario</field>
         <field name="zip">2000</field>
@@ -47,7 +43,6 @@
     <!-- Consejo Municipal Rosario -->
     <record id="res_partner_cmr" model="res.partner">
         <field name="name">Concejo Municipal de Rosario</field>
-        <field eval="1" name="customer"/>
         <field name="is_company">1</field>
         <field name="city">Rosario</field>
         <field name="zip">2000</field>
@@ -66,7 +61,6 @@
     <!-- Odoo -->
     <record id="res_partner_odoo" model="res.partner">
         <field name="name">Odoo Inc</field>
-        <field eval="1" name="supplier"/>
         <field name="is_company">1</field>
         <field name="city">San Francisco</field>
         <field name="zip">CA 94107</field>
@@ -84,7 +78,6 @@
     <!-- Telecom -->
     <record id="res_partner_telecom" model="res.partner">
         <field name="name">TELECOM</field>
-        <field eval="1" name="supplier"/>
         <field name="is_company">1</field>
         <field name='l10n_latam_identification_type_id' ref="l10n_ar.it_cuit"/>
         <field name='vat'>30639453738</field>
@@ -94,7 +87,6 @@
     <!-- Odoo -->
     <record id="res_partner_expresso" model="res.partner">
         <field name="name">Expresso</field>
-        <field eval="1" name="customer"/>
         <field name="is_company">1</field>
         <field name="city">Barcelona</field>
         <field name="zip">11002</field>
@@ -112,7 +104,6 @@
     <!-- Paseo del Fuego -->
     <record id="res_partner_cerrocastor" model="res.partner">
         <field name="name">Cerro Castor</field>
-        <field eval="1" name="customer"/>
         <field name="is_company">1</field>
         <field name="city">Ushuaia</field>
         <field name="state_id" ref="base.state_ar_v"/>
