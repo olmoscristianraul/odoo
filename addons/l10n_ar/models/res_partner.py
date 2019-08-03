@@ -2,6 +2,9 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError, ValidationError
 import stdnum.ar
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class ResPartner(models.Model):
@@ -86,7 +89,12 @@ class ResPartner(models.Model):
 
     def l10n_ar_identification_validation(self):
         for rec in self.filtered('vat'):
-            module = rec._get_validation_module()
+            try:
+                module = rec._get_validation_module()
+            except Exception as error:
+                module = False
+                _logger.log(25, "Argentinian document was not validated: %s", repr(error))
+
             if not module:
                 continue
             try:
