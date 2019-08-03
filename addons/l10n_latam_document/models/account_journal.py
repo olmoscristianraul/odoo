@@ -34,8 +34,11 @@ class AccountJournal(models.Model):
 
     @api.model
     def _search(self, args, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
-        if self._context.get('default_type') in ('out_receipt', 'in_receipt'):
-            args += [('l10n_latam_use_documents', '=', False)]
-        elif self._context.get('default_type') in self.env['account.move'].get_invoice_types():
-            args += [('l10n_latam_use_documents', '=', True)]
+        company_id = [item[-1] for item in args if item[0] == 'company_id']
+        company_id = company_id[0] if company_id else self.env.context.get('company_id', self.env.company.id)
+        if self.env['res.company'].browse(company_id)._localization_use_documents():
+            if self._context.get('default_type') in ('out_receipt', 'in_receipt'):
+                args += [('l10n_latam_use_documents', '=', False)]
+            elif self._context.get('default_type') in self.env['account.move'].get_invoice_types():
+                args += [('l10n_latam_use_documents', '=', True)]
         return super()._search(args, offset, limit, order, count=count, access_rights_uid=access_rights_uid)
