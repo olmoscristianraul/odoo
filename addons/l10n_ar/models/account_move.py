@@ -67,45 +67,6 @@ class AccountMove(models.Model):
             afip_concept = '1'
         return afip_concept
 
-    def _get_argentina_amounts(self):
-        self.ensure_one()
-        tax_lines = self.line_ids.filtered('tax_line_id')
-        vat_taxes = tax_lines.filtered(lambda r: r.tax_line_id.tax_group_id.l10n_ar_vat_afip_code)
-
-        # we add and "r.base" because only if a there is a base amount it is considered taxable, this is used for
-        # eg to validate invoices on afif. Does not include afip_code [0, 1, 2] because their are not taxes
-        # themselves: VAT Exempt, VAT Untaxed and VAT Not applicable
-        vat_taxables = vat_taxes.filtered(lambda r: r.tax_line_id.tax_group_id.l10n_ar_vat_afip_code not in ['0', '1', '2'] and r.tax_base_amount)
-
-        # vat exempt values (are the ones with code 2)
-        vat_exempt_taxes = vat_taxes.filtered(lambda r: r.tax_line_id.tax_group_id.l10n_ar_vat_afip_code == '2')
-
-        # vat untaxed values / no gravado (are the ones with code 1)
-        vat_untaxed_taxes = vat_taxes.filtered(lambda r: r.tax_line_id.tax_group_id.l10n_ar_vat_afip_code == '1')
-
-        # other taxes values
-        not_vat_taxes = tax_lines - vat_taxes
-
-        iibb_perc = tax_lines.filtered(lambda r: r.tax_line_id.tax_group_id.l10n_ar_tribute_afip_code == '07')
-        mun_perc = tax_lines.filtered(lambda r: r.tax_line_id.tax_group_id.l10n_ar_tribute_afip_code == '08')
-        intern_tax = tax_lines.filtered(lambda r: r.tax_line_id.tax_group_id.l10n_ar_tribute_afip_code == '04')
-        other_perc = tax_lines.filtered(lambda r: r.tax_line_id.tax_group_id.l10n_ar_tribute_afip_code == '09')
-
-        return dict(
-            vat_tax_ids=vat_taxes,
-            vat_taxable_ids=vat_taxables,
-            vat_amount=sum(vat_taxes.mapped('price_unit')),
-            vat_taxable_amount=sum(vat_taxables.mapped('tax_base_amount')),
-            vat_exempt_base_amount=sum(vat_exempt_taxes.mapped('tax_base_amount')),
-            vat_untaxed_base_amount=sum(vat_untaxed_taxes.mapped('tax_base_amount')),
-            not_vat_tax_ids=not_vat_taxes,
-            other_taxes_amount=sum(not_vat_taxes.mapped('price_unit')),
-            iibb_perc_amount=sum(iibb_perc.mapped('price_unit')),
-            mun_perc_amount=sum(mun_perc.mapped('price_unit')),
-            intern_tax_amount=sum(intern_tax.mapped('price_unit')),
-            other_perc_amount=sum(other_perc.mapped('price_unit')),
-        )
-
     def _get_l10n_latam_documents_domain(self):
         self.ensure_one()
         domain = super()._get_l10n_latam_documents_domain()
@@ -118,55 +79,22 @@ class AccountMove(models.Model):
         return domain
 
     def check_argentinian_invoice_taxes(self):
-        """ We consider argentinian invoices the ones from companies with localization AR that belongs to a journal
-        with use_documents """
         _logger.info('Running checks related to argentinian documents')
 
-        # check that there is one and only one vat tax per invoice line
-        for inv_line in self.filtered(lambda x: x.company_id.l10n_ar_company_requires_vat).mapped('invoice_line_ids'):
-            vat_taxes = inv_line.tax_ids.filtered(
-                lambda x: x.tax_group_id.l10n_ar_vat_afip_code)
-            if len(vat_taxes) != 1:
-                raise UserError(_(
-                    'There must be one and only one VAT tax per line. Verify lines with product') + ' "%s"' % (
-                        inv_line.product_id.name))
-
-        # check partner has responsibility so it will be assigned on invoice validate
-        without_responsibility = self.filtered(
-            lambda x: not x.partner_id.l10n_ar_afip_responsibility_type_id)
-        if without_responsibility:
-            raise UserError(_(
-                'The following invoices has a partner without AFIP responsibility') + ':<br/>%s' % ('<br/>'.join(
-                    ['[%i] %s' % (i.id, i.display_name) for i in without_responsibility])))
-
-        # We verify Vendor Bills that must report CUIT and do not have it configured
-        without_vat = self.filtered(
-            lambda x: x.type in ['in_invoice', 'in_refund'] and not x.commercial_partner_id.l10n_ar_vat)
-        if without_vat:
-            raise UserError(_('The following partners do not have VAT configured') + ': %s' % (', '.join(
-                without_vat.mapped('commercial_partner_id.name'))))
-
-        # Invoices that should not have any VAT and have
-        not_zero_aliquot = self.filtered(
-            lambda x: x.type in ['in_invoice', 'in_refund'] and x.l10n_latam_document_type_id.purchase_aliquots == 'zero'
-            and any([t.tax_line_id.tax_group_id.l10n_ar_vat_afip_code != '0'
-                     for t in x._get_argentina_amounts()['vat_tax_ids']]))
-        if not_zero_aliquot:
-            raise UserError(_(
-                'The following invoices have incorrect VAT configured. You must use VAT Not Applicable.<br/>'
-                ' * Invoices: %s') % (', '.join(not_zero_aliquot.mapped('l10n_latam_document_number'))))
-
-        # Invoices that should have VAT but instead have VAT not correspond
-        zero_aliquot = self.filtered(
-            lambda x: x.type in ['in_invoice', 'in_refund']
-            and x.l10n_latam_document_type_id.purchase_aliquots == 'not_zero' and
-            any([t.tax_line_id.tax_group_id.l10n_ar_vat_afip_code == '0'
-                 for t in x._get_argentina_amounts()['vat_tax_ids']]))
-        if zero_aliquot:
-            raise UserError(_(
-                'The following invoices have VAT not applicable but you must select a correct rate (Not Taxed, Exempt,'
-                ' Zero, 10.5, etc.)') + '. <br/> * ' + _('Invoices') + ': %s' % (', '.join(
-                    zero_aliquot.mapped('l10n_latam_document_number'))))
+        # check vat on companies thats has it (Responsable inscripto)
+        for inv in self.filtered(lambda x: x.company_id.l10n_ar_company_requires_vat):
+            purchase_aliquots = 'not_zero'
+            # we require a single vat on each invoice line except from some purchase documents
+            if inv.type in ['in_invoice', 'in_refund'] and inv.l10n_latam_document_type_id.purchase_aliquots == 'zero':
+                purchase_aliquots = 'zero'
+            for line in inv.mapped('invoice_line_ids').filtered(lambda x: x.display_type not in ('line_section', 'line_note')):
+                vat_taxes = line.tax_ids.filtered(lambda x: x.tax_group_id.l10n_ar_vat_afip_code)
+                if len(vat_taxes) != 1:
+                    raise UserError(_('There must be one and only one VAT tax per line. Check line "%s"') % line.name)
+                elif purchase_aliquots == 'zero' and vat_taxes.tax_group_id.l10n_ar_vat_afip_code != '0':
+                    raise UserError(_('On invoice id "%s" you must use VAT Not Applicable on every line.')  % inv.id)
+                elif purchase_aliquots == 'not_zero' and vat_taxes.tax_group_id.l10n_ar_vat_afip_code == '0':
+                    raise UserError(_('On invoice id "%s" you must use VAT taxes different than VAT Not Applicable.')  % inv.id)
 
     # TODO make it with create/write or with https://github.com/odoo/odoo/pull/31059
     @api.constrains('invoice_date')
