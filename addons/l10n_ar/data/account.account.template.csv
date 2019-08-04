@@ -4,8 +4,8 @@ l10n_ar.base_cheques_de_terceros_rechazados,l10n_ar.l10nar_base_chart_template,1
 l10n_ar.base_fondo_comun_de_inversion,l10n_ar.l10nar_base_chart_template,1.1.2.01.010,account.data_account_type_current_assets,Fondo común de inversión,False,l10n_ar.account_group_inversiones
 l10n_ar.base_plazo_fijo,l10n_ar.l10nar_base_chart_template,1.1.2.01.020,account.data_account_type_current_assets,Plazo fijo,False,l10n_ar.account_group_inversiones
 l10n_ar.base_deudores_por_ventas,l10n_ar.l10nar_base_chart_template,1.1.3.01.010,account.data_account_type_receivable,Deudores por ventas,True,l10n_ar.account_group_creditos_por_ventas
-l10n_ar.base_ret_percepcion_drei_tasa_municipal,l10n_ar.l10nar_base_chart_template,1.1.4.01.010,account.data_account_type_current_assets,Ret/Percepción DReI/Tasa Municipal,False,l10n_ar.account_group_creditos_fiscales_municipales
-l10n_ar.base_saldo_a_favor_drei_tasa_municipal,l10n_ar.l10nar_base_chart_template,1.1.4.01.020,account.data_account_type_current_assets,Saldo a favor DReI/Tasa Municipal,False,l10n_ar.account_group_creditos_fiscales_municipales
+l10n_ar.base_ret_percepcion_tasa_municipal,l10n_ar.l10nar_base_chart_template,1.1.4.01.010,account.data_account_type_current_assets,Ret/Percepción Tasa Municipal,False,l10n_ar.account_group_creditos_fiscales_municipales
+l10n_ar.base_saldo_a_favor_tasa_municipal,l10n_ar.l10nar_base_chart_template,1.1.4.01.020,account.data_account_type_current_assets,Saldo a favor Tasa Municipal,False,l10n_ar.account_group_creditos_fiscales_municipales
 l10n_ar.base_saldo_favor_iibb_sf,l10n_ar.l10nar_base_chart_template,1.1.4.02.010,account.data_account_type_current_assets,Saldo a favor IIBB p. Santa Fé,False,l10n_ar.account_group_creditos_fiscales_iibb
 l10n_ar.base_retencion_iibb_sf_sufrida,l10n_ar.l10nar_base_chart_template,1.1.4.02.020,account.data_account_type_current_assets,Retención IIBB p. Santa Fé sufrida,False,l10n_ar.account_group_creditos_fiscales_iibb
 l10n_ar.base_percepcion_iibb_sf_sufrida,l10n_ar.l10nar_base_chart_template,1.1.4.02.030,account.data_account_type_current_assets,Percepción IIBB p. Santa Fé sufrida,False,l10n_ar.account_group_creditos_fiscales_iibb
@@ -57,8 +57,8 @@ l10n_ar.base_giro_en_descubierto,l10n_ar.l10nar_base_chart_template,2.1.2.01.020
 l10n_ar.base_otras_deudas_documentadas,l10n_ar.l10nar_base_chart_template,2.1.2.01.030,account.data_account_type_current_liabilities,Otras deudas documentadas,False,l10n_ar.account_group_deudas_financieras
 l10n_ar.base_prestamo_banco_x,l10n_ar.l10nar_base_chart_template,2.1.2.01.040,account.data_account_type_non_current_liabilities,Prestamo Banco xxxxx,False,l10n_ar.account_group_deudas_financieras
 l10n_ar.base_acreedores_varios,l10n_ar.l10nar_base_chart_template,2.1.2.01.050,account.data_account_type_payable,Acreedores varios,True,l10n_ar.account_group_deudas_financieras
-l10n_ar.base_drei_a_pagar,l10n_ar.l10nar_base_chart_template,2.1.3.01.010,account.data_account_type_payable,DREI a pagar,True,l10n_ar.account_group_deudas_tasas_municipales
-l10n_ar.base_plan_drei_a_pagar,l10n_ar.l10nar_base_chart_template,2.1.3.01.020,account.data_account_type_payable,Plan DREI a pagar,True,l10n_ar.account_group_deudas_tasas_municipales
+l10n_ar.base_tasa_municipal_a_pagar,l10n_ar.l10nar_base_chart_template,2.1.3.01.010,account.data_account_type_payable,Tasa Municipal a pagar,True,l10n_ar.account_group_deudas_tasas_municipales
+l10n_ar.base_plan_tasa_municipal_a_pagar,l10n_ar.l10nar_base_chart_template,2.1.3.01.020,account.data_account_type_payable,Plan Tasa Municipal a pagar,True,l10n_ar.account_group_deudas_tasas_municipales
 l10n_ar.base_iibb_a_pagar,l10n_ar.l10nar_base_chart_template,2.1.3.02.010,account.data_account_type_payable,IIBB a pagar,True,l10n_ar.account_group_deudas_iibb
 l10n_ar.ri_retencion_sicore_a_pagar,l10n_ar.l10nar_ex_chart_template,2.1.3.02.020,account.data_account_type_payable,SICORE a pagar,True,l10n_ar.account_group_deudas_iibb
 l10n_ar.ri_retencion_iibb_aplicada,l10n_ar.l10nar_ex_chart_template,2.1.3.02.030,account.data_account_type_current_liabilities,Retención IIBB aplicada,False,l10n_ar.account_group_deudas_iibb
@@ -148,7 +148,7 @@ l10n_ar.base_honorarios_administracion,l10n_ar.l10nar_base_chart_template,5.3.1.
 l10n_ar.base_articulos_de_libreria,l10n_ar.l10nar_base_chart_template,5.3.1.01.120,account.data_account_type_expenses,Artículos de librería,False,l10n_ar.account_group_gastos_administrativos
 l10n_ar.base_seguros_administracion,l10n_ar.l10nar_base_chart_template,5.3.1.01.130,account.data_account_type_expenses,Seguros Administración,False,l10n_ar.account_group_gastos_administrativos
 l10n_ar.base_sellados_y_certificaciones,l10n_ar.l10nar_base_chart_template,5.3.1.01.140,account.data_account_type_expenses,Sellados y Certificaciones,False,l10n_ar.account_group_gastos_administrativos
-l10n_ar.base_drei,l10n_ar.l10nar_base_chart_template,5.4.1.01.010,account.data_account_type_expenses,Tasa Municipal/DREI,False,l10n_ar.account_group_tasas_municipales
+l10n_ar.base_tasa_municipal,l10n_ar.l10nar_base_chart_template,5.4.1.01.010,account.data_account_type_expenses,Tasa Municipal,False,l10n_ar.account_group_tasas_municipales
 l10n_ar.base_impuestos_iibb_caba,l10n_ar.l10nar_base_chart_template,5.4.2.01.010,account.data_account_type_expenses,IIBB CABA,False,l10n_ar.account_group_iibb
 l10n_ar.base_impuestos_iibb_ba,l10n_ar.l10nar_base_chart_template,5.4.2.01.020,account.data_account_type_expenses,IIBB Prov. Bs. As.,False,l10n_ar.account_group_iibb
 l10n_ar.base_impuestos_iibb_co,l10n_ar.l10nar_base_chart_template,5.4.2.01.030,account.data_account_type_expenses,IIBB Prov. Córdoba,False,l10n_ar.account_group_iibb

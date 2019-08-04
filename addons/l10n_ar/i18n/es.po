@@ -766,7 +766,7 @@ msgid "Others"
 msgstr "Otros"
 
 #. module: l10n_ar
-#: model:account.tax.group,name:l10n_ar.tax_group_percepcion_drei
+#: model:account.tax.group,name:l10n_ar.tax_group_percepcion_municipal
 msgid "Percepción DREI"
 msgstr ""
 

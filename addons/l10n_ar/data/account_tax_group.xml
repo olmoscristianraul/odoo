@@ -74,7 +74,7 @@
         <field name="l10n_ar_tribute_afip_code">07</field>
     </record>
 
-    <record model="account.tax.group" id="tax_group_percepcion_drei">
+    <record model="account.tax.group" id="tax_group_percepcion_municipal">
         <field name="name">Percepciones por Impuestos Municipales</field>
         <field name="l10n_ar_tribute_afip_code">08</field>
     </record>
