@@ -19,8 +19,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_1'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_1')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Invoice to CMR with vat 21, 27 and 10,5 -->
@@ -41,8 +42,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_2'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_2')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Invoice to ADHOC with vat cero and 21 (citi needs to guess operation type) -->
@@ -62,8 +64,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_3'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_3')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Invoice to ADHOC with vat exempt and 21 (citi needs to guess operation type) -->
@@ -83,8 +86,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_4'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_4')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Invoice to ADHOC with all type of taxes (citi needs to guess operation type)  -->
@@ -108,8 +112,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_5'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_5')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Invoice to consumidor final -->
@@ -128,8 +133,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_8'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_8')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Invoice to ADHOC in USD and vat 21 -->
@@ -149,8 +155,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_10'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_10')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Invoice to ADHOC con muchas lineas para probar rounding "ERROR 1" (ver readme), con 4 ya daria error (precision decimal de monedas y producto en 2) -->
@@ -172,8 +179,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_11'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_11')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Invoice to ADHOC con muchas lineas para probar rounding "ERROR 2" (ver readme), (se requiere usar precision decimal de precio producto en 4 para que de el error) -->
@@ -195,8 +203,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_12'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_12')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Invoice to ADHOC con muchas lineas para probar factura en cero y rounding "ERROR 3" (ver readme), (se requiere usar precision decimal de precio producto en 4 para que de el error y cambiar el 260.59 por 260.60)
@@ -223,8 +232,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_13'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_13')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Invoice to ADHOC con 100% de descuento (para testear citi, citi needs to guess operation type) -->
@@ -243,8 +253,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_17'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_17')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Invoice to ADHOC con 100% de descuento en ivas distintos (para testear citi)
@@ -266,8 +277,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_18'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_18')]"/>
+        <value eval="True"/>
     </function>
 
 </odoo>

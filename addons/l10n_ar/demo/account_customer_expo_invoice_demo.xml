@@ -25,8 +25,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_6'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_6')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Export invoice to expresso, fiscal position changes tax to exempt (type 4 because it have services) -->
@@ -51,8 +52,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_7'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_7')]"/>
+        <value eval="True"/>
     </function>
 
 
@@ -73,8 +75,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_14'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_14')]"/>
+        <value eval="True"/>
     </function>
 
 
@@ -95,8 +98,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_15'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_15')]"/>
+        <value eval="True"/>
     </function>
 
 
@@ -117,9 +121,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_16'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_invoice_16')]"/>
+        <value eval="True"/>
     </function>
-
 
 </odoo>

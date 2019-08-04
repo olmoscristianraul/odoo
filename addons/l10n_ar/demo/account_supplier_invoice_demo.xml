@@ -27,8 +27,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_sup_invoice_1'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_sup_invoice_1')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Invoice from Asustek with vat 21, 27 and 10,5 -->
@@ -51,8 +52,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_sup_invoice_2'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_sup_invoice_2')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Invoice from Asustek with vat cero and 21 -->
@@ -74,8 +76,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_sup_invoice_3'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_sup_invoice_3')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Invoice to Asustek with vat exempt and 21 -->
@@ -97,8 +100,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_sup_invoice_4'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_sup_invoice_4')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Invoice to Asustek with all type of taxes  -->
@@ -124,8 +128,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_sup_invoice_5'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_sup_invoice_5')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Importacion de servicios a odoo, fiscal position changes tax to no corresponde -->
@@ -147,8 +152,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_sup_invoice_6'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_sup_invoice_6')]"/>
+        <value eval="True"/>
     </function>
 
     <!-- Factura simil dhl con linea no corresponde en negativo -->
@@ -171,8 +177,9 @@
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
         <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_sup_invoice_7'))]).ids"/>
     </function>
-    <function model="account.move" name="_recompute_payment_terms_lines" context="{'check_move_validity': False}">
+    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_sup_invoice_7')]"/>
+        <value eval="True"/>
     </function>
 
 <!-- creamos despacho de importación -->
