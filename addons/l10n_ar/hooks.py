@@ -8,7 +8,7 @@ def update_tax_calculation_rounding_method(cr, registry):
     _logger.info('Update _tax_calculation_rounding_method = round_globally for Argentinian companies')
     env = Environment(cr, SUPERUSER_ID, {})
     country_ar = env.ref('base.ar').id
-    env['res.company'].search( [('partner_id.country_id', '=', country_ar)]).write(
+    env['res.company'].search([('partner_id.country_id', '=', country_ar)]).write(
         {'tax_calculation_rounding_method': 'round_globally'})
 
 
