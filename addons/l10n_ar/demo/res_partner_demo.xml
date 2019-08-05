@@ -126,28 +126,28 @@
         <field name='vat'>30111111118</field>
     </record>
 
-        <!-- ASUSTeK - Supplier -->
+        <!-- Wood Corner - Supplier -->
     <record id="base.res_partner_1" model="res.partner">
         <field name='l10n_latam_identification_type_id' ref="l10n_ar.it_cuit"/>
         <field name='vat'>30222222229</field>
         <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_IVARI"/>
     </record>
 
-        <!-- Agrolait - Customer -->
+        <!-- Deco Addict - Customer -->
     <record id="base.res_partner_2" model="res.partner">
         <field name='l10n_latam_identification_type_id' ref="l10n_ar.it_cuit"/>
         <field name='vat'>30111111126</field>
         <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_IVARI"/>
     </record>
 
-        <!-- Camptocamp - Supplier/Customer -->
+        <!-- Azure Interior - Supplier/Customer -->
     <record id="base.res_partner_12" model="res.partner">
         <field name='l10n_latam_identification_type_id' ref="l10n_ar.it_cuit"/>
         <field name='vat'>30888888884</field>
         <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_IVARI"/>
     </record>
 
-        <!-- Global Solutions  - cliente exterior -->
+        <!-- Ready Mat - cliente exterior -->
     <record id="base.res_partner_4" model="res.partner">
         <field name='l10n_latam_identification_type_id' ref="l10n_latam_base.it_fid"/>
         <field name='vat'>12345678</field>
