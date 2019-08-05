@@ -3,7 +3,7 @@
     <template id="report_invoice_document" inherit_id="account.report_invoice_document">
 
         <xpath expr="//t[@id='inv_tax_id_label']" position="attributes">
-            <attribute name="t-esc">o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label or 'Tax ID'</attribute>
+            <attribute name="t-esc">o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label</attribute>
         </xpath>
 
         <xpath expr="//h2" position="attributes">
