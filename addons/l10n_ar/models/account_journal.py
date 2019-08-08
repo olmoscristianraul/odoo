@@ -127,6 +127,8 @@ class AccountJournal(models.Model):
         self.ensure_one()
         if self.company_id.country_id != self.env.ref('base.ar'):
             return True
+        if self.type != 'sale' and self._origin.type != 'sale':
+            return True
         invoices = self.env['account.move'].search([('journal_id', '=', self.id), ('state', '!=', 'draft')])
         if invoices:
             raise ValidationError(_(
