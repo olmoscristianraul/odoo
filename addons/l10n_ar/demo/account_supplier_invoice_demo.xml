@@ -319,4 +319,8 @@
         <field name="account_id" model="account.tax" eval="obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Adicional 20%'), ('type_tax_use', '=', 'purchase')], limit=1).account_id.id"/>
     </record> -->
 
+    <function model="account.move" name="post">
+        <value eval="[ref('demo_sup_invoice_1'), ref('demo_sup_invoice_2'), ref('demo_sup_invoice_3'), ref('demo_sup_invoice_4'), ref('demo_sup_invoice_5'), ref('demo_sup_invoice_6'), ref('demo_sup_invoice_7'), ref('demo_despacho_1')]"/>
+    </function>
+
 </odoo>

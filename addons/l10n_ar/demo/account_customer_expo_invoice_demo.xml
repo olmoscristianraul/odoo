@@ -126,4 +126,8 @@
         <value eval="True"/>
     </function>
 
+    <function model="account.move" name="post">
+        <value eval="[ref('demo_invoice_6'), ref('demo_invoice_7'), ref('demo_invoice_14'), ref('demo_invoice_15'), ref('demo_invoice_16')]"/>
+    </function>
+
 </odoo>
