@@ -4,7 +4,7 @@
     'version': '13.0.1.0.0',
     'category': 'Localization',
     'sequence': 14,
-    'author': 'Jos/ADHOC SA/Daniel',
+    'author': 'Odoo, ADHOC SA',
     'description': """
 Base Module for LATAM Localizations
 ===================================
