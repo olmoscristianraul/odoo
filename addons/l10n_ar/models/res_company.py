@@ -40,7 +40,9 @@ class ResCompany(models.Model):
         if chart_template_id:
             responsibility = self.env['account.chart.template']._get_ar_responsibility_match(chart_template_id)
             if responsibility:
-                values.update(l10n_ar_afip_responsibility_type_id=responsibility.id, country_id=self.env.ref('base.ar').id)
+                values.update(
+                    l10n_ar_afip_responsibility_type_id=responsibility.id, country_id=self.env.ref('base.ar').id,
+                    tax_calculation_rounding_method='round_globally')
         return super().write(values)
 
     @api.constrains('l10n_ar_afip_responsibility_type_id')
