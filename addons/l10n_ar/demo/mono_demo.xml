@@ -42,6 +42,6 @@
         <field name='l10n_ar_afip_pos_partner_id' ref="l10n_ar.partner_mono"/>
         <field name='l10n_ar_afip_pos_system'>II_IM</field>
         <field name='l10n_ar_share_sequences' eval="True"/>
-    </function>
+    </record>
 
 </odoo>
