@@ -32,7 +32,7 @@ class AccountMove(models.Model):
     l10n_ar_afip_concept = fields.Selection(
         compute='_compute_l10n_ar_afip_concept', selection='get_afip_invoice_concepts', string="AFIP Concept",
         help="A concept is suggested regarding the type of the products on the invoice but it is allowed to force a"
-        " different type if required.", readonly=True, states={'draft': [('readonly', False)]})
+        " different type if required.")
     l10n_ar_afip_service_start = fields.Date(string='AFIP Service Start Date', readonly=True, states={'draft': [('readonly', False)]})
     l10n_ar_afip_service_end = fields.Date(string='AFIP Service End Date', readonly=True, states={'draft': [('readonly', False)]})
 
