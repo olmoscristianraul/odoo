@@ -43,15 +43,8 @@ class ResPartner(models.Model):
         """ We add this computed field that returns cuit or nothing ig this one is not set for the partner. This
         Validation can be also done by calling ensure_vat() method that returns the cuit or error if this one is not
         found """
-        for rec in self:
-            commercial_partner = rec.commercial_partner_id
-            if rec.l10n_latam_identification_type_id.l10n_ar_afip_code == '80':
-                rec.l10n_ar_vat = rec.vat
-            # If the partner is outside Argentina then we return the defined
-            # country vat number defined by AFIP for that specific partner
-            elif commercial_partner.country_id and commercial_partner.country_id != self.env.ref('base.ar'):
-                rec.l10n_ar_vat = commercial_partner.country_id[
-                    commercial_partner.is_company and 'l10n_ar_legal_entity_vat' or 'l10n_ar_natural_vat']
+        for rec in self.filtered(lambda x: x.l10n_latam_identification_type_id.l10n_ar_afip_code == '80'):
+            rec.l10n_ar_vat = rec.vat
 
     @api.constrains('vat', 'l10n_latam_identification_type_id')
     def check_vat(self):
