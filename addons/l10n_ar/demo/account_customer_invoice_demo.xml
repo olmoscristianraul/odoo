@@ -16,14 +16,6 @@
         ]"/>
     </record>
 
-    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
-        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_1'))]).ids"/>
-    </function>
-    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
-        <value eval="[ref('demo_invoice_1')]"/>
-        <value eval="True"/>
-    </function>
-
     <!-- Invoice to CMR with vat 21, 27 and 10,5 -->
     <record id="demo_invoice_2" model="account.move">
         <field name="partner_id" ref="res_partner_cmr"/>
@@ -39,14 +31,6 @@
         ]"/>
     </record>
 
-    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
-        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_2'))]).ids"/>
-    </function>
-    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
-        <value eval="[ref('demo_invoice_2')]"/>
-        <value eval="True"/>
-    </function>
-
     <!-- Invoice to ADHOC with vat cero and 21 (citi needs to guess operation type) -->
     <record id="demo_invoice_3" model="account.move">
         <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
@@ -61,14 +45,6 @@
         ]"/>
     </record>
 
-    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
-        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_3'))]).ids"/>
-    </function>
-    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
-        <value eval="[ref('demo_invoice_3')]"/>
-        <value eval="True"/>
-    </function>
-
     <!-- Invoice to ADHOC with vat exempt and 21 (citi needs to guess operation type) -->
     <record id="demo_invoice_4" model="account.move">
         <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
@@ -82,14 +58,6 @@
             (0, 0, {'product_id': ref('product_product_exento'), 'price_unit': 100.0, 'quantity': 1}),
         ]"/>
     </record>
-
-    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
-        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_4'))]).ids"/>
-    </function>
-    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
-        <value eval="[ref('demo_invoice_4')]"/>
-        <value eval="True"/>
-    </function>
 
     <!-- Invoice to ADHOC with all type of taxes (citi needs to guess operation type)  -->
     <record id="demo_invoice_5" model="account.move">
@@ -109,14 +77,6 @@
         ]"/>
     </record>
 
-    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
-        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_5'))]).ids"/>
-    </function>
-    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
-        <value eval="[ref('demo_invoice_5')]"/>
-        <value eval="True"/>
-    </function>
-
     <!-- Invoice to consumidor final -->
     <record id="demo_invoice_8" model="account.move">
         <field name="partner_id" ref="l10n_ar.par_cfa"/>
@@ -129,14 +89,6 @@
             (0, 0, {'product_id': ref('product.product_product_2'), 'price_unit': 642.0, 'quantity': 1}),
         ]"/>
     </record>
-
-    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
-        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_8'))]).ids"/>
-    </function>
-    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
-        <value eval="[ref('demo_invoice_8')]"/>
-        <value eval="True"/>
-    </function>
 
     <!-- Invoice to ADHOC in USD and vat 21 -->
     <record id="demo_invoice_10" model="account.move">
@@ -151,14 +103,6 @@
         ]"/>
         <field name="currency_id" ref="base.USD"/>
     </record>
-
-    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
-        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_10'))]).ids"/>
-    </function>
-    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
-        <value eval="[ref('demo_invoice_10')]"/>
-        <value eval="True"/>
-    </function>
 
     <!-- Invoice to ADHOC con muchas lineas para probar rounding "ERROR 1" (ver readme), con 4 ya daria error (precision decimal de monedas y producto en 2) -->
     <record id="demo_invoice_11" model="account.move">
@@ -176,14 +120,6 @@
         ]"/>
     </record>
 
-    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
-        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_11'))]).ids"/>
-    </function>
-    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
-        <value eval="[ref('demo_invoice_11')]"/>
-        <value eval="True"/>
-    </function>
-
     <!-- Invoice to ADHOC con muchas lineas para probar rounding "ERROR 2" (ver readme), (se requiere usar precision decimal de precio producto en 4 para que de el error) -->
     <record id="demo_invoice_12" model="account.move">
         <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
@@ -199,14 +135,6 @@
             (0, 0, {'product_id': ref('product.product_product_2'), 'price_unit': 1.6376, 'quantity': 2, 'name': 'Support Services 4'}),
         ]"/>
     </record>
-
-    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
-        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_12'))]).ids"/>
-    </function>
-    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
-        <value eval="[ref('demo_invoice_12')]"/>
-        <value eval="True"/>
-    </function>
 
     <!-- Invoice to ADHOC con muchas lineas para probar factura en cero y rounding "ERROR 3" (ver readme), (se requiere usar precision decimal de precio producto en 4 para que de el error y cambiar el 260.59 por 260.60)
    # TODO mejorar este caso demo porque con dos decimales queda en negativo (citi needs to guess operation type) -->
@@ -229,14 +157,6 @@
         ]"/>
     </record>
 
-    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
-        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_13'))]).ids"/>
-    </function>
-    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
-        <value eval="[ref('demo_invoice_13')]"/>
-        <value eval="True"/>
-    </function>
-
     <!-- Invoice to ADHOC con 100% de descuento (para testear citi, citi needs to guess operation type) -->
     <record id="demo_invoice_17" model="account.move">
         <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
@@ -249,14 +169,6 @@
             (0, 0, {'product_id': ref('product.product_product_2'), 'price_unit': 24.3, 'quantity': 3, 'name': 'Support Services 8', 'discount': 100}),
         ]"/>
     </record>
-
-    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
-        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_17'))]).ids"/>
-    </function>
-    <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
-        <value eval="[ref('demo_invoice_17')]"/>
-        <value eval="True"/>
-    </function>
 
     <!-- Invoice to ADHOC con 100% de descuento en ivas distintos (para testear citi)
    y con linea de importe -->
@@ -275,10 +187,13 @@
     </record>
 
     <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
-        <value model="account.move.line" eval="obj().search([('move_id', '=', ref('demo_invoice_18'))]).ids"/>
+        <value model="account.move.line" eval="obj().search([('move_id', 'in', [ref('demo_invoice_1'), ref('demo_invoice_2'), ref('demo_invoice_3'), ref('demo_invoice_4'), ref('demo_invoice_5'), ref('demo_invoice_8'), ref('demo_invoice_10'), ref('demo_invoice_11'), ref('demo_invoice_12'), ref('demo_invoice_13'), ref('demo_invoice_17'), ref('demo_invoice_18')])]).ids"/>
     </function>
+
     <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
-        <value eval="[ref('demo_invoice_18')]"/>
+        <value eval="[ref('demo_invoice_1'), ref('demo_invoice_2'), ref('demo_invoice_3'), ref('demo_invoice_4'), ref('demo_invoice_5'),
+        ref('demo_invoice_8'), ref('demo_invoice_10'), ref('demo_invoice_11'), ref('demo_invoice_12'), ref('demo_invoice_13'),
+        ref('demo_invoice_17'), ref('demo_invoice_18')]"/>
         <value eval="True"/>
     </function>
 
