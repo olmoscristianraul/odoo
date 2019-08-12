@@ -4,6 +4,7 @@ l10n_ar.base_cheques_de_terceros_rechazados,l10n_ar.l10nar_base_chart_template,1
 l10n_ar.base_fondo_comun_de_inversion,l10n_ar.l10nar_base_chart_template,1.1.2.01.010,account.data_account_type_current_assets,Fondo común de inversión,False,l10n_ar.account_group_inversiones
 l10n_ar.base_plazo_fijo,l10n_ar.l10nar_base_chart_template,1.1.2.01.020,account.data_account_type_current_assets,Plazo fijo,False,l10n_ar.account_group_inversiones
 l10n_ar.base_deudores_por_ventas,l10n_ar.l10nar_base_chart_template,1.1.3.01.010,account.data_account_type_receivable,Deudores por ventas,True,l10n_ar.account_group_creditos_por_ventas
+l10n_ar.base_deudores_por_ventas_pos,l10n_ar.l10nar_base_chart_template,1.1.3.01.020,account.data_account_type_receivable,Deudores por ventas (PoS),True,l10n_ar.account_group_creditos_por_ventas
 l10n_ar.base_ret_percepcion_tasa_municipal,l10n_ar.l10nar_base_chart_template,1.1.4.01.010,account.data_account_type_current_assets,Ret/Percepción Tasa Municipal,False,l10n_ar.account_group_creditos_fiscales_municipales
 l10n_ar.base_saldo_a_favor_tasa_municipal,l10n_ar.l10nar_base_chart_template,1.1.4.01.020,account.data_account_type_current_assets,Saldo a favor Tasa Municipal,False,l10n_ar.account_group_creditos_fiscales_municipales
 l10n_ar.base_saldo_favor_iibb_sf,l10n_ar.l10nar_base_chart_template,1.1.4.02.010,account.data_account_type_current_assets,Saldo a favor IIBB p. Santa Fé,False,l10n_ar.account_group_creditos_fiscales_iibb
