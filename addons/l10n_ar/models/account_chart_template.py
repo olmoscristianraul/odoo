@@ -41,8 +41,11 @@ class AccountChartTemplate(models.Model):
         return match
 
     def load_for_current_company(self, sale_tax_rate, purchase_tax_rate, company=False):
-        """ Raise a warning if the user is trying to install a CoA that does not match with the defined AFIP
-        Responsibility in the company
+        """ Set companies AFIP Responsibility and Country if AR CoA is installed, also set tax calculation rounding
+        method required in order to properly validate match AFIP invoices.
+
+        Also, raise a warning if the user is trying to install a CoA that does not match with the defined AFIP
+        Responsibility defined in the company
         """
         self.ensure_one()
         if not company:
@@ -53,6 +56,12 @@ class AccountChartTemplate(models.Model):
 
         company_responsibility = company.l10n_ar_afip_responsibility_type_id
         coa_responsibility = self._get_ar_responsibility_match(self.id)
+        if coa_responsibility:
+            company.write({
+                'l10n_ar_afip_responsibility_type_id': coa_responsibility.id,
+                'country_id': self.env.ref('base.ar').id,
+                'tax_calculation_rounding_method': 'round_globally',
+            })
 
         if company_responsibility and company_responsibility != coa_responsibility:
             raise UserError(_(

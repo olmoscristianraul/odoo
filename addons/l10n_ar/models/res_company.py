@@ -34,17 +34,6 @@ class ResCompany(models.Model):
         self.ensure_one()
         return True if self.country_id == self.env.ref('base.ar') else super()._localization_use_documents()
 
-    def write(self, values):
-        """ Set companies AFIP Responsibility and Country if AR CoA is installed """
-        chart_template_id = values.get('chart_template_id', False)
-        if chart_template_id:
-            responsibility = self.env['account.chart.template']._get_ar_responsibility_match(chart_template_id)
-            if responsibility:
-                values.update(
-                    l10n_ar_afip_responsibility_type_id=responsibility.id, country_id=self.env.ref('base.ar').id,
-                    tax_calculation_rounding_method='round_globally')
-        return super().write(values)
-
     @api.constrains('l10n_ar_afip_responsibility_type_id')
     def _check_accounting_info(self):
         """ Do not let to change the AFIP Responsibility of the company if there is already installed a chart of
