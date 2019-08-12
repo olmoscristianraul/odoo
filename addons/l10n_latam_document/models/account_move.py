@@ -88,6 +88,17 @@ class AccountMove(models.Model):
             rec.l10n_latam_document_number = rec.l10n_latam_sequence_id.next_by_id()
         return super().post()
 
+    @api.constrains('name', 'journal_id', 'state')
+    def _check_unique_sequence_number(self):
+        """ Do not apply unique sequence number for vendoer bills and refunds.
+        Also apply constraint when state change """
+        vendor = self.filtered(lambda x: x.type in ['in_refund', 'in_invoice'])
+        try:
+            return super(AccountMove, self - vendor)._check_unique_sequence_number()
+        except ValidationError:
+            raise ValidationError(_('Duplicated invoice number detected. You probably add twice the same customer'
+                                    ' invoice/debit note.'))
+
     @api.constrains('state', 'l10n_latam_document_type_id')
     def _check_l10n_latam_documents(self):
         validated_invoices = self.filtered(lambda x: x.l10n_latam_use_documents and x.state in ['open', 'done'])
