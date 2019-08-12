@@ -264,13 +264,13 @@
         <field name="account_id" model="account.tax" eval="obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'IVA Adicional 20%'), ('type_tax_use', '=', 'purchase')], limit=1).account_id.id"/>
     </record> -->
 
+    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
+        <value model="account.move.line" eval="obj().search([('move_id', 'in', [ref('demo_sup_invoice_1'), ref('demo_sup_invoice_2'), ref('demo_sup_invoice_3'), ref('demo_sup_invoice_4'), ref('demo_sup_invoice_5'), ref('demo_sup_invoice_6'), ref('demo_sup_invoice_7')])]).ids"/>
+    </function>
+
     <function model="account.move" name="_recompute_dynamic_lines" context="{'check_move_validity': False}">
         <value eval="[ref('demo_sup_invoice_1'), ref('demo_sup_invoice_2'), ref('demo_sup_invoice_3'), ref('demo_sup_invoice_4'), ref('demo_sup_invoice_5'), ref('demo_sup_invoice_6'), ref('demo_sup_invoice_7'), ref('demo_despacho_1')]"/>
         <value eval="True"/>
-    </function>
-
-    <function model="account.move.line" name="_onchange_product_id" context="{'check_move_validity': False}">
-        <value model="account.move.line" eval="obj().search([('move_id', 'in', [ref('demo_sup_invoice_1'), ref('demo_sup_invoice_2'), ref('demo_sup_invoice_3'), ref('demo_sup_invoice_4'), ref('demo_sup_invoice_5'), ref('demo_sup_invoice_6'), ref('demo_sup_invoice_7')])]).ids"/>
     </function>
 
     <function model="account.move" name="post">
