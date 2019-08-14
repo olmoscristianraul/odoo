@@ -30,7 +30,7 @@
                      'company_id': ref('l10n_ar.company_ri')}"/>
     </function>
 
-    <function model="account.chart.template" name="try_loading_for_company">
+    <function model="account.chart.template" name="try_loading">
         <value eval="[ref('l10n_ar.l10nar_ri_chart_template')]"/>
         <value model="res.company" eval="obj().env.ref('l10n_ar.company_ri')"/>
     </function>
