@@ -96,18 +96,55 @@ class AccountMove(models.Model):
                 elif purchase_aliquots == 'not_zero' and vat_taxes.tax_group_id.l10n_ar_vat_afip_code == '0':
                     raise UserError(_('On invoice id "%s" you must use VAT taxes different than VAT Not Applicable.')  % inv.id)
 
-    # TODO make it with create/write or with https://github.com/odoo/odoo/pull/31059
-    @api.constrains('invoice_date')
-    def set_afip_date(self):
-        for rec in self.filtered('invoice_date'):
-            invoice_date = fields.Datetime.from_string(rec.invoice_date)
-            vals = {}
-            if not rec.l10n_ar_afip_service_start:
-                vals['l10n_ar_afip_service_start'] = invoice_date + relativedelta(day=1)
-            if not rec.l10n_ar_afip_service_end:
-                vals['l10n_ar_afip_service_end'] = invoice_date + relativedelta(day=1, days=-1, months=+1)
-            if vals:
-                rec.write(vals)
+    @api.model
+    def create(self, values):
+        if 'partner_id' in values and 'journal_id' not in values:
+            values.update(self._prepare_add_missing_fields(values))
+        return super().create(values)
+
+    def write(self, values):
+        if 'invoice_date' in values:
+            for rec in self:
+                values.update(self._prepare_add_missing_fields(values))
+                super(AccountMove, rec).write(values)
+            return True
+        else:
+            return super().write(values)
+
+    @api.model
+    def _prepare_add_missing_fields(self, values):
+        """ Deduce missing fields from onchange """
+        res = {}
+        new_values = self.copy_data()[0] if self else {}
+        new_values.update(values)
+
+        # set afip service star/end date if not set
+        onchange_fields = ['l10n_ar_afip_service_start', 'l10n_ar_afip_service_end']
+        if new_values.get('l10n_ar_afip_concept') and new_values.get('invoice_date') and any(f not in values for f in onchange_fields):
+            move = self.new(new_values)
+            move.onchange_afip_service_dates()
+            for field in onchange_fields:
+                if not new_values.get(field):
+                    res[field] = move._fields[field].convert_to_write(move[field], move)
+
+        # set proper journal when invoice is created from sale or subscription
+        onchange_fields = ['journal_id']
+        if new_values.get('partner_id') and not new_values.get('journal_id'):
+            move = self.new(new_values)
+            move._onchange_partner_journal()
+            for field in onchange_fields:
+                res[field] = move._fields[field].convert_to_write(move[field], move)
+        return res
+
+    @api.onchange('l10n_ar_afip_concept', 'invoice_date')
+    def onchange_afip_service_dates(self):
+        """ Proper populate service_start_date and service_end_date when needed depending on the invoice_date """
+        if self.l10n_ar_afip_concept in ['2', '3', '4']:
+            if self.invoice_date:
+                if not self.l10n_ar_afip_service_start:
+                    self.l10n_ar_afip_service_start = self.invoice_date + relativedelta(day=1)
+                if not self.l10n_ar_afip_service_end:
+                    self.l10n_ar_afip_service_end = self.invoice_date + relativedelta(day=1, days=-1, months=+1)
 
     @api.onchange('partner_id')
     def check_afip_responsibility(self):
@@ -130,8 +167,6 @@ class AccountMove(models.Model):
             return res
         return super().get_document_type_sequence()
 
-    # TODO make it with create/write or with https://github.com/odoo/odoo/pull/31059
-    @api.constrains('partner_id')
     @api.onchange('partner_id')
     def _onchange_partner_journal(self):
         """ This method is used when the invoice is created from the sale or subscription """
