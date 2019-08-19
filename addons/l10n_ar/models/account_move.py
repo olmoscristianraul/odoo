@@ -96,15 +96,17 @@ class AccountMove(models.Model):
                 elif purchase_aliquots == 'not_zero' and vat_taxes.tax_group_id.l10n_ar_vat_afip_code == '0':
                     raise UserError(_('On invoice id "%s" you must use VAT taxes different than VAT Not Applicable.')  % inv.id)
 
-    @api.onchange('invoice_date')
     def set_afip_date(self):
-        for rec in self.filtered('invoice_date'):
-            invoice_date = fields.Datetime.from_string(rec.invoice_date)
-            vals = {}
+        for rec in self.filtered(lambda m: m.invoice_date and m.l10n_ar_afip_concept in ['2', '3', '4']):
             if not rec.l10n_ar_afip_service_start:
-                rec.l10n_ar_afip_service_start = invoice_date + relativedelta(day=1)
+                rec.l10n_ar_afip_service_start = rec.invoice_date + relativedelta(day=1)
             if not rec.l10n_ar_afip_service_end:
-                rec.l10n_ar_afip_service_end = invoice_date + relativedelta(day=1, days=-1, months=+1)
+                rec.l10n_ar_afip_service_end = rec.invoice_date + relativedelta(day=1, days=-1, months=+1)
+
+    @api.onchange('invoice_date')
+    def _onchange_invoice_date(self):
+        super()._onchange_invoice_date()
+        self.set_afip_service_dates()
 
     @api.onchange('partner_id')
     def check_afip_responsibility(self):
