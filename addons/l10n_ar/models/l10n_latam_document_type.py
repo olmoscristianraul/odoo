@@ -69,7 +69,7 @@ class L10nLatamDocumentType(models.Model):
         # Import Dispatch Number Validator
         if self.code in ['66', '67']:
             if len(document_number) != 16:
-                raise UserError(msg % (document_number, self.name, ('The number of import Dispatch must be 16 characters')))
+                raise UserError(msg % (document_number, self.name, _('The number of import Dispatch must be 16 characters')))
             return document_number
 
         # Invoice Number Validator (For Eg: 123-123)
