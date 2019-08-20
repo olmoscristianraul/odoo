@@ -25,7 +25,6 @@ class AccountMove(models.Model):
         ' identify the type of responsibilities that a person or a legal entity could have and that impacts in the'
         ' type of operations and requirements they need.')
 
-    # TODO make it editable, we have to change move creation method
     l10n_ar_currency_rate = fields.Float(copy=False, digits=(16, 4), readonly=True, string="Currency Rate")
 
     # Mostly used on reports
@@ -168,8 +167,6 @@ class AccountMove(models.Model):
             default_values_list = [{} for move in self]
         for move, default_values in zip(self, default_values_list):
             default_values.update({
-                # TODO enable when we make l10n_ar_currency_rate editable
-                # 'l10n_ar_currency_rate': move.l10n_ar_currency_rate,
                 'l10n_ar_afip_service_start': move.l10n_ar_afip_service_start,
                 'l10n_ar_afip_service_end': move.l10n_ar_afip_service_end,
             })
