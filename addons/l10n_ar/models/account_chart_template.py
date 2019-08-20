@@ -45,7 +45,7 @@ class AccountChartTemplate(models.Model):
         Responsibility defined in the company
         """
         self.ensure_one()
-        if company.country == self.env.ref('base.ar'):
+        if company.country_id == self.env.ref('base.ar'):
             company_responsibility = company.l10n_ar_afip_responsibility_type_id
             coa_responsibility = self._get_ar_responsibility_match(self.id)
             if coa_responsibility:
