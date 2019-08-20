@@ -48,7 +48,7 @@ class AccountMove(models.Model):
     def _get_concept(self):
         """ Method to get the concept of the invoice considering the type of the products on the invoice """
         self.ensure_one()
-        invoice_lines = self.invoice_line_ids
+        invoice_lines = self.invoice_line_ids.filtered(lambda x: not x.display_type)
         product_types = set([x.product_id.type for x in invoice_lines if x.product_id])
         consumable = set(['consu', 'product'])
         service = set(['service'])
