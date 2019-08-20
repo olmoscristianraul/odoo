@@ -23,10 +23,10 @@ class AccountJournal(models.Model):
         return [
             ('II_IM', 'Pre-printed Invoice'),
             ('RLI_RLM', 'Online Invoice'),
-            ('BFERCEL', 'Electronic Fiscal Bonds - Online Invoice'),
-            ('FEERCELP', 'Export Vouchers - Billing Plus'),
-            ('FEERCEL', 'Export Vouchers - Online Invoice'),
-            ('CPERCEL', 'Product Coding - Online Vouchers'),
+            ('BFERCEL', 'Electronic Fiscal Bond - Online Invoice'),
+            ('FEERCELP', 'Export Voucher - Billing Plus'),
+            ('FEERCEL', 'Export Voucher - Online Invoice'),
+            ('CPERCEL', 'Product Coding - Online Voucher'),
         ]
 
     def _get_journal_letter(self, counterpart_partner=False):
