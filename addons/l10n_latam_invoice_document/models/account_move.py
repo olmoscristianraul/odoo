@@ -52,7 +52,7 @@ class AccountMove(models.Model):
     @api.depends('l10n_latam_document_type_id', 'journal_id')
     def _compute_l10n_latam_sequence(self):
         for rec in self.filtered('journal_id'):
-            rec.l10n_latam_sequence_id = rec.get_document_type_sequence()
+            rec.l10n_latam_sequence_id = rec._get_document_type_sequence()
 
     def _compute_l10n_latam_amount_and_taxes(self):
         for invoice in self.filtered(lambda x: x.is_invoice(include_receipts=True)):
@@ -170,7 +170,7 @@ class AccountMove(models.Model):
             ) for group, amounts in res]
         super(AccountMove, self - move_with_doc_type)._compute_invoice_taxes_by_group()
 
-    def get_document_type_sequence(self):
+    def _get_document_type_sequence(self):
         """ Method to be inherited by different localizations. """
         self.ensure_one()
         return self.env['ir.sequence']
