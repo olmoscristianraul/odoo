@@ -27,18 +27,15 @@ class AccountChartTemplate(models.Model):
         return res
 
     @api.model
-    def _get_ar_responsibility_match(self, chart_template_id=False):
-        """ If not chart_template_id: return the {recordset(coa): recordset(responsibility recordset)} match dictionary
-            if chart_template_id: return responsibility type that match with the given chart_template_id
+    def _get_ar_responsibility_match(self, chart_template_id):
+        """ return responsibility type that match with the given chart_template_id
         """
         match = {
             self.env.ref('l10n_ar.l10nar_base_chart_template').id: self.env.ref('l10n_ar.res_RM'),
             self.env.ref('l10n_ar.l10nar_ex_chart_template').id: self.env.ref('l10n_ar.res_IVAE'),
             self.env.ref('l10n_ar.l10nar_ri_chart_template').id: self.env.ref('l10n_ar.res_IVARI'),
         }
-        if chart_template_id:
-            return match.get(chart_template_id)
-        return match
+        return match.get(chart_template_id)
 
     def _load(self, sale_tax_rate, purchase_tax_rate, company):
         """ Set companies AFIP Responsibility and Country if AR CoA is installed, also set tax calculation rounding
