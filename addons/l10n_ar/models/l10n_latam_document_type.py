@@ -32,9 +32,9 @@ class L10nLatamDocumentType(models.Model):
             ('I', 'I'),  # used for mapping of imports
         ]
 
-    def get_document_sequence_vals(self, journal):
+    def _get_document_sequence_vals(self, journal):
         """ Values to create the sequences """
-        values = super().get_document_sequence_vals(journal)
+        values = super()._get_document_sequence_vals(journal)
         if self.country_id != self.env.ref('base.ar'):
             return values
 

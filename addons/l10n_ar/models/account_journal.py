@@ -159,7 +159,7 @@ class AccountJournal(models.Model):
                lambda x: x.l10n_ar_letter == document.l10n_ar_letter):
                 continue
 
-            sequences |= self.env['ir.sequence'].create(document.get_document_sequence_vals(self))
+            sequences |= self.env['ir.sequence'].create(document._get_document_sequence_vals(self))
         return sequences
 
     @api.constrains('l10n_ar_afip_pos_number')
