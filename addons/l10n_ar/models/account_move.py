@@ -53,17 +53,15 @@ class AccountMove(models.Model):
         consumable = set(['consu', 'product'])
         service = set(['service'])
         mixed = set(['consu', 'service', 'product'])
+        # on expo invoice you can mix services and products
+        expo_invoice = self.l10n_latam_document_type_id.code in ['19', '20', '21']
+
         # Default value "product"
         afip_concept = '1'
-        if product_types.issubset(mixed):
-            afip_concept = '3'
-        if product_types.issubset(service):
+        if product_types == service:
             afip_concept = '2'
-        if product_types.issubset(consumable):
-            afip_concept = '1'
-        # on expo invoice you can mix services and products
-        if self.l10n_latam_document_type_id.code in ['19', '20', '21'] and afip_concept == '3':
-            afip_concept = '1'
+        elif product_types - consumable and product_types - service and not expo_invoice:
+            afip_concept = '3'
         return afip_concept
 
     def _get_l10n_latam_documents_domain(self):
