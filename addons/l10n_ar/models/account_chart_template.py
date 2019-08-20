@@ -45,18 +45,20 @@ class AccountChartTemplate(models.Model):
         Responsibility defined in the company
         """
         self.ensure_one()
-        if company.country_id == self.env.ref('base.ar'):
-            company_responsibility = company.l10n_ar_afip_responsibility_type_id
-            coa_responsibility = self._get_ar_responsibility_match(self.id)
-            if coa_responsibility:
-                company.write({
-                    'l10n_ar_afip_responsibility_type_id': coa_responsibility.id,
-                    'country_id': self.env.ref('base.ar').id,
-                    'tax_calculation_rounding_method': 'round_globally',
-                })
 
+        ar_coa = self.env.ref('l10n_ar.l10nar_base_chart_template') | self.env.ref('l10n_ar.l10nar_ex_chart_template')
+        ar_coa |= self.env.ref('l10n_ar.l10nar_ri_chart_template')
+
+        if self in ar_coa:
+            coa_responsibility = self._get_ar_responsibility_match(self.id)
+            company_responsibility = company.l10n_ar_afip_responsibility_type_id
             if company_responsibility and company_responsibility != coa_responsibility:
                 raise UserError(_(
-                    'You are trying to install a chart of account for the %s responsibility but your company is configured'
-                    ' as %s type' % (coa_responsibility.name, company_responsibility.name)))
+                    'You are trying to install a chart of account for the %s responsibility but your company is'
+                    ' configured as %s type' % (coa_responsibility.name, company_responsibility.name)))
+            company.write({
+                'l10n_ar_afip_responsibility_type_id': coa_responsibility.id,
+                'country_id': self.env.ref('base.ar').id,
+                'tax_calculation_rounding_method': 'round_globally',
+            })
         return super()._load(sale_tax_rate, purchase_tax_rate, company)
