@@ -40,7 +40,7 @@ class ResPartner(models.Model):
 
     @api.depends('vat', 'l10n_latam_identification_type_id')
     def _compute_l10n_ar_vat(self):
-        """ We add this computed field that returns cuit or nothing ig this one is not set for the partner. This
+        """ We add this computed field that returns cuit or nothing if this one is not set for the partner. This
         Validation can be also done by calling ensure_vat() method that returns the cuit or error if this one is not
         found """
         for rec in self.filtered(lambda x: x.l10n_latam_identification_type_id.l10n_ar_afip_code == '80'):
