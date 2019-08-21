@@ -61,7 +61,7 @@ class L10nLatamDocumentType(models.Model):
         """
         self.ensure_one()
         if self.country_id != self.env.ref('base.ar'):
-            return super()._format_document_number()
+            return super()._format_document_number(document_number)
 
         if not document_number:
             return False
