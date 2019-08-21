@@ -16,7 +16,7 @@ class L10nLatamDocumentType(models.Model):
     purchase_aliquots = fields.Selection(
         [('not_zero', 'Not Zero'), ('zero', 'Zero')], help='Raise an error if a vendor bill is miss encoded. "Not Zero"'
         ' means the VAT taxes are required for the invoices related to this document type, and those with "Zero" means'
-        ' that only "VAT Not correspond" tax is allowed.')
+        ' that only "VAT Not Applicable" tax is allowed.')
 
     def _get_l10n_ar_letters(self):
         """ Return the list of values of the selection field. """

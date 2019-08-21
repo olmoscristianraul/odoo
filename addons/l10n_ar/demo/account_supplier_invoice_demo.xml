@@ -3,7 +3,7 @@
 
     <!-- we add l10n_latam_document_number on on a separete line because we need l10n_latam_document_type_id to be auto assigned so that account.move.name can be computed with the _inverse_l10n_latam_document_number -->
 
-    <!-- Invoice from gritti support service, auto fiscal position set VAT not correspond -->
+    <!-- Invoice from gritti support service, auto fiscal position set VAT Not Applicable -->
     <record id="demo_sup_invoice_1" model="account.move">
         <field name="partner_id" ref="res_partner_gritti_agrimensura"/>
         <field name="fiscal_position_id" model="account.fiscal.position" eval="obj().search([('company_id', '=', obj().env.ref('l10n_ar.company_ri').id), ('name', '=', 'Compras IVA no corresponde')], limit=1).id"/>
