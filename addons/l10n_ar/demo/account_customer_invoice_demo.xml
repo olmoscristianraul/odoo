@@ -241,7 +241,7 @@
         ]"/>
     </record>
 
-    <!-- Invoice to ADHOC con 100% de descuento (para testear citi, citi needs to guess operation type) -->
+    <!-- Invoice to ADHOC with 100% of discount -->
     <record id="demo_invoice_17" model="account.move">
         <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
         <field name="invoice_user_id" ref="base.user_demo"/>
@@ -254,8 +254,7 @@
         ]"/>
     </record>
 
-    <!-- Invoice to ADHOC con 100% de descuento en ivas distintos (para testear citi)
-   y con linea de importe -->
+    <!-- Invoice to ADHOC with 100% of discount and with different VAT aliquots -->
     <record id="demo_invoice_18" model="account.move">
         <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
         <field name="invoice_user_id" ref="base.user_demo"/>
