@@ -105,7 +105,7 @@ class AccountJournal(models.Model):
     def create(self, values):
         """ Create Document sequences after create the journal """
         res = super().create(values)
-        res.create_document_sequences()
+        res._l10n_ar_create_document_sequences()
         return res
 
     def write(self, values):
@@ -115,7 +115,7 @@ class AccountJournal(models.Model):
         res = super().write(values)
         if to_check.intersection(set(values.keys())):
             for rec in self:
-                rec.create_document_sequences()
+                rec._l10n_ar_create_document_sequences()
         return res
 
     @api.constrains('type', 'l10n_ar_afip_pos_system', 'l10n_ar_afip_pos_number', 'l10n_ar_share_sequences',
@@ -133,7 +133,7 @@ class AccountJournal(models.Model):
                 'You can not change the journal configuration for a journal that already have validate invoices') +
                 ':<br/><br/> - %s' % ('<br/>- '.join(invoices.mapped('display_name'))))
 
-    def create_document_sequences(self):
+    def _l10n_ar_create_document_sequences(self):
         """ IF AFIP Configuration change try to review if this can be done and then create / update the document
         sequences """
         self.ensure_one()
