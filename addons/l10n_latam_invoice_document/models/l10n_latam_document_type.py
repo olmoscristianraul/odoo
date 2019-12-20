@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models, api
+from odoo.osv import expression
 
 
 class L10nLatamDocumentType(models.Model):
@@ -42,6 +43,16 @@ class L10nLatamDocumentType(models.Model):
                 name = '(%s) %s' % (rec.code, name)
             result.append((rec.id, name))
         return result
+
+    @api.model
+    def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
+        args = args or []
+        if operator == 'ilike' and not (name or '').strip():
+            domain = []
+        else:
+            domain = ['|', ('name', 'ilike', name), ('code', 'ilike', name)]
+        ids = self._search(expression.AND([domain, args]), limit=limit, access_rights_uid=name_get_uid)
+        return models.lazy_name_get(self.browse(ids).with_user(name_get_uid))
 
     def _filter_taxes_included(self, taxes):
         """ This method is to be inherited by different localizations and must return filter the given taxes recordset
