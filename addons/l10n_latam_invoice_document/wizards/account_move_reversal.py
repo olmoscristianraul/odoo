@@ -23,6 +23,7 @@ class AccountMoveReversal(models.TransientModel):
             if move_ids_use_document:
                 raise UserError(_('You can only reverse documents with legal invoicing documents from Latin America one at a time.\nProblematic documents: %s') % ", ".join(move_ids_use_document.mapped('name')))
 
+        res['move_id'] = move_ids[0].id if move_ids else False
         return res
 
     @api.model
