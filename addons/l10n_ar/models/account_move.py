@@ -167,20 +167,27 @@ class AccountMove(models.Model):
         return super()._reverse_moves(default_values_list=default_values_list, cancel=cancel)
 
     def _get_highest_query(self):
-        if self.l10n_latam_use_documents and self.journal_id.l10n_ar_share_sequences:
+        # if self.l10n_latam_use_documents and self.journal_id.l10n_ar_share_sequences:
+        if self.l10n_latam_use_documents:
             return "SELECT {field} FROM {table} {where_string} ORDER BY SUBSTRING({field}, 5, 15) DESC LIMIT 1 FOR UPDATE"
-        super(AccountMove, self)._get_highest_query()
+        return super(AccountMove, self)._get_highest_query()
 
 
-    def _get_last_sequence_domain(self, relaxed=False):
+    # def _get_last_sequence_domain(self, relaxed=False):
 
-        where_string, param = super(AccountMove, self)._get_last_sequence_domain(relaxed)
-        if self.l10n_latam_use_documents and self.journal_id.l10n_ar_share_sequences:
-            where_string += " AND document_letter"
-            param['document_letter'] = self.document_type_id.letter
-            # remove the latam_document_type_id
-            #where_string += " AND l10n_latam_document_type_id = %(l10n_latam_document_type_id)s"
-            #param['l10n_latam_document_type_id'] = self.l10n_latam_document_type_id.id or 0
-            #where_string += "AND l10n_latam_document_type_id = %()"
-        return where_string, param
+    #     where_string, param = super(AccountMove, self)._get_last_sequence_domain(relaxed)
+    #     if self.l10n_latam_use_documents and self.journal_id.l10n_ar_share_sequences:
+    #         where_string += " AND l10n_ar_letter"
+    #         param['l10n_ar_letter'] = self.l10n_latam_document_type_id.l10n_ar_letter
+    #         # remove the latam_document_type_id
+    #         #where_string += " AND l10n_latam_document_type_id = %(l10n_latam_document_type_id)s"
+    #         #param['l10n_latam_document_type_id'] = self.l10n_latam_document_type_id.id or 0
+    #         #where_string += "AND l10n_latam_document_type_id = %()"
+    #     return where_string, param
 
+    def _get_starting_sequence(self):
+        if self.l10n_latam_use_documents and self.company_id.country_id == self.env.ref('base.ar'):
+            if self.l10n_latam_document_type_id:
+                return "%s %05d-00000000" % (self.l10n_latam_document_type_id.doc_code_prefix, self.journal_id.l10n_ar_afip_pos_number)
+            return ""
+        return super(AccountMove, self)._get_starting_sequence()
