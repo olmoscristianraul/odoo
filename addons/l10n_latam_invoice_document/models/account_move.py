@@ -65,7 +65,8 @@ class AccountMove(models.Model):
     def _get_starting_sequence(self):
         if self.l10n_latam_use_documents:
             if self.l10n_latam_document_type_id:
-                return "%s 0001-00000000" % (self.l10n_latam_document_type_id.doc_code_prefix)
+                print(" ---- latam._get_starting_sequence ")  # TODO delete
+                return "%s 00000000" % (self.l10n_latam_document_type_id.doc_code_prefix)
             return ""
         return super(AccountMove, self)._get_starting_sequence()
 
