@@ -106,7 +106,10 @@ class SequenceMixin(models.AbstractModel):
 
         self.flush([self._sequence_field])
         self.env.cr.execute(query, param)
-        return (self.env.cr.fetchone() or [None])[0]
+        res = (self.env.cr.fetchone() or [None])[0]
+
+        print(" ---- account._get_last_sequence %s" % res)
+        return res
 
     def _set_next_sequence(self):
         """Set the next sequence.
@@ -126,5 +129,9 @@ class SequenceMixin(models.AbstractModel):
             seq=int(sequence.group('seq') or 0) + 1,
             suffix=sequence.group('suffix'),
         )
+
+        print(" ---- account._set_next_sequence() last_sequence %s" % last_sequence)  # TODO delete
+        print(" ---- account._set_next_sequence() value %s" % value)  # TODO delete
+
         self[self._sequence_field] = value
         self.flush([self._sequence_field])
