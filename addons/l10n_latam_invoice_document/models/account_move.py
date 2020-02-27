@@ -43,11 +43,11 @@ class AccountMove(models.Model):
                     rec.name = name
                     rec.highest_name = ''
 
-    # @api.depends('journal_id', 'date', 'state')
-    # def _compute_highest_name(self):
-    #     latam_bills = self.filtered(lambda b: b.is_purchase_document() and b.l10n_latam_use_documents)
-    #     latam_bills.highest_name = ''
-    #     super(AccountMove, self - latam_bills)._compute_highest_name()
+    @api.depends('journal_id', 'date', 'state')
+    def _compute_highest_name(self):
+        latam_bills = self.filtered(lambda b: b.is_purchase_document() and b.l10n_latam_use_documents)
+        latam_bills.highest_name = ''
+        super(AccountMove, self - latam_bills)._compute_highest_name()
 
     @api.model
     def _deduce_sequence_number_reset(self, name):
