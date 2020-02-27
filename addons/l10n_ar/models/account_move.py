@@ -167,11 +167,14 @@ class AccountMove(models.Model):
         return super()._reverse_moves(default_values_list=default_values_list, cancel=cancel)
 
     def _get_starting_sequence(self):
-        """ If use documents then will create a new starting sequence using the document type code prefix, the journal
-        document number and a 8 padding number """
+        """ If use documents then will create a new starting sequence using the document type code prefix and the
+        journal document number with a 8 padding number """
+        print(" ---- ar._get_starting_sequence ")  # TODO delete
         if self.l10n_latam_use_documents and self.company_id.country_id == self.env.ref('base.ar'):
             if self.l10n_latam_document_type_id:
-                return "%s %05d-00000000" % (self.l10n_latam_document_type_id.doc_code_prefix, self.journal_id.l10n_ar_afip_pos_number)
+                number = "00000000"
+                # TODO sync with AFIP
+                return "%s %05d-%s" % (self.l10n_latam_document_type_id.doc_code_prefix, self.journal_id.l10n_ar_afip_pos_number, number)
             return ""
         return super(AccountMove, self)._get_starting_sequence()
 
