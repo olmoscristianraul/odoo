@@ -29,17 +29,19 @@ class AccountMove(models.Model):
 
     @api.onchange('l10n_latam_document_type_id')
     def _onchange_document_type(self):
-        for rec in self.filtered(lambda m: m.l10n_latam_use_documents):
+        for rec in self.filtered(lambda m: m.l10n_latam_use_documents and m.l10n_latam_document_type_id):
             if rec.is_sale_document():
-                rec.name = '/'
-
                 rec._compute_highest_name()
                 if rec.highest_name == "1":
                     rec.highest_name = ""
                 rec._compute_name()
             elif rec.is_purchase_document():
                 rec.name = '1-1'
-                rec.highest_name = ''
+                number = rec.l10n_latam_document_type_id._format_document_number(rec.name)
+                name = "%s %s" % (rec.l10n_latam_document_type_id.doc_code_prefix, number)
+                if rec.name != name:
+                    rec.name = name
+                    rec.highest_name = ''
 
     # @api.depends('journal_id', 'date', 'state')
     # def _compute_highest_name(self):
