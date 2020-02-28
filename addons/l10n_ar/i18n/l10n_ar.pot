@@ -694,11 +694,6 @@ msgid "Legal Entity VAT"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model.fields,field_description:l10n_ar.field_ir_sequence__l10n_ar_letter
-msgid "Letter"
-msgstr ""
-
-#. module: l10n_ar
 #: model:ir.model.fields,field_description:l10n_ar.field_l10n_latam_document_type__l10n_ar_letter
 msgid "Letters"
 msgstr ""
@@ -882,15 +877,9 @@ msgid "Responsibility Types"
 msgstr ""
 
 #. module: l10n_ar
-#: model:ir.model,name:l10n_ar.model_ir_sequence
 #: model:ir.model.fields,field_description:l10n_ar.field_l10n_ar_afip_responsibility_type__sequence
 #: model_terms:ir.ui.view,arch_db:l10n_ar.view_account_journal_form
 msgid "Sequence"
-msgstr ""
-
-#. module: l10n_ar
-#: model:ir.model.fields,field_description:l10n_ar.field_account_journal__l10n_ar_sequence_ids
-msgid "Sequences"
 msgstr ""
 
 #. module: l10n_ar
