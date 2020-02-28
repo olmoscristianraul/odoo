@@ -17,31 +17,38 @@ class AccountMove(models.Model):
     l10n_latam_document_type_id = fields.Many2one(
         'l10n_latam.document.type', string='Document Type', readonly=False, auto_join=True, index=True,
         states={'posted': [('readonly', True)]}, compute='_compute_l10n_latam_document_type', store=True)
+    l10n_latam_document_number = fields.Char(
+        string='Document Number', readonly=True, states={'draft': [('readonly', False)]})
     l10n_latam_use_documents = fields.Boolean(related='journal_id.l10n_latam_use_documents')
     l10n_latam_country_code = fields.Char(
         related='company_id.country_id.code', help='Technical field used to hide/show fields regarding the localization')
 
-#    def _compute_name(self):
-#        normal_invoices = self.filtered(lambda m: not m.l10n_latam_use_documents or m.state != 'draft' or m.name not in [False, '', '/'] or m.is_purchase_document())
-#        super(AccountMove, normal_invoices)._compute_name()
-#        for rec in self - normal_invoices:
-#                rec.name = '/'
+    @api.depends('journal_id', 'date', 'state', 'highest_name')
+    def _compute_name(self):
+        """ Change the way that the use_document moves name is computed:
 
-    @api.onchange('l10n_latam_document_type_id')
+        * If use document but does not have document type selected then name = ''
+        * If use document, has document type and is a sale document:
+          * compute the next sequence (could be the last one or a starting one)
+        * If use document, has document type and is a purchase document:
+           * set the name with the values of the document type prefix and document_number """
+        use_document = self.filtered(lambda x: x.journal_id.l10n_latam_use_documents)
+        if use_document:
+            if use_document.filtered(lambda x: x.l10n_latam_document_type_id and x.state == 'posted'):
+                for rec in use_document:
+                    if rec.is_sale_document():
+                        rec._set_next_sequence()
+                    else:
+                        rec.name = rec.name = "%s %s" % (rec.l10n_latam_document_type_id.doc_code_prefix, rec.l10n_latam_document_number)
+            else:
+                use_document.name = '/'
+        super(AccountMove, self - use_document)._compute_name()
+
+    @api.onchange('l10n_latam_document_type_id', 'partner_id')
     def _onchange_document_type(self):
         for rec in self.filtered(lambda m: m.l10n_latam_use_documents and m.l10n_latam_document_type_id):
             if rec.is_sale_document():
                 rec._compute_highest_name()
-                if rec.highest_name == "1":
-                    rec.highest_name = ""
-                rec._compute_name()
-            elif rec.is_purchase_document():
-                rec.name = '1-1'
-                number = rec.l10n_latam_document_type_id._format_document_number(rec.name)
-                name = "%s %s" % (rec.l10n_latam_document_type_id.doc_code_prefix, number)
-                if rec.name != name:
-                    rec.name = name
-                    rec.highest_name = ''
 
     @api.depends('journal_id', 'date', 'state')
     def _compute_highest_name(self):
@@ -63,12 +70,21 @@ class AccountMove(models.Model):
         return where_string, param
 
     def _get_starting_sequence(self):
-        if self.l10n_latam_use_documents:
+        if self.journal_id.l10n_latam_use_documents:
             if self.l10n_latam_document_type_id:
-                print(" ---- latam._get_starting_sequence ")  # TODO delete
                 return "%s 00000000" % (self.l10n_latam_document_type_id.doc_code_prefix)
+            # There was no pattern found, propose one
             return ""
+
         return super(AccountMove, self)._get_starting_sequence()
+
+    @api.onchange('l10n_latam_document_number', 'l10n_latam_document_type_id')
+    def _compute_l10n_latam_document_number(self):
+        res = {}
+        for rec in self.filtered(lambda x: x.l10n_latam_document_number and x.l10n_latam_document_type_id):
+            formated_number = rec.l10n_latam_document_type_id._format_document_number(rec.l10n_latam_document_number)
+            if formated_number != rec.l10n_latam_document_number:
+                rec.l10n_latam_document_number = formated_number
 
     def _compute_l10n_latam_amount_and_taxes(self):
         recs_invoice = self.filtered(lambda x: x.is_invoice())
@@ -122,7 +138,7 @@ class AccountMove(models.Model):
         valid = re.compile(r'[A-Z\-]+\s*\d{1,5}\-\d{1,8}')
         without_number = validated_invoices.filtered(lambda x: not valid.match(x.name))
         if without_number:
-            raise ValidationError(_('The document number on the following invoices is not correct %s.' % (
+            raise ValidationError(_('The document number on the following invoices is set or not valid %s.' % (
                 without_number.ids)))
 
     @api.constrains('type', 'l10n_latam_document_type_id')
@@ -157,7 +173,7 @@ class AccountMove(models.Model):
             document_types = rec.l10n_latam_available_document_type_ids._origin
             document_types = internal_type and document_types.filtered(lambda x: x.internal_type == internal_type) or document_types
             rec.l10n_latam_document_type_id = document_types and document_types[0].id
-            rec._onchange_document_type()
+            # rec._onchange_document_type()
 
     def _compute_invoice_taxes_by_group(self):
         report_or_portal_view = 'commit_assetsbundle' in self.env.context or \

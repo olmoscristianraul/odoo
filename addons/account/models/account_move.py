@@ -934,13 +934,11 @@ class AccountMove(models.Model):
                 # Not the first name of the period for the journal, but had a name set
                 record.name = '/'
             record.name = record.name or '/'
-            print("----- account,_compute_name() name %s" % record.name)
 
     @api.depends('journal_id', 'date', 'state')
     def _compute_highest_name(self):
         for record in self:
             record.highest_name = record._get_last_sequence()
-            print(" ---- _compute_highest_name %s " % record.highest_name)
 
     @api.onchange('name', 'highest_name')
     def _onchange_name_warning(self):

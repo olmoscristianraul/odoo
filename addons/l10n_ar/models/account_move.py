@@ -166,17 +166,17 @@ class AccountMove(models.Model):
             })
         return super()._reverse_moves(default_values_list=default_values_list, cancel=cancel)
 
+    def _get_formatted_sequence(self, number=0):
+        return "%s %05d-%08d" % (self.l10n_latam_document_type_id.doc_code_prefix,
+                                 self.journal_id.l10n_ar_afip_pos_number, number)
+
     def _get_starting_sequence(self):
         """ If use documents then will create a new starting sequence using the document type code prefix and the
         journal document number with a 8 padding number """
-        print(" ---- ar._get_starting_sequence ")  # TODO delete
-        if self.l10n_latam_use_documents and self.company_id.country_id == self.env.ref('base.ar'):
+        if self.journal_id.l10n_latam_use_documents and self.env.company.country_id == self.env.ref('base.ar'):
             if self.l10n_latam_document_type_id:
-                number = "00000000"
-                # TODO sync with AFIP
-                return "%s %05d-%s" % (self.l10n_latam_document_type_id.doc_code_prefix, self.journal_id.l10n_ar_afip_pos_number, number)
-            return ""
-        return super(AccountMove, self)._get_starting_sequence()
+                return self._get_formatted_sequence()
+        return super()._get_starting_sequence()
 
     def _get_highest_query(self):
         # if self.l10n_latam_use_documents and self.journal_id.l10n_ar_share_sequences:
@@ -184,10 +184,9 @@ class AccountMove(models.Model):
             return "SELECT {field} FROM {table} {where_string} ORDER BY SUBSTRING({field}, 5, 15) DESC LIMIT 1 FOR UPDATE"
         return super()._get_highest_query()
 
-    def _get_last_sequence_domain(self, relaxed=False):
-        where_string, param = super()._get_last_sequence_domain(relaxed)
-        print(" ----- where_string, param %s %s " % (where_string, param))
-        return where_string, param
+    # def _get_last_sequence_domain(self, relaxed=False):
+    #     where_string, param = super()._get_last_sequence_domain(relaxed)
+    #     return where_string, param
     #     if self.l10n_latam_use_documents and self.journal_id.l10n_ar_share_sequences:
     #         where_string += " AND l10n_ar_letter"
     #         param['l10n_ar_letter'] = self.l10n_latam_document_type_id.l10n_ar_letter
@@ -203,14 +202,7 @@ class AccountMove(models.Model):
     #             continue
     """
 
-    # record._set_next_sequence()
-
-    # def _compute_highest_name(self):
-
     # @api.constrains('name', 'journal_id', 'state')
     # def _check_unique_sequence_number(self):
 
-    # def _set_next_sequence(self):
-    #     """ Get the last from AFIP """
-    #     super()._set_next_sequence()
 
