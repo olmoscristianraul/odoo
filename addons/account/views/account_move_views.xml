@@ -584,8 +584,10 @@
                             </h1>
 
                             <!-- Number -->
-                            <span class="text-warning" attrs="{'invisible': [('show_name_warning', '=', False)]}">The current highest number is <field name="highest_name"/>. You might want to put a higher number here.</span>
-                            <h1 class="mt0" attrs="{'invisible':[('name', '=', '/'), ('posted_before', '=', False)]}">
+                            <span class="text-warning">The current highest number is <field name="highest_name"/>. You might want to put a higher number here.</span>
+                            <!-- <span class="text-warning" attrs="{'invisible': [('show_name_warning', '=', False)]}">The current highest number is <field name="highest_name"/>. You might want to put a higher number here.</span> -->
+                            <!-- <h1 class="mt0" attrs="{'invisible':[('name', '=', '/'), ('posted_before', '=', False)]}"> -->
+                            <h1 class="mt0">
                                 <field name="name" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="JRNL/2016/00001"/>
                             </h1>
 
