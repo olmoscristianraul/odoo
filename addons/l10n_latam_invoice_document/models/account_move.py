@@ -22,6 +22,15 @@ class AccountMove(models.Model):
     l10n_latam_use_documents = fields.Boolean(related='journal_id.l10n_latam_use_documents')
     l10n_latam_country_code = fields.Char(
         related='company_id.country_id.code', help='Technical field used to hide/show fields regarding the localization')
+    l10n_latam_manual_document_number = fields.Boolean(compute='_compute_l10n_latam_manual_document_number', string='Manual Number')
+
+    @api.depends('l10n_latam_document_type_id', 'journal_id')
+    def _compute_l10n_latam_manual_document_number(self):
+        recs_with_journal_id = self.filtered(lambda x: x.journal_id and x.journal_id.l10n_latam_use_documents)
+        for rec in recs_with_journal_id:
+            rec.l10n_latam_manual_document_number = True if rec.journal_id.type == 'purchase' else False
+        remaining = self - recs_with_journal_id
+        remaining.l10n_latam_manual_document_number = False
 
     @api.depends('journal_id', 'date', 'state', 'highest_name')
     def _compute_name(self):

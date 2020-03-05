@@ -184,6 +184,20 @@ class AccountMove(models.Model):
             return "SELECT {field} FROM {table} {where_string} ORDER BY SUBSTRING({field}, 5, 15) DESC LIMIT 1 FOR UPDATE"
         return super()._get_highest_query()
 
+    @api.depends('l10n_latam_document_type_id', 'journal_id')
+    def _compute_l10n_latam_manual_document_number(self):
+        """ If customer invoice is related to a manual journal of if the document type is a "LIQUIDO PRODUCTO" one then
+        will set manual_document_number = True """
+        super()._compute_l10n_latam_manual_document_number()
+
+        manual_pos_system = ['II_IM', 'RLI_RLM', 'BFERCEL', 'FEERCELP', 'FEERCEL', 'CPERCEL']
+        liq_doc_codes = ['58', '60', '61']
+
+        arg_sale_recs = self.filtered(lambda x: x.company_id.country_id == self.env.ref('base.ar') and x.l10n_latam_use_documents)
+        for rec in arg_sale_recs:
+            if rec.journal_id.l10n_ar_afip_pos_system in manual_pos_system or rec.l10n_latam_document_type_id.code in liq_doc_codes:
+                rec.l10n_latam_manual_document_number = True
+
     # def _get_last_sequence_domain(self, relaxed=False):
     #     where_string, param = super()._get_last_sequence_domain(relaxed)
     #     return where_string, param
