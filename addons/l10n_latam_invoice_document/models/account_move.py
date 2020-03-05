@@ -18,7 +18,7 @@ class AccountMove(models.Model):
         'l10n_latam.document.type', string='Document Type', readonly=False, auto_join=True, index=True,
         states={'posted': [('readonly', True)]}, compute='_compute_l10n_latam_document_type', store=True)
     l10n_latam_document_number = fields.Char(
-        string='Document Number', readonly=True, states={'draft': [('readonly', False)]})
+        string='Document Number', readonly=True, states={'draft': [('readonly', False)]}, compute='_compute_l10n_latam_document_number', store=True)
     l10n_latam_use_documents = fields.Boolean(related='journal_id.l10n_latam_use_documents')
     l10n_latam_country_code = fields.Char(
         related='company_id.country_id.code', help='Technical field used to hide/show fields regarding the localization')
@@ -78,9 +78,10 @@ class AccountMove(models.Model):
 
         return super(AccountMove, self)._get_starting_sequence()
 
-    @api.onchange('l10n_latam_document_number', 'l10n_latam_document_type_id')
+    # we add the onchange because odoo dont call the onchange on the depends depending on iteself, so we force it with the onchange
+    @api.onchange('l10n_latam_document_number')
+    @api.depends('l10n_latam_document_number', 'l10n_latam_document_type_id')
     def _compute_l10n_latam_document_number(self):
-        res = {}
         for rec in self.filtered(lambda x: x.l10n_latam_document_number and x.l10n_latam_document_type_id):
             formated_number = rec.l10n_latam_document_type_id._format_document_number(rec.l10n_latam_document_number)
             if formated_number != rec.l10n_latam_document_number:
