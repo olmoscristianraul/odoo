@@ -96,6 +96,7 @@ class AccountMove(models.Model):
             if formated_number != rec.l10n_latam_document_number:
                 rec.l10n_latam_document_number = formated_number
 
+    @api.depends()
     def _compute_l10n_latam_amount_and_taxes(self):
         recs_invoice = self.filtered(lambda x: x.is_invoice())
         for invoice in recs_invoice:
@@ -185,6 +186,7 @@ class AccountMove(models.Model):
             rec.l10n_latam_document_type_id = document_types and document_types[0].id
             # rec._onchange_document_type()
 
+    @api.depends()
     def _compute_invoice_taxes_by_group(self):
         report_or_portal_view = 'commit_assetsbundle' in self.env.context or \
             not self.env.context.get('params', {}).get('view_type') == 'form'
