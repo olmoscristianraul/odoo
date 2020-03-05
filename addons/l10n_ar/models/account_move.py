@@ -197,26 +197,3 @@ class AccountMove(models.Model):
         for rec in arg_sale_recs:
             if rec.journal_id.l10n_ar_afip_pos_system in manual_pos_system or rec.l10n_latam_document_type_id.code in liq_doc_codes:
                 rec.l10n_latam_manual_document_number = True
-
-    # def _get_last_sequence_domain(self, relaxed=False):
-    #     where_string, param = super()._get_last_sequence_domain(relaxed)
-    #     return where_string, param
-    #     if self.l10n_latam_use_documents and self.journal_id.l10n_ar_share_sequences:
-    #         where_string += " AND l10n_ar_letter"
-    #         param['l10n_ar_letter'] = self.l10n_latam_document_type_id.l10n_ar_letter
-    #         # remove the latam_document_type_id
-    #         #where_string += " AND l10n_latam_document_type_id = %(l10n_latam_document_type_id)s"
-    #         #param['l10n_latam_document_type_id'] = self.l10n_latam_document_type_id.id or 0
-    #         #where_string += "AND l10n_latam_document_type_id = %()"
-    #     return where_string, param
-
-    """
-    #         if self.l10n_ar_share_sequences and self.l10n_ar_sequence_ids.filtered(
-    #            lambda x: x.l10n_ar_letter == document.l10n_ar_letter):
-    #             continue
-    """
-
-    # @api.constrains('name', 'journal_id', 'state')
-    # def _check_unique_sequence_number(self):
-
-
