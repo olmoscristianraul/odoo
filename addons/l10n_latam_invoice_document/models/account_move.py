@@ -47,8 +47,6 @@ class AccountMove(models.Model):
                 for rec in use_document:
                     if rec.is_sale_document():
                         rec._set_next_sequence()
-                    else:
-                        rec.name = rec.name = "%s %s" % (rec.l10n_latam_document_type_id.doc_code_prefix, rec.l10n_latam_document_number)
             else:
                 use_document.name = '/'
         super(AccountMove, self - use_document)._compute_name()
@@ -87,7 +85,7 @@ class AccountMove(models.Model):
 
         return super(AccountMove, self)._get_starting_sequence()
 
-    @api.onchange('name', 'l10n_latam_document_type_id')
+    @api.onchange('name', 'partner_id', 'l10n_latam_document_type_id')
     def onchange_name(self):
         document = self.l10n_latam_document_type_id
         if self.name and self.name != '/':
@@ -100,7 +98,7 @@ class AccountMove(models.Model):
                     document_number = document._format_document_number(res.group(2))
                 else:
                     document_number = document.search([('code', '=', 1)])._format_document_number(res.group(2))
-                self.name = (document.doc_code_prefix or '<DOC>') + ' ' + document_number
+                self.name = (document.doc_code_prefix or 'DOC') + ' ' + document_number
 
     def _compute_l10n_latam_document_number(self):
         recs_with_name = self.filtered(lambda x: x.name != '/')
