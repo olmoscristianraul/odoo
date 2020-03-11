@@ -32,7 +32,7 @@ class AccountMove(models.Model):
         remaining = self - recs_with_journal_id
         remaining.l10n_latam_manual_document_number = False
 
-    @api.depends('journal_id', 'date', 'state', 'highest_name')
+    @api.depends('journal_id', 'date', 'state', 'highest_name', 'l10n_latam_manual_document_number')
     def _compute_name(self):
         """ Change the way that the use_document moves name is computed:
 
@@ -43,12 +43,23 @@ class AccountMove(models.Model):
            * set the name with the values of the document type prefix and document_number """
         use_document = self.filtered(lambda x: x.journal_id.l10n_latam_use_documents)
         if use_document:
-            if use_document.filtered(lambda x: x.l10n_latam_document_type_id and x.state == 'posted'):
-                for rec in use_document:
-                    if rec.is_sale_document():
-                        rec._set_next_sequence()
-            else:
-                use_document.name = '/'
+            manual_number = use_document.filtered(lambda x: x.l10n_latam_manual_document_number)
+            manual_number.name = ''
+
+            print(" ---- manual_number %s" % manual_number)
+
+            not_manual = use_document - manual_number
+            sale_doc = not_manual.filtered(lambda x: x.is_sale_document())
+            posted_sale_doc = sale_doc.filtered(lambda x: x.l10n_latam_document_type_id and x.state == 'posted')
+            for rec in posted_sale_doc:
+                if rec.is_sale_document():
+                    rec._set_next_sequence()
+
+            unposted_not_manual_sale = sale_doc - posted_sale_doc
+            unposted_not_manual_sale.name = '/'
+
+            purchase_doc = not_manual.filtered(lambda x: x.is_purchase_document() and not rec.name)
+            purchase_doc.name = '/'
         super(AccountMove, self - use_document)._compute_name()
 
     @api.onchange('l10n_latam_document_type_id', 'partner_id')
