@@ -11,15 +11,6 @@ class AccountMove(models.Model):
 
     _inherit = 'account.move'
 
-    @api.model
-    def _l10n_ar_get_document_number_parts(self, document_number, document_type_code):
-        # import shipments
-        if document_type_code in ['66', '67']:
-            pos = invoice_number = '0'
-        else:
-            pos, invoice_number = document_number.split('-')
-        return {'invoice_number': int(invoice_number), 'point_of_sale': int(pos)}
-
     l10n_ar_afip_responsibility_type_id = fields.Many2one(
         'l10n_ar.afip.responsibility.type', string='AFIP Responsibility Type', help='Defined by AFIP to'
         ' identify the type of responsibilities that a person or a legal entity could have and that impacts in the'
