@@ -186,5 +186,5 @@ class AccountMove(models.Model):
 
         arg_sale_recs = self.filtered(lambda x: x.company_id.country_id == self.env.ref('base.ar') and x.l10n_latam_use_documents)
         for rec in arg_sale_recs:
-            if rec.journal_id.l10n_ar_afip_pos_system in manual_pos_system or rec.l10n_latam_document_type_id.code in liq_doc_codes:
+            if (rec.journal_id.l10n_ar_afip_pos_system in manual_pos_system and not rec.highest_name) or rec.l10n_latam_document_type_id.code in liq_doc_codes:
                 rec.l10n_latam_manual_document_number = True
