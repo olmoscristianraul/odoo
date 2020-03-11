@@ -45,8 +45,8 @@
                     attrs="{'invisible': [('l10n_latam_use_documents', '=', False)], 'required': [('l10n_latam_use_documents', '=', True)], 'readonly': [('state', '!=', 'draft')]}"
                     domain="[('id', 'in', l10n_latam_available_document_type_ids)]" options="{'no_open': True, 'no_create': True}"/>
                 <field name="l10n_latam_manual_document_number"/>
-                <!-- <field name="l10n_latam_document_number"
-                    attrs="{'invisible': [('l10n_latam_manual_document_number', '=', False)], 'required': [('l10n_latam_manual_document_number', '=', True)], 'readonly': [('state', '!=', 'draft')]}"/> -->
+                <field name="l10n_latam_document_number"
+                    attrs="{'invisible': [('l10n_latam_manual_document_number', '=', False)], 'required': [('l10n_latam_manual_document_number', '=', True)], 'readonly': [('state', '!=', 'draft')]}"/>
             </field>
         </field>
     </record>
