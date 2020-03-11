@@ -2,7 +2,6 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
-from functools import partial
 import re
 from odoo.tools.misc import formatLang
 
@@ -18,7 +17,8 @@ class AccountMove(models.Model):
         'l10n_latam.document.type', string='Document Type', readonly=False, auto_join=True, index=True,
         states={'posted': [('readonly', True)]}, compute='_compute_l10n_latam_document_type', store=True)
     l10n_latam_document_number = fields.Char(
-        string='Document Number', readonly=True, states={'draft': [('readonly', False)]}, compute='_compute_l10n_latam_document_number', store=True)
+        compute='_compute_l10n_latam_document_number',
+        string='Document Number', readonly=True, states={'draft': [('readonly', False)]})
     l10n_latam_use_documents = fields.Boolean(related='journal_id.l10n_latam_use_documents')
     l10n_latam_country_code = fields.Char(
         related='company_id.country_id.code', help='Technical field used to hide/show fields regarding the localization')
@@ -87,14 +87,31 @@ class AccountMove(models.Model):
 
         return super(AccountMove, self)._get_starting_sequence()
 
-    # we add the onchange because odoo dont call the onchange on the depends depending on iteself, so we force it with the onchange
-    @api.onchange('l10n_latam_document_number')
-    @api.depends('l10n_latam_document_number', 'l10n_latam_document_type_id')
+    @api.onchange('name', 'l10n_latam_document_type_id')
+    def onchange_name(self):
+        document = self.l10n_latam_document_type_id
+        if self.name and self.name != '/':
+            if document.code in ['66', '67']:
+                pass
+                # prefix_pos_number = re.fullmatch(r"(?P<prefix>[A-Z,\-,a-z]*)\s(?P<number>\d{16})", self.name)
+            else:
+                res = re.match(r"(?P<prefix>[A-Z,\-,a-z]*)\s*(?P<number>.*)", self.name)
+                if document:
+                    document_number = document._format_document_number(res.group(2))
+                else:
+                    document_number = document.search([('code', '=', 1)])._format_document_number(res.group(2))
+                self.name = (document.doc_code_prefix or '<DOC>') + ' ' + document_number
+
     def _compute_l10n_latam_document_number(self):
-        for rec in self.filtered(lambda x: x.l10n_latam_document_number and x.l10n_latam_document_type_id):
-            formated_number = rec.l10n_latam_document_type_id._format_document_number(rec.l10n_latam_document_number)
-            if formated_number != rec.l10n_latam_document_number:
-                rec.l10n_latam_document_number = formated_number
+        recs_with_name = self.filtered(lambda x: x.name != '/')
+        for rec in recs_with_name:
+            name = rec.name
+            doc_code_prefix = rec.l10n_latam_document_type_id.doc_code_prefix
+            if doc_code_prefix and name:
+                name = name.split(" ", 1)[-1]
+            rec.l10n_latam_document_number = name
+        remaining = self - recs_with_name
+        remaining.l10n_latam_document_number = False
 
     @api.depends()
     def _compute_l10n_latam_amount_and_taxes(self):
