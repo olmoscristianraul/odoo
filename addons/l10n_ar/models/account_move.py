@@ -58,17 +58,6 @@ class AccountMove(models.Model):
             afip_concept = '3'
         return afip_concept
 
-    def _get_l10n_latam_documents_domain(self):
-        self.ensure_one()
-        domain = super()._get_l10n_latam_documents_domain()
-        if self.journal_id.company_id.country_id == self.env.ref('base.ar'):
-            letters = self.journal_id._get_journal_letter(counterpart_partner=self.partner_id.commercial_partner_id)
-            domain += ['|', ('l10n_ar_letter', '=', False), ('l10n_ar_letter', 'in', letters)]
-            codes = self.journal_id._get_journal_codes()
-            if codes:
-                domain.append(('code', 'in', codes))
-        return domain
-
     def _check_argentinian_invoice_taxes(self):
 
         # check vat on companies thats has it (Responsable inscripto)
@@ -157,6 +146,17 @@ class AccountMove(models.Model):
             })
         return super()._reverse_moves(default_values_list=default_values_list, cancel=cancel)
 
+    def _get_l10n_latam_documents_domain(self):
+        self.ensure_one()
+        domain = super()._get_l10n_latam_documents_domain()
+        if self.journal_id.company_id.country_id == self.env.ref('base.ar'):
+            letters = self.journal_id._get_journal_letter(counterpart_partner=self.partner_id.commercial_partner_id)
+            domain += ['|', ('l10n_ar_letter', '=', False), ('l10n_ar_letter', 'in', letters)]
+            codes = self.journal_id._get_journal_codes()
+            if codes:
+                domain.append(('code', 'in', codes))
+        return domain
+
     def _get_formatted_sequence(self, number=0):
         return "%s %05d-%08d" % (self.l10n_latam_document_type_id.doc_code_prefix,
                                  self.journal_id.l10n_ar_afip_pos_number, number)
@@ -169,22 +169,14 @@ class AccountMove(models.Model):
                 return self._get_formatted_sequence()
         return super()._get_starting_sequence()
 
-    def _get_highest_query(self):
-        # if self.l10n_latam_use_documents and self.journal_id.l10n_ar_share_sequences:
-        if self.l10n_latam_use_documents:
-            return "SELECT {field} FROM {table} {where_string} ORDER BY SUBSTRING({field}, 5, 15) DESC LIMIT 1 FOR UPDATE"
-        return super()._get_highest_query()
-
-    @api.depends('l10n_latam_document_type_id', 'journal_id')
-    def _compute_l10n_latam_manual_document_number(self):
-        """ If customer invoice is related to a manual journal of if the document type is a "LIQUIDO PRODUCTO" one then
-        will set manual_document_number = True """
-        super()._compute_l10n_latam_manual_document_number()
-
-        manual_pos_system = ['II_IM', 'RLI_RLM', 'BFERCEL', 'FEERCELP', 'FEERCEL', 'CPERCEL']
-        liq_doc_codes = ['58', '60', '61']
-
-        arg_sale_recs = self.filtered(lambda x: x.company_id.country_id == self.env.ref('base.ar') and x.l10n_latam_use_documents)
-        for rec in arg_sale_recs:
-            if (rec.journal_id.l10n_ar_afip_pos_system in manual_pos_system and not rec.highest_name) or rec.l10n_latam_document_type_id.code in liq_doc_codes:
-                rec.l10n_latam_manual_document_number = True
+    def _get_last_sequence_domain(self, relaxed=False):
+        where_string, param = super(AccountMove, self)._get_last_sequence_domain(relaxed)
+        if self.company_id.country_id == self.env.ref('base.ar') and self.l10n_latam_use_documents:
+            if not self.journal_id.l10n_ar_share_sequences:
+                where_string += " AND l10n_latam_document_type_id = %(l10n_latam_document_type_id)s"
+                param['l10n_latam_document_type_id'] = self.l10n_latam_document_type_id.id or 0
+            elif self.journal_id.l10n_ar_share_sequences:
+                where_string += " AND l10n_latam_document_type_id in %(l10n_latam_document_type_ids)s"
+                param['l10n_latam_document_type_ids'] = tuple(self.l10n_latam_document_type_id.search(
+                    [('l10n_ar_letter', '=', self.l10n_latam_document_type_id.l10n_ar_letter)]).ids)
+        return where_string, param

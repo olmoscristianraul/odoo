@@ -11,6 +11,20 @@ class AccountMoveReversal(models.TransientModel):
     l10n_latam_document_type_id = fields.Many2one('l10n_latam.document.type', 'Document Type', ondelete='cascade', domain="[('id', 'in', l10n_latam_available_document_type_ids)]", compute='_compute_document_type', readonly=False)
     l10n_latam_available_document_type_ids = fields.Many2many('l10n_latam.document.type', compute='_compute_document_type')
     l10n_latam_document_number = fields.Char(string='Document Number')
+    l10n_latam_manual_document_number = fields.Boolean(compute='_compute_l10n_latam_manual_document_number', string='Manual Number')
+
+    @api.depends('l10n_latam_document_type_id')
+    def _compute_l10n_latam_manual_document_number(self):
+        for rec in self.filtered('move_ids'):
+            move = rec.move_ids[0]
+            refund = move.new({
+                'type': self._reverse_type_map(move.type),
+                'journal_id': move.journal_id.id,
+                'partner_id': move.partner_id.id,
+                'company_id': move.company_id.id,
+                'l10n_latam_document_type_id': rec.l10n_latam_document_type_id.id,
+            })
+            rec.l10n_latam_manual_document_number = refund.l10n_latam_manual_document_number
 
     @api.model
     def _reverse_type_map(self, move_type):
@@ -52,6 +66,14 @@ class AccountMoveReversal(models.TransientModel):
         res = super()._prepare_default_reversal(move)
         res.update({
             'l10n_latam_document_type_id': self.l10n_latam_document_type_id.id,
-            'name': self.l10n_latam_document_number,
+            'l10n_latam_document_number': self.l10n_latam_document_number,
         })
         return res
+
+    @api.onchange('l10n_latam_document_number', 'l10n_latam_document_type_id')
+    def _onchange_l10n_latam_document_number(self):
+        if self.l10n_latam_document_type_id:
+            l10n_latam_document_number = self.l10n_latam_document_type_id._format_document_number(
+                self.l10n_latam_document_number)
+            if self.l10n_latam_document_number != l10n_latam_document_number:
+                self.l10n_latam_document_number = l10n_latam_document_number

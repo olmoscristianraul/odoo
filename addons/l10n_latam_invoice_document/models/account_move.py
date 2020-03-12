@@ -17,7 +17,7 @@ class AccountMove(models.Model):
         'l10n_latam.document.type', string='Document Type', readonly=False, auto_join=True, index=True,
         states={'posted': [('readonly', True)]}, compute='_compute_l10n_latam_document_type', store=True)
     l10n_latam_document_number = fields.Char(
-        compute='_compute_l10n_latam_document_number',
+        compute='_compute_l10n_latam_document_number', inverse='_inverse_l10n_latam_document_number',
         string='Document Number', readonly=True, states={'draft': [('readonly', False)]})
     l10n_latam_use_documents = fields.Boolean(related='journal_id.l10n_latam_use_documents')
     l10n_latam_country_code = fields.Char(
@@ -26,14 +26,30 @@ class AccountMove(models.Model):
 
     @api.depends('l10n_latam_document_type_id', 'journal_id')
     def _compute_l10n_latam_manual_document_number(self):
+        """ Indicates if this document type use a sequence or numbering is made manually
+        """
         recs_with_journal_id = self.filtered(lambda x: x.journal_id and x.journal_id.l10n_latam_use_documents)
         for rec in recs_with_journal_id:
             rec.l10n_latam_manual_document_number = True if rec.journal_id.type == 'purchase' else False
         remaining = self - recs_with_journal_id
         remaining.l10n_latam_manual_document_number = False
 
-    @api.depends('journal_id', 'date', 'state', 'highest_name', 'l10n_latam_manual_document_number')
+    @api.onchange('l10n_latam_document_type_id', 'l10n_latam_document_number')
+    def _inverse_l10n_latam_document_number(self):
+        for rec in self.filtered('l10n_latam_document_type_id'):
+            if not rec.l10n_latam_document_number:
+                rec.name = '/'
+            else:
+                l10n_latam_document_number = rec.l10n_latam_document_type_id._format_document_number(rec.l10n_latam_document_number)
+                if rec.l10n_latam_document_number != l10n_latam_document_number:
+                    rec.l10n_latam_document_number = l10n_latam_document_number
+                rec.name = "%s %s" % (rec.l10n_latam_document_type_id.doc_code_prefix, l10n_latam_document_number)
+
+    @api.depends('l10n_latam_document_type_id')
     def _compute_name(self):
+        # TODO ajustar este readme
+        # Si estamos en facturas que usan tipo de docuemnto y no hay tipo de documento seleccionado entonces devolvemso / para que no haya name
+        # si estamos en facturas que usan tipo de documento y se enumran manualmente y no hay name o la factura está en borrador y no fue posteada, restablecemos a / (esto es para cuando se cambia el tipo de documento)
         """ Change the way that the use_document moves name is computed:
 
         * If use document but does not have document type selected then name = ''
@@ -41,51 +57,22 @@ class AccountMove(models.Model):
           * compute the next sequence (could be the last one or a starting one)
         * If use document, has document type and is a purchase document:
            * set the name with the values of the document type prefix and document_number """
-        use_document = self.filtered(lambda x: x.journal_id.l10n_latam_use_documents)
-        if use_document:
-            manual_number = use_document.filtered(lambda x: x.l10n_latam_manual_document_number)
-            manual_number.name = ''
+        without_doc_type = self.filtered(lambda x: x.journal_id.l10n_latam_use_documents and not x.l10n_latam_document_type_id)
+        manual_documents = self.filtered(lambda x: x.journal_id.l10n_latam_use_documents and x.l10n_latam_manual_document_number)
+        (without_doc_type + manual_documents.filtered(lambda x: not x.name or x.name and x.state == 'draft' and not x.posted_before)).name = '/'
+        super(AccountMove, self - without_doc_type - manual_documents)._compute_name()
 
-            print(" ---- manual_number %s" % manual_number)
-
-            not_manual = use_document - manual_number
-            sale_doc = not_manual.filtered(lambda x: x.is_sale_document())
-            posted_sale_doc = sale_doc.filtered(lambda x: x.l10n_latam_document_type_id and x.state == 'posted')
-            for rec in posted_sale_doc:
-                if rec.is_sale_document():
-                    rec._set_next_sequence()
-
-            unposted_not_manual_sale = sale_doc - posted_sale_doc
-            unposted_not_manual_sale.name = '/'
-
-            purchase_doc = not_manual.filtered(lambda x: x.is_purchase_document() and not rec.name)
-            purchase_doc.name = '/'
-        super(AccountMove, self - use_document)._compute_name()
-
-    @api.onchange('l10n_latam_document_type_id', 'partner_id')
-    def _onchange_document_type(self):
-        for rec in self.filtered(lambda m: m.l10n_latam_use_documents and m.l10n_latam_document_type_id):
-            if rec.is_sale_document():
-                rec._compute_highest_name()
-
-    @api.depends('journal_id', 'date', 'state')
+    @api.depends('l10n_latam_document_type_id')
     def _compute_highest_name(self):
-        latam_bills = self.filtered(lambda b: b.is_purchase_document() and b.l10n_latam_use_documents)
-        latam_bills.highest_name = ''
-        super(AccountMove, self - latam_bills)._compute_highest_name()
+        manual_records = self.filtered('l10n_latam_manual_document_number')
+        manual_records.highest_name = ''
+        super(AccountMove, self - manual_records)._compute_highest_name()
 
     @api.model
     def _deduce_sequence_number_reset(self, name):
         if self.l10n_latam_use_documents:
             return 'never'
         return super(AccountMove, self)._deduce_sequence_number_reset(name)
-
-    def _get_last_sequence_domain(self, relaxed=False):
-        where_string, param = super(AccountMove, self)._get_last_sequence_domain(relaxed)
-        if self.l10n_latam_use_documents:
-            where_string += " AND l10n_latam_document_type_id = %(l10n_latam_document_type_id)s"
-            param['l10n_latam_document_type_id'] = self.l10n_latam_document_type_id.id or 0
-        return where_string, param
 
     def _get_starting_sequence(self):
         if self.journal_id.l10n_latam_use_documents:
@@ -96,21 +83,7 @@ class AccountMove(models.Model):
 
         return super(AccountMove, self)._get_starting_sequence()
 
-    @api.onchange('name', 'partner_id', 'l10n_latam_document_type_id')
-    def onchange_name(self):
-        document = self.l10n_latam_document_type_id
-        if self.name and self.name != '/':
-            if document.code in ['66', '67']:
-                pass
-                # prefix_pos_number = re.fullmatch(r"(?P<prefix>[A-Z,\-,a-z]*)\s(?P<number>\d{16})", self.name)
-            else:
-                res = re.match(r"(?P<prefix>[A-Z,\-,a-z]*)\s*(?P<number>.*)", self.name)
-                if document:
-                    document_number = document._format_document_number(res.group(2))
-                else:
-                    document_number = document.search([('code', '=', 1)])._format_document_number(res.group(2))
-                self.name = (document.doc_code_prefix or 'DOC') + ' ' + document_number
-
+    @api.depends('name')
     def _compute_l10n_latam_document_number(self):
         recs_with_name = self.filtered(lambda x: x.name != '/')
         for rec in recs_with_name:
@@ -163,7 +136,6 @@ class AccountMove(models.Model):
     def _check_l10n_latam_documents(self):
         """ This constraint checks that if a invoice is posted and does not have a document type configured will raise
         an error. This only applies to invoices related to journals that has the "Use Documents" set as True.
-
         And if the document type is set then check if the invoice number has been set, because a posted invoice
         without a document number is not valid in the case that the related journals has "Use Docuemnts" set as True """
         validated_invoices = self.filtered(lambda x: x.l10n_latam_use_documents and x.state == 'posted')
@@ -172,10 +144,10 @@ class AccountMove(models.Model):
             raise ValidationError(_(
                 'The journal require a document type but not document type has been selected on invoices %s.' % (
                     without_doc_type.ids)))
-        valid = re.compile(r'[A-Z\-]+\s*\d{1,5}\-\d{1,8}')
-        without_number = validated_invoices.filtered(lambda x: not valid.match(x.name))
+        without_number = validated_invoices.filtered(
+            lambda x: not x.l10n_latam_document_number and x.l10n_latam_manual_document_number)
         if without_number:
-            raise ValidationError(_('The document number on the following invoices is set or not valid %s.' % (
+            raise ValidationError(_('Please set the document number on the following invoices %s.' % (
                 without_number.ids)))
 
     @api.constrains('type', 'l10n_latam_document_type_id')
@@ -249,7 +221,8 @@ class AccountMove(models.Model):
     def _check_unique_vendor_number(self):
         """ The constraint _check_unique_sequence_number is valid for customer bills but not valid for us on vendor
         bills because the uniqueness must be per partner """
-        for rec in self.filtered(lambda x: x.is_purchase_document() and x.l10n_latam_use_documents):
+        for rec in self.filtered(
+                lambda x: x.name and x.name != '/' and x.is_purchase_document() and x.l10n_latam_use_documents):
             domain = [
                 ('type', '=', rec.type),
                 # by validating name we validate l10n_latam_document_type_id
@@ -257,13 +230,8 @@ class AccountMove(models.Model):
                 ('company_id', '=', rec.company_id.id),
                 ('id', '!=', rec.id),
                 ('commercial_partner_id', '=', rec.commercial_partner_id.id),
-                ('posted_before', '=', True),
+                # allow to have to equal if they are cancelled
+                ('state', '!=', 'cancel'),
             ]
             if rec.search(domain):
                 raise ValidationError(_('Vendor bill number must be unique per vendor and company.'))
-
-    def unlink(self):
-        """ When using documents, on vendor bills the document_number is set manually by the number given from the vendor,
-        the odoo sequence is not used. In this case We allow to delete vendor bills with document_number/move_name """
-        self.filtered(lambda x: x.type in x.get_purchase_types() and x.state in ('draft', 'cancel') and x.l10n_latam_use_documents).write({'name': '/'})
-        return super().unlink()
