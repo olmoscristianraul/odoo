@@ -3,132 +3,37 @@
 
    <template id="partner_info" name="Latam partner">
 
-        <!-- <div class="clearfix"/>
-        <h3>Billing information</h3>
-        <div t-attf-class="form-group #{error.get('company_name') and 'has-error' or ''} col-lg-6">
-            <t t-if="partner.commercial_partner_id.is_company and partner.commercial_partner_id != partner">
-                <label class="control-label label-optional" for="company_name">Company Name</label>
-                <p class="form-control" t-esc="partner.commercial_company_name" readonly="1"/>
-            </t>
-        </div> -->
-        <div class="clearfix"/>
-
         <!-- show document type -->
-        <div t-attf-class="form-group #{error.get('l10n_latam_identification_type_id') and 'has-error' or ''} col-lg-3">
-            <label class="control-label" for="l10n_latam_identification_type_id">Tipo de Documento</label>
-            <!-- <input name="commercial_partner_id" class="form-control" t-att-value="partner.commercial_partner_id.id" type='hidden'/> -->
-            <!-- <t t-set="document_type" t-value="partner.commercial_partner_id.l10n_latam_identification_type_id"/> -->
+        <div t-attf-class="form-group #{error.get('l10n_latam_identification_type_id') and 'o_has_error' or ''} col-xl-6">
+            <label class="col-form-label" for="l10n_latam_identification_type_id">Tipo de Documento</label>
 
-            <t t-set="document_type" t-value="partner.commercial_partner_id.l10n_latam_identification_type_id"/>
-            <t t-if="document_type">
-                <p class="form-control" t-esc="document_type.code" readonly="1" title="Changing your document type is not allowed. Please contact us directly for this operation."/>
-                <input name="l10n_latam_identification_type_id" class="form-control" t-att-value="document_type.id" type='hidden'/>
-            </t>
-            <t t-else="">
-                <select name="l10n_latam_identification_type_id" class="form-control">
+            <t t-set="identification_type" t-value="partner.l10n_latam_identification_type_id"/>
+            <t t-if="partner.can_edit_vat()">
+                <select name="l10n_latam_identification_type_id"  t-attf-class="form-control #{error.get('l10n_latam_identification_type_id') and 'is-invalid' or ''}">
+                <!--
+                    t-att-readonly="None if partner.can_edit_vat() else '1'"
+                    t-att-title="None if partner.can_edit_vat() else 'Changing Identification type is not allowed once document(s) have been issued for your account. Please contact us directly for this operation.'"
+                -->
                     <option value="">Tipo de Documento...</option>
-                    <t t-foreach="document_categories or []" t-as="document_category">
-                        <option t-att-value="document_category.id" t-att-selected="str(document_category.id) == l10n_latam_identification_type_id">
-                            <t t-esc="document_category.code"/>
+                    <t t-foreach="identification_types or []" t-as="identification_type">
+                        <option t-att-value="identification_type.id" t-att-selected="identification_type.id == int(l10n_latam_identification_type_id) if l10n_latam_identification_type_id else identification_type.id == partner.l10n_latam_identification_type_id.id">
+                            <t t-esc="identification_type.name"/>
                         </option>
                     </t>
                 </select>
             </t>
+            <!-- <t t-else="">
+                <p class="form-control" t-esc="identification_type.name" readonly="1" title="Changing Identification type is not allowed once document(s) have been issued for your account. Please contact us directly for this operation."/>
+                <input type='hidden' name="l10n_latam_identification_type_id" class="form-control" t-att-value="identification_type.id"/>
+            </t> -->
         </div>
 
-        <!-- agregamos document number -->
-        <!-- <div t-attf-class="form-group #{error.get('main_id_number') and 'has-error' or ''} col-lg-3">
-            <label class="control-label" for="main_id_number">Número de Documento</label>
-            <input type="text" name="main_id_number" class="form-control" t-att-value="partner.commercial_partner_id.main_id_number or main_id_number" t-att-readonly="'readonly' if partner.commercial_partner_id.main_id_number else None" t-att-title="'Changing your document number is not allowed. Please contact us directly for this operation.' if partner.commercial_partner_id.main_id_number else None"/>
-        </div> -->
-
-        <!-- agregamos responsabilidad afiy type -->
-        <!-- <div t-attf-class="form-group #{error.get('afip_responsability_type_id') and 'has-error' or ''} col-lg-6">
-            <label class="control-label" for="afip_responsability_type_id">Tipo de Responsabilidad AFIP</label>
-            <t t-set="afip_category" t-value="partner.commercial_partner_id.afip_responsability_type_id"/>
-            <t t-if="afip_category">
-                <p class="form-control" t-esc="afip_category.name" readonly="1" title="Changing your document type is not allowed. Please contact us directly for this operation."/>
-                <input name="afip_responsability_type_id" class="form-control" t-att-value="afip_category.id" type='hidden'/>
-            </t>
-            <t t-else="">
-                <select name="afip_responsability_type_id" class="form-control">
-                    <option value="">Tipo de Responsabilidad AFIP...</option>
-                    <t t-foreach="afip_responsabilities or []" t-as="afip_type">
-                        <option t-att-value="afip_type.id" t-att-selected="str(afip_type.id) == afip_responsability_type_id">
-                            <t t-esc="afip_type.name"/>
-                        </option>
-                    </t>
-                </select>
-            </t>
-        </div> -->
-
-        <div class="clearfix"/>
     </template>
 
-
     <template id="portal_my_details" name="portal_my_details" inherit_id="portal.portal_my_details">
-        <!-- <xpath expr="//label[@for='company_name']/.." position="replace">
-        </xpath> -->
-        <xpath expr="//button[@type='submit']/.." position="before">
+        <xpath expr="//input[@name='vat']/.." position="before">
             <t t-call="l10n_latam_website_sale.partner_info"/>
         </xpath>
     </template>
-
-    <template id="address" name="Address Management" inherit_id="website_sale.address">
-
-        <!-- <xpath expr="//label[@for='company_name']/.." position="replace">
-        </xpath> -->
-
-        <xpath expr="//input[@name='field_required']" position="before">
-            <t t-if="mode[1] == 'billing'">
-                <t t-set="l10n_latam_identification_type_id" t-value="'l10n_latam_identification_type_id' in checkout and checkout['l10n_latam_identification_type_id']"/>
-                <!-- <t t-set="main_id_number" t-value="'main_id_number' in checkout and checkout['main_id_number']"/> -->
-                <!-- <t t-set="afip_responsability_type_id" t-value="'afip_responsability_type_id' in checkout and checkout['afip_responsability_type_id']"/> -->
-                <t t-call="l10n_latam_website_sale.partner_info"/>
-            </t>
-        </xpath>
-
-        <!-- mostramos negrita para zip -->
-        <!-- <t t-if="'zip' in zip_city and zip_city.index('zip') &lt; zip_city.index('city')" position="replace">
-            <t t-if="'zip' in zip_city and zip_city.index('zip') &lt; zip_city.index('city')">
-                <div t-attf-class="form-group #{error.get('zip') and 'o_has_error' or ''} col-md-4 div_zip">
-                    <label class="col-form-label" for="zip">Zip Code</label>
-                    <input type="text" name="zip" t-att-value="'zip' in checkout and checkout['zip']" class="form-control" t-attf-class="form-control #{error.get('zip') and 'is-invalid' or ''}"/>
-                </div>
-            </t>
-        </t>
-        <t t-if="'zip' in zip_city and zip_city.index('zip') &gt; zip_city.index('city')" position="replace">
-            <t t-if="'zip' in zip_city and zip_city.index('zip') &gt; zip_city.index('city')">
-                <div t-attf-class="form-group #{error.get('zip') and 'o_has_error' or ''} col-md-4 div_zip">
-                    <label class="col-form-label" for="zip">Zip Code</label>
-                    <input type="text" name="zip" t-att-value="'zip' in checkout and checkout['zip']" class="form-control" t-attf-class="form-control #{error.get('zip') and 'is-invalid' or ''}"/>
-                </div>
-            </t>
-        </t>
-
-        <div t-attf-class="form-group #{error.get('city') and 'o_has_error' or ''} col-md-8 div_city">
-            <label class="col-form-label" for="city">City</label>
-            <input type="text" name="city" t-attf-class="form-control #{error.get('city') and 'is-invalid' or ''}" t-att-value="'city' in checkout and checkout['city']"/>
-        </div> -->
-
-    </template>
-
-
-    <!-- <template id="portal_my_details" name="portal_my_details" inherit_id="portal.portal_my_details">
-        <div t-attf-class="form-group #{error.get('vat') and 'o_has_error' or ''} col-xl-6" position="attributes">
-            <attribute name="t-if">False</attribute>
-        </div>
-
-        <label class="col-form-label label-optional" for="zipcode" position="attributes">
-            <attribute name="class">col-form-label</attribute>
-        </label>
-
-   </template>
-
-    <template id="address_b2b" name="Show b2b fields" inherit_id="website_sale.address_b2b">
-        <div t-attf-class="form-group #{error.get('vat') and 'o_has_error' or ''} col-lg-6 div_vat" position="attributes">
-            <attribute name="t-if">False</attribute>
-        </div>
-    </template> -->
 
 </odoo>
