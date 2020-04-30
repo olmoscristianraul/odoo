@@ -101,6 +101,7 @@ Master Data:
         'views/ir_sequence_view.xml',
         'views/report_invoice.xml',
         'report/invoice_report_view.xml',
+        'views/templates.xml',
     ],
     'demo': [
         # we create demo data on different companies (not main_company) to
