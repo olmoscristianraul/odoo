@@ -6,33 +6,32 @@
         <!-- show document type -->
         <div t-attf-class="form-group #{error.get('l10n_latam_identification_type_id') and 'o_has_error' or ''} col-xl-6">
             <label class="col-form-label" for="l10n_latam_identification_type_id">Tipo de Documento</label>
-
-            <t t-set="identification_type" t-value="partner.l10n_latam_identification_type_id"/>
-            <t t-if="partner.can_edit_vat()">
-                <select name="l10n_latam_identification_type_id"  t-attf-class="form-control #{error.get('l10n_latam_identification_type_id') and 'is-invalid' or ''}">
-                <!--
-                    t-att-readonly="None if partner.can_edit_vat() else '1'"
-                    t-att-title="None if partner.can_edit_vat() else 'Changing Identification type is not allowed once document(s) have been issued for your account. Please contact us directly for this operation.'"
-                -->
-                    <option value="">Tipo de Documento...</option>
-                    <t t-foreach="identification_types or []" t-as="identification_type">
-                        <option t-att-value="identification_type.id" t-att-selected="identification_type.id == int(l10n_latam_identification_type_id) if l10n_latam_identification_type_id else identification_type.id == partner.l10n_latam_identification_type_id.id">
-                            <t t-esc="identification_type.name"/>
-                        </option>
-                    </t>
-                </select>
-            </t>
-            <!-- <t t-else="">
-                <p class="form-control" t-esc="identification_type.name" readonly="1" title="Changing Identification type is not allowed once document(s) have been issued for your account. Please contact us directly for this operation."/>
-                <input type='hidden' name="l10n_latam_identification_type_id" class="form-control" t-att-value="identification_type.id"/>
-            </t> -->
+            <select name="l10n_latam_identification_type_id"  t-attf-class="form-control #{error.get('l10n_latam_identification_type_id') and 'is-invalid' or ''}" t-att-readonly="None if can_edit_vat else '1'" t-att-title="None if can_edit_vat else 'Changing Identification type is not allowed once document(s) have been issued for your account. Please contact us directly for this operation.'" >
+                <option value="">Tipo de Documento...</option>
+                <t t-foreach="identification_types or []" t-as="identification_type">
+                    <option t-att-value="identification_type.id" t-att-selected="identification_type.id == int(l10n_latam_identification_type_id) if l10n_latam_identification_type_id else identification_type.id == partner_identification_id">
+                        <t t-esc="identification_type.name"/>
+                    </option>
+                </t>
+            </select>
         </div>
 
     </template>
 
     <template id="portal_my_details" name="portal_my_details" inherit_id="portal.portal_my_details">
         <xpath expr="//input[@name='vat']/.." position="before">
+            <t t-set="can_edit_vat" value="partner.can_edit_vat()"/>
+            <t t-set="partner_identification_id" value="partner.l10n_latam_identification_type_id.id"/>
             <t t-call="l10n_latam_website_sale.partner_info"/>
+        </xpath>
+    </template>
+
+    <template id="address_b2b" inherit_id="website_sale.address_b2b">
+        <xpath expr="//input[@name='vat']/.." position="before">
+            <t t-if="mode[1] == 'billing'" positon="inside">
+                <t t-set="partner_identification_id" value="website_sale_order.partner_id.l10n_latam_identification_type_id.id or 0"/>
+                <t t-call="l10n_latam_website_sale.partner_info"/>
+            </t>
         </xpath>
     </template>
 

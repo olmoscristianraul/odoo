@@ -1,28 +1,29 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo.addons.website_sale.controllers.main import WebsiteSale
+from odoo.addons.portal.controllers.portal import CustomerPortal
 from odoo.http import request, route
 from odoo.exceptions import ValidationError
 from odoo import _
 
 
-class L10nLatamWebsiteSale(WebsiteSale):
+class L10nLatamCustomerPortal(CustomerPortal):
 
-    def _get_mandatory_billing_fields(self):
-        """Inherit method in order to do not break Odoo tests"""
-        res = super()._get_mandatory_billing_fields()
-        return res + ["l10n_latam_identification_type_id", "vat"]
+    OPTIONAL_BILLING_FIELDS = CustomerPortal.OPTIONAL_BILLING_FIELDS + [
+        "l10n_latam_identification_type_id",
+    ]
 
     @route()
-    def address(self, **kw):
-        response = super().address(**kw)
+    def account(self, redirect=None, **post):
+        if post and request.httprequest.method == 'POST':
+            post.update({'l10n_latam_identification_type_id': int(post.pop('l10n_latam_identification_type_id') or False) or False})
+
+        response = super().account(redirect=redirect, **post)
+
         identification_types = request.env['l10n_latam.identification.type'].sudo().search([])
-        response.qcontext.update({
-            'identification_types': identification_types,
-        })
+        response.qcontext.update({'identification_types': identification_types})
         return response
 
-    def checkout_form_validate(self, mode, all_form_values, data):
-        error, error_message = super().checkout_form_validate(mode=mode, all_form_values=all_form_values, data=data)
+    def details_form_validate(self, data):
+        error, error_message = super().details_form_validate(data)
 
         # identification type validation
         partner = request.env.user.partner_id

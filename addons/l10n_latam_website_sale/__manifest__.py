@@ -10,7 +10,7 @@
 """,
     'depends': [
         'portal',
-        # 'website_sale',
+        'website_sale',
     ],
     'data': [
         'views/templates.xml',
