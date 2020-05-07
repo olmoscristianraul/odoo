@@ -221,12 +221,12 @@ class AccountMove(models.Model):
         for vat in vat_taxable:
             base_imp = sum(self.invoice_line_ids.filtered(lambda x: x.tax_ids.filtered(lambda y: y.tax_group_id.l10n_ar_vat_afip_code == vat.tax_line_id.tax_group_id.l10n_ar_vat_afip_code)).mapped('price_subtotal'))
             res += [{'Id': vat.tax_line_id.tax_group_id.l10n_ar_vat_afip_code,
-                     'BaseImp': float_repr(base_imp, precision_digits=2),
-                     'Importe': float_repr(vat.price_subtotal, precision_digits=2)}]
+                     'BaseImp': base_imp,
+                     'Importe': vat.price_subtotal}]
 
         # Report vat 0%
         vat_base_0 = sum(self.invoice_line_ids.filtered(lambda x: x.tax_ids.filtered(lambda y: y.tax_group_id.l10n_ar_vat_afip_code == '3')).mapped('price_subtotal'))
         if vat_base_0:
-            res += [{'Id': '3', 'BaseImp': float_repr(vat_base_0, precision_digits=2), 'Importe': float_repr(0.0, precision_digits=2)}]
+            res += [{'Id': '3', 'BaseImp': vat_base_0, 'Importe': 0.0}]
 
         return res if res else None
