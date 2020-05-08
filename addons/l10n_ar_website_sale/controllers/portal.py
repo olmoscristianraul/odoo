@@ -5,27 +5,29 @@ from odoo.exceptions import ValidationError
 from odoo import _
 
 
-class L10nLatamCustomerPortal(CustomerPortal):
+class L10nARCustomerPortal(CustomerPortal):
 
     OPTIONAL_BILLING_FIELDS = CustomerPortal.OPTIONAL_BILLING_FIELDS + [
-        "l10n_latam_identification_type_id",
-    ]
+        "l10n_latam_identification_type_id", "l10n_ar_afip_responsibility_type_id"]
 
     @route()
     def account(self, redirect=None, **post):
         if post and request.httprequest.method == 'POST':
-            post.update({'l10n_latam_identification_type_id': int(post.pop('l10n_latam_identification_type_id') or False) or False})
+            post.update({'l10n_latam_identification_type_id': int(post.pop('l10n_latam_identification_type_id') or False) or False,
+                         'l10n_ar_afip_responsibility_type_id': int(post.pop('l10n_ar_afip_responsibility_type_id') or False) or False})
 
         response = super().account(redirect=redirect, **post)
 
         identification_types = request.env['l10n_latam.identification.type'].sudo().search([])
-        response.qcontext.update({'identification_types': identification_types})
+        responsibility_types = request.env['l10n_ar.afip.responsibility.type'].sudo().search([])
+        response.qcontext.update({'identification_types': identification_types,
+                                  'responsibility_types': responsibility_types})
         return response
 
     def details_form_validate(self, data):
+        """ Add identification type validation """
         error, error_message = super().details_form_validate(data)
 
-        # identification type validation
         partner = request.env.user.partner_id
         if data.get("l10n_latam_identification_type_id") and data.get("vat") and partner and \
            (partner.l10n_latam_identification_type_id.id != data.get("l10n_latam_identification_type_id") or

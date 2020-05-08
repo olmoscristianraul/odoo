@@ -5,20 +5,20 @@ from odoo.exceptions import ValidationError
 from odoo import _
 
 
-class L10nLatamWebsiteSale(WebsiteSale):
+class L10nARWebsiteSale(WebsiteSale):
 
     def _get_mandatory_billing_fields(self):
         """Inherit method in order to do not break Odoo tests"""
         res = super()._get_mandatory_billing_fields()
-        return res + ["l10n_latam_identification_type_id", "vat"]
+        return res + ["l10n_latam_identification_type_id", "l10n_ar_afip_responsibility_type_id", "vat"]
 
     @route()
     def address(self, **kw):
         response = super().address(**kw)
         identification_types = request.env['l10n_latam.identification.type'].sudo().search([])
-        response.qcontext.update({
-            'identification_types': identification_types,
-        })
+        responsibility_types = request.env['l10n_ar.afip.responsibility.type'].sudo().search([])
+        response.qcontext.update({'identification_types': identification_types,
+                                  'responsibility_types': responsibility_types})
         return response
 
     def checkout_form_validate(self, mode, all_form_values, data):

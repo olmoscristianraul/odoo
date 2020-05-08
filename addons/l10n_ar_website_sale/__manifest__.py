@@ -1,21 +1,24 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    'name': 'LATAM Localization Website',
+    'name': 'Argentinian Website',
     'version': '1.0',
     'category': 'Localization',
     'sequence': 14,
     'author': 'Odoo, ADHOC SA',
-    'summary': 'LATAM Identification Types in Portal and website',
     'description': """
+
+* Be able to see Identification Type and AFIP Responsibility in both portal and shop check address.
+* Show shop taxes included/excluded with a new option that depends on the partner responsibility.
+
 """,
     'depends': [
-        'portal',
         'website_sale',
+        'l10n_ar',
     ],
     'data': [
         'views/templates.xml',
     ],
     'installable': True,
-    'auto_install': False,
+    'auto_install': True,
     'application': False,
 }
