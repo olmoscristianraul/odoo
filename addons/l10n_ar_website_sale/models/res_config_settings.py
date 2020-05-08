@@ -13,6 +13,7 @@ class ResConfigSettings(models.TransientModel):
         required=True, default='tax_excluded',
         config_parameter='account.show_line_subtotals_tax_selection')
 
+    # TODO we need to change this method to work as we need
     @api.onchange('show_line_subtotals_tax_selection')
     def _onchange_l10n_ar_sale_tax(self):
         if self.show_line_subtotals_tax_selection == "tax_excluded":
