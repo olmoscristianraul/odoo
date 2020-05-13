@@ -6,7 +6,7 @@
         <field name="name">Percepción IVA Aplicada</field>
         <field name="description">Perc IVA A</field>
         <field name="sequence">4</field>
-        <field name="active" eval="True"/>
+        <field name="active" eval="False"/>
         <field name="amount_type">fixed</field>
         <field eval="0.0" name="amount"/>
         <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -253,7 +253,7 @@
         <field name="name">Percepción IIBB Aplicada</field>
         <field name="description">Perc IIBB A</field>
         <field name="sequence">4</field>
-        <field name="active" eval="True"/>
+        <field name="active" eval="False"/>
         <field name="amount_type">fixed</field>
         <field eval="0.0" name="amount"/>
         <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -991,4 +991,41 @@
         <field name="type_tax_use">purchase</field>
         <field name="tax_group_id" ref="l10n_ar.tax_group_percepcion_iva"/>
     </record>
+
+    <record id="ri_tax_other_taxes" model="account.tax.template">
+        <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+        <field name="name">Other Tax</field>
+        <field name="description">Other Tax</field>
+        <field name="sequence">4</field>
+        <field name="active" eval="False"/>
+        <field name="amount_type">fixed</field>
+        <field eval="0.1" name="amount"/>
+        <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'base',
+            }),
+
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'tax',
+                'account_id': ref('base_impuestos_debitos_y_creditos'),
+            }),
+        ]"/>
+        <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'base',
+            }),
+
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'tax',
+                'account_id': ref('base_impuestos_debitos_y_creditos'),
+            }),
+        ]"/>
+        <field name="type_tax_use">sale</field>
+        <field name="tax_group_id" ref="account.tax_group_taxes"/>
+    </record>
+
 </odoo>
