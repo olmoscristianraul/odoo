@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- TODO * factura de proveedor que puede ser análoga a la anterior -->
+
+    <!-- <function model="account.move" name="post">
+        <value eval="[ref('demo_invoice_19')]"/>
+    </function> -->
+
+</odoo>
