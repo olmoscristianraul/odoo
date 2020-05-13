@@ -115,7 +115,6 @@ Master Data:
         'demo/account_customer_refund_demo.xml',
         'demo/account_supplier_invoice_demo.xml',
         'demo/account_supplier_refund_demo.xml',
-        'demo/temp.xml',  # TODO pass to account_supplier_invoice_demo after finish
         # restore
         'demo/res_users_demo.xml',
     ],
