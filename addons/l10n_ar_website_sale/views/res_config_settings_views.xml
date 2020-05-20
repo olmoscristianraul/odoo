@@ -14,7 +14,7 @@
                     <div class="o_setting_right_pane">
                         <label string="Product Prices" for="show_line_subtotals_tax_selection"/>
                         <div class="text-muted">
-                            AR: Product prices displaying in web catalog (only applies to portal users)
+                            How Portal and Public users see the product prices in website
                         </div>
                         <div class="content-group">
                             <div class="mt16">
