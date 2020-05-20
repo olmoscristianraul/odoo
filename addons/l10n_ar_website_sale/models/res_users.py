@@ -15,12 +15,15 @@ class ResUsers(models.Model):
         return False
 
     def is_user_type(self):
+        """ Let us know the name of the sel_groups related to the modification of the user/type
+        this is: internal / portal / public """
         internal = self.env.ref('base.group_user')
         portal = self.env.ref('base.group_portal')
         public = self.env.ref('base.group_public')
         return name_selection_groups([internal.id, portal.id, public.id])
 
     def write(self, values):
+        """ If user type has been change then update the user tax group """
         res = super().write(values)
         if self.is_user_type() in values:
             self._l10n_ar_update_user_tax_group()
