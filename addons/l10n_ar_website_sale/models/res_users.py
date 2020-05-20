@@ -6,10 +6,11 @@ class ResUsers(models.Model):
 
     _inherit = 'res.users'
 
-    def is_ar_portal_user(self):
-        """ Is a portal user in an argentinian company """
+    def _l10n_ar_is_portal_public(self):
+        """ Return True of False if the user is a portal or public user and belongs to an Argentinian Company """
         self.ensure_one()
-        if self.has_group('base.group_portal') and self.company_ids.filtered(lambda x: x.country_id == self.env.ref('base.ar')):
+        if (self.has_group('base.group_portal') or self._is_public() and \
+           self.company_ids.filtered(lambda x: x.country_id == self.env.ref('base.ar')):
             return True
         return False
 
@@ -41,8 +42,8 @@ class ResUsers(models.Model):
         company_tax_config = self.env['ir.config_parameter'].sudo().get_param(
             'l10n_ar_website_sale.show_line_subtotals_tax_selection') or 'responsibility_type'
 
-        portal_users = self.filtered(lambda x: x.is_ar_portal_user())
-        for user in portal_users:
+        portal_and_public_users = self.filtered(lambda x: x._l10n_ar_is_portal_public())
+        for user in portal_and_public_users:
             final_consumer = user.l10n_ar_afip_responsibility_type_id == self.env.ref('l10n_ar.res_CF')
             if company_tax_config == 'tax_included' or (company_tax_config == 'responsibility_type' and final_consumer):
                 tax_excluded.users -= user
