@@ -14,9 +14,10 @@ class ResConfigSettings(models.TransientModel):
         config_parameter='l10n_ar_website_sale.show_line_subtotals_tax_selection')
 
     def set_values(self):
-        """ When changing setting we also update all the portal users """
+        """ When changing setting for how to display the prices in Argentinian company we also update all the related
+        portal and public users """
         res = super().set_values()
-        # TODO compare between the saved and the ir.config.parameter?
-        if self.l10n_ar_show_line_subtotals_tax_selection:
-            self.env['res.users'].search([])._l10n_ar_update_tax_group_portal_user()
+        company_tax_config = self.env['ir.config_parameter'].sudo().get_param('l10n_ar_website_sale.show_line_subtotals_tax_selection')
+        if company_tax_config != self.l10n_ar_show_line_subtotals_tax_selection:
+            self.env['res.users'].search([])._l10n_ar_update_user_tax_group()
         return res
