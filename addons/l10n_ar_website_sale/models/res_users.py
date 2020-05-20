@@ -23,17 +23,20 @@ class ResUsers(models.Model):
     def write(self, values):
         res = super().write(values)
         if self.is_user_type() in values:
-            self._l10n_ar_update_tax_group_portal_user()
+            self._l10n_ar_update_user_tax_group()
         return res
 
     # TODO test
     # def create(self, values):
     #     res = super().create(values)
     #     if self.is_user_type() in values:
-    #         self._l10n_ar_update_tax_group_portal_user()
+    #         self._l10n_ar_update_user_tax_group()
     #     return res
 
-    def _l10n_ar_update_tax_group_portal_user(self):
+    def _l10n_ar_update_user_tax_group(self):
+        """ Will move the user to the correspond tax group depending of the configuration defined in the global settings
+
+        NOTE: This will only applies to portal and public users """
         # TODO we need default for non portal users
         # B2B is the default for new users (portal and internal)
 
