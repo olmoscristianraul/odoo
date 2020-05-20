@@ -8,9 +8,9 @@ class ResConfigSettings(models.TransientModel):
 
     l10n_ar_show_line_subtotals_tax_selection = fields.Selection([
         ('responsibility_type', 'Regarding Responsibility Type'),
-        ('tax_excluded', 'Tax-Excluded'),
-        ('tax_included', 'Tax-Included')], string="Line Subtotals Tax Display",
-        required=True, default='responsibility_type',
+        ('tax_excluded', 'Tax-Excluded (B2B)'),
+        ('tax_included', 'Tax-Included (B2C)')],
+        string="Line Subtotals Tax Display", default='responsibility_type',
         config_parameter='l10n_ar_website_sale.show_line_subtotals_tax_selection')
 
     def set_values(self):
