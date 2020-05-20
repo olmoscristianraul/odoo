@@ -9,7 +9,7 @@ class ResUsers(models.Model):
     def _l10n_ar_is_portal_public(self):
         """ Return True of False if the user is a portal or public user and belongs to an Argentinian Company """
         self.ensure_one()
-        if (self.has_group('base.group_portal') or self._is_public() and \
+        if (self.has_group('base.group_portal') or self._is_public()) and \
            self.company_ids.filtered(lambda x: x.country_id == self.env.ref('base.ar')):
             return True
         return False
