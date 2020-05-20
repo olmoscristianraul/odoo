@@ -21,3 +21,9 @@ class ResConfigSettings(models.TransientModel):
         if company_tax_config != self.l10n_ar_tax_groups:
             self.env['res.users'].search([])._l10n_ar_update_user_tax_group()
         return res
+
+    @api.onchange('show_line_subtotals_tax_selection')
+    def _onchange_sale_tax(self):
+        """ Only run onchange when we are not in Argentinian Company """
+        if self.env.company.country_id != self.env.ref('base.ar'):
+            super()._onchange_sale_tax()
