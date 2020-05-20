@@ -55,6 +55,7 @@ class ResUsers(models.Model):
                 tax_excluded.users -= user
                 tax_included.users |= user
             else:
-                # company_tax_config == 'tax_excluded' or (company_tax_config == 'responsibility_type' and not final_consumer)
+                # company_tax_config == 'tax_excluded' or (company_tax_config == 'responsibility_type'
+                # and not final_consumer)
                 tax_included.users -= user
                 tax_excluded.users |= user
