@@ -18,28 +18,54 @@ class L10nARWebsiteSale(WebsiteSale):
         identification_types = request.env['l10n_latam.identification.type'].sudo().search([])
         responsibility_types = request.env['l10n_ar.afip.responsibility.type'].sudo().search([])
         response.qcontext.update({'identification_types': identification_types,
-                                  'responsibility_types': responsibility_types})
+                                  'responsibility_types': responsibility_types,
+                                  'identification': kw.get('l10n_latam_identification_type_id'),
+                                  'responsibility': kw.get('l10n_ar_afip_responsibility_type_id')})
         return response
 
-    def checkout_form_validate(self, mode, all_form_values, data):
-        error, error_message = super().checkout_form_validate(mode=mode, all_form_values=all_form_values, data=data)
-
-        # identification type validation
-        partner = request.env.user.partner_id
-        if data.get("l10n_latam_identification_type_id") and data.get("vat") and partner and \
-           (partner.l10n_latam_identification_type_id.id != data.get("l10n_latam_identification_type_id") or
-                partner.vat != data.get("vat")):
-            if partner.can_edit_vat():
-                if hasattr(partner, "check_vat"):
-                    partner_dummy = partner.new({
-                        'l10n_latam_identification_type_id': data.get('l10n_latam_identification_type_id', False),
-                        'vat': data['vat'], 'country_id': (int(data['country_id']) if data.get('country_id') else False)})
-                    try:
-                        partner_dummy.check_vat()
-                    except ValidationError as exception:
-                        error["vat"] = 'error'
-                        error_message.append(exception.name)
-            else:
-                error_message.append(_('Changing VAT number and Identification type is not allowed once document(s) have been issued for your account. Please contact us directly for this operation.'))
-
+    def _vat_validation(self, data):
+        """ Do the vat validation taking into account the identification_type """
+        # TODO improve pass error and error_message
+        # TODO this should only be applied for argentinian companies
+        error = {}
+        error_message = []
+        Partner = request.env['res.partner']
+        if data.get("vat") and hasattr(Partner, "check_vat"):
+            partner_dummy = Partner.new({
+                'vat': data['vat'],
+                'country_id': (int(data['country_id'])
+                               if data.get('country_id') else False),
+                'l10n_latam_identification_type_id': (int(data['l10n_latam_identification_type_id'])
+                                                      if data.get('l10n_latam_identification_type_id') else False),
+            })
+            try:
+                partner_dummy.check_vat()
+            except ValidationError as exception:
+                error["vat"] = 'error'
+                error_message.append(exception.name)
         return error, error_message
+
+    # def checkout_form_validate(self, mode, all_form_values, data):
+    #     # import pdb; pdb.set_trace()
+    #     error, error_message = super().checkout_form_validate(mode=mode, all_form_values=all_form_values, data=data)
+
+    #     # identification type validation
+    #     partner = request.env.user.partner_id
+    #     if data.get("l10n_latam_identification_type_id") and data.get("vat") and partner and \
+    #        (partner.l10n_latam_identification_type_id.id != data.get("l10n_latam_identification_type_id") or
+    #             partner.vat != data.get("vat")):
+    #         if partner.can_edit_vat():
+    #             if hasattr(partner, "check_vat"):
+    #                 partner_dummy = partner.new({
+    #                     'l10n_latam_identification_type_id': data.get('l10n_latam_identification_type_id', False),
+    #                     'vat': data['vat'], 'country_id': (int(data['country_id']) if data.get('country_id') else False)})
+    #                 try:
+    #                     partner_dummy.check_vat()
+    #                     error.pop('vat')
+    #                 except ValidationError as exception:
+    #                     error["vat"] = 'error'
+    #                     error_message.append(exception.name)
+    #         else:
+    #             error_message.append(_('Changing VAT number and Identification type is not allowed once document(s) have been issued for your account. Please contact us directly for this operation.'))
+
+    #     return error, error_message

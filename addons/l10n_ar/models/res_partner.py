@@ -56,6 +56,7 @@ class ResPartner(models.Model):
         remaining = self - recs_ar_vat
         remaining.l10n_ar_vat = False
 
+    # TODO ensure that we can call check_vat and convert it to a constraint
     @api.constrains('vat', 'l10n_latam_identification_type_id')
     def check_vat(self):
         """ Since we validate more documents than the vat for Argentinian partners (CUIT - VAT AR, CUIL, DNI) we

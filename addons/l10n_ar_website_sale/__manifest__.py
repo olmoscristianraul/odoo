@@ -18,6 +18,8 @@
     'data': [
         'views/templates.xml',
         'views/res_config_settings_views.xml',
+        'data/data.xml',
+        'demo/demo.xml',
     ],
     'installable': True,
     'auto_install': True,
