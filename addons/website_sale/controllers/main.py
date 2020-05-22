@@ -563,18 +563,14 @@ class WebsiteSale(http.Controller):
             error_message.append(_('Invalid Email! Please enter a valid email address.'))
 
         # vat validation
-        t1, t2 = self._vat_validation(data)
-        error.update(t1)
-        if t2:
-            error_message.extend(t2)
+        error, error_message = self._vat_validation(data, error, error_message)
 
         if [err for err in error.values() if err == 'missing']:
             error_message.append(_('Some required fields are empty.'))
 
         return error, error_message
 
-    def _vat_validation(self, data):
-        res = {}
+    def _vat_validation(self, data, error, error_message):
         Partner = request.env['res.partner']
         if data.get("vat") and hasattr(Partner, "check_vat"):
             if data.get("country_id"):
@@ -587,8 +583,8 @@ class WebsiteSale(http.Controller):
             try:
                 partner_dummy.check_vat()
             except ValidationError:
-                res["vat"] = 'error'
-        return res
+                error["vat"] = 'error'
+        return error, error_message
 
     def _checkout_form_save(self, mode, checkout, all_values):
         Partner = request.env['res.partner']

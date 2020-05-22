@@ -13,31 +13,37 @@ class L10nARCustomerPortal(CustomerPortal):
     # TODO test if it is working in portal my account
     @route()
     def account(self, redirect=None, **post):
+        """Extend in order to add information about the identification types and AFI responsibility show in portal"""
+        if request.website.sudo().company_id.country_id != request.env.ref('base.ar'):
+            return super().account(redirect=redirect, **post)
+
         if post and request.httprequest.method == 'POST':
             post.update({'l10n_latam_identification_type_id': int(post.pop('l10n_latam_identification_type_id') or False) or False,
                          'l10n_ar_afip_responsibility_type_id': int(post.pop('l10n_ar_afip_responsibility_type_id') or False) or False})
 
         response = super().account(redirect=redirect, **post)
-
-        identification_types = request.env['l10n_latam.identification.type'].sudo().search([])
-        responsibility_types = request.env['l10n_ar.afip.responsibility.type'].sudo().search([])
-        response.qcontext.update({'identification_types': identification_types,
-                                  'responsibility_types': responsibility_types})
+        response.qcontext.update({
+            'identification_types': request.env['l10n_latam.identification.type'].sudo().search([]),
+            'responsibility_types': request.env['l10n_ar.afip.responsibility.type'].sudo().search([]),
+            'identification': post.get('l10n_latam_identification_type_id'),
+            'responsibility': post.get('l10n_ar_afip_responsibility_type_id')})
         return response
 
-    def details_form_validate(self, data):
-        """ Add identification type validation """
-        error, error_message = super().details_form_validate(data)
+    def _vat_validation(self, data, error, error_message):
+        """ If Argentinian Company Do the vat validation taking into account the identification_type """
+        if request.website.sudo().company_id.country_id != request.env.ref('base.ar'):
+            return super()._vat_validation(data, error, error_message)
 
         partner = request.env.user.partner_id
         if data.get("l10n_latam_identification_type_id") and data.get("vat") and partner and \
-           (partner.l10n_latam_identification_type_id.id != data.get("l10n_latam_identification_type_id") or
-                partner.vat != data.get("vat")):
+           (partner.l10n_latam_identification_type_id.id != data.get("l10n_latam_identification_type_id") or partner.vat != data.get("vat")):
             if partner.can_edit_vat():
                 if hasattr(partner, "check_vat"):
                     partner_dummy = partner.new({
-                        'l10n_latam_identification_type_id': data.get('l10n_latam_identification_type_id', False),
-                        'vat': data['vat'], 'country_id': (int(data['country_id']) if data.get('country_id') else False)})
+                        'vat': data['vat'], 'country_id': (int(data['country_id']) if data.get('country_id') else False),
+                        'l10n_latam_identification_type_id': (int(data['l10n_latam_identification_type_id'])
+                                                              if data.get('l10n_latam_identification_type_id') else False),
+                    })
                     try:
                         partner_dummy.check_vat()
                     except ValidationError as exception:
@@ -45,5 +51,4 @@ class L10nARCustomerPortal(CustomerPortal):
                         error_message.append(exception.name)
             else:
                 error_message.append(_('Changing VAT number and Identification type is not allowed once document(s) have been issued for your account. Please contact us directly for this operation.'))
-
         return error, error_message

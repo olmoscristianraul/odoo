@@ -33,26 +33,6 @@
 
     <template id="portal_my_details" name="portal_my_details" inherit_id="portal.portal_my_details">
         <xpath expr="//input[@name='vat']/.." position="before">
-
-        <!-- TODO testing, delete after confirm everything is ok
-
-            <t t-esc="'res_company'"/>
-            <t t-esc="res_company"/>
-
-            <t t-esc="'website'"/>
-            <t t-esc="website"/>
-
-            <t t-esc="'website.company_id'"/>
-            <t t-esc="website.company_id"/>
-
-            <t t-esc="'website_sale'"/>
-            <t t-esc="website_sale"/>
-
-        res_company = res.company(4,)
-        website = website(3,)
-        website.company_id = res.company(4,)
-        website_sale =  -->
-
         <t t-if="res_company.country_id == env.ref('base.ar')">
             <t t-call="l10n_ar_website_sale.partner_info"/>
         </t>
