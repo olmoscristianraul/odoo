@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import models, api
 from odoo.addons.base.models.res_users import name_selection_groups
 
 
@@ -29,19 +29,21 @@ class ResUsers(models.Model):
             self._l10n_ar_update_user_tax_group()
         return res
 
-    # TODO test
-    # def create(self, values):
-    #     res = super().create(values)
-    #     if self.is_user_type() in values:
-    #         self._l10n_ar_update_user_tax_group()
-    #     return res
+    @api.model
+    def create(self, values):
+        """ when a user is created re compute the tax groups """
+        res = super().create(values)
+        res._l10n_ar_update_user_tax_group()
+        return res
+
+    def _get_company_public_user(self):
+        all_public = self.with_context(active_test=False).search([]).filtered(lambda x: x._is_public())
+        company_public_users = all_public.filtered(lambda x: x.company_id == self.env.company_id.id)
+        return company_public_users or all_public[0]
 
     def _l10n_ar_update_user_tax_group(self):
         """ Will move the user to the correspond tax group depending of the configuration defined in the global settings
-
         NOTE: This will only applies to portal and public users """
-        # TODO we need default for non portal users
-        # B2B is the default for new users (portal and internal)
 
         tax_included = self.env.ref('account.group_show_line_subtotals_tax_included')
         tax_excluded = self.env.ref('account.group_show_line_subtotals_tax_excluded')
@@ -49,8 +51,11 @@ class ResUsers(models.Model):
             'l10n_ar_website_sale.l10n_ar_tax_groups') or 'responsibility_type'
 
         portal_and_public_users = self.filtered(lambda x: x._l10n_ar_is_portal_public())
+        public_user = self._get_company_public_user()
+        print(" ---- public user %s" % public_user.name)
+
         for user in portal_and_public_users:
-            final_consumer = user.l10n_ar_afip_responsibility_type_id == self.env.ref('l10n_ar.res_CF')
+            final_consumer = (user.l10n_ar_afip_responsibility_type_id or public_user.l10n_ar_afip_responsibility_type_id) == self.env.ref('l10n_ar.res_CF')
             if company_tax_config == 'tax_included' or (company_tax_config == 'responsibility_type' and final_consumer):
                 tax_excluded.users -= user
                 tax_included.users |= user
