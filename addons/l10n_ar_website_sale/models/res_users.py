@@ -46,7 +46,7 @@ class ResUsers(models.Model):
         tax_included = self.env.ref('account.group_show_line_subtotals_tax_included')
         tax_excluded = self.env.ref('account.group_show_line_subtotals_tax_excluded')
         company_tax_config = self.env['ir.config_parameter'].sudo().get_param(
-            'l10n_ar_website_sale.show_line_subtotals_tax_selection') or 'responsibility_type'
+            'l10n_ar_website_sale.l10n_ar_tax_groups') or 'responsibility_type'
 
         portal_and_public_users = self.filtered(lambda x: x._l10n_ar_is_portal_public())
         for user in portal_and_public_users:

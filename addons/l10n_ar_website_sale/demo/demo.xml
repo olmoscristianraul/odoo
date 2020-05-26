@@ -11,18 +11,22 @@
         <field name="domain"></field>
         <field name="company_id" ref="l10n_ar.company_ri"/>
         <field name="user_id" ref="base.public_user"/>
+        <field name="logo" type="base64" file="l10n_ar_website_sale/static/description/icon.png"/>
+        <field name="domain" model="ir.config_parameter" eval="obj().env['ir.config_parameter'].sudo().get_param('web.base.url')"/>
     </record>
     <record id="default_website_mono" model="website">
         <field name="name">(AR) Monotributista Website</field>
         <field name="domain"></field>
         <field name="company_id" ref="l10n_ar.company_mono"/>
         <field name="user_id" ref="base.public_user"/>
+        <field name="logo" type="base64" file="l10n_ar_website_sale/static/description/icon.png"/>
     </record>
     <record id="default_website_exento" model="website">
         <field name="name">(AR) Exento Website</field>
         <field name="domain"></field>
         <field name="company_id" ref="l10n_ar.company_exento"/>
         <field name="user_id" ref="base.public_user"/>
+        <field name="logo" type="base64" file="l10n_ar_website_sale/static/description/icon.png"/>
     </record>
 
     <function model="payment.acquirer" name="copy">

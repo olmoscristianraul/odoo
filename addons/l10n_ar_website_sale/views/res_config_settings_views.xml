@@ -12,7 +12,7 @@
             <xpath expr="//div[@id='website_tax_inclusion_setting']" position="after">
                 <div class="col-12 col-lg-6 o_setting_box" id="website_tax_inclusion_setting_ar" attrs="{'invisible': [('l10n_ar_country_code', '!=', 'AR')]}">
                     <div class="o_setting_right_pane">
-                        <label string="Product Prices" for="show_line_subtotals_tax_selection"/>
+                        <label string="Product Prices" for="l10n_ar_tax_groups"/>
                         <div class="text-muted">
                             How Portal and Public users see the product prices in website
                         </div>
