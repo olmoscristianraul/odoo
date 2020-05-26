@@ -55,7 +55,8 @@
         <xpath expr="//input[@name='vat']/.." position="before">
             <t t-if="mode[1] == 'billing'" positon="inside">
                 <t t-if="res_company.country_id == env.ref('base.ar')">
-                    <t t-set="partner" value="website_sale_order.partner_id"/>
+                    <t t-set="partner" t-value="website_sale_order.partner_id"/>
+                    <t t-call="l10n_ar_website_sale.partner_info"/>
                 </t>
             </t>
         </xpath>
