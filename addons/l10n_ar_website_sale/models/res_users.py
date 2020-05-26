@@ -38,7 +38,7 @@ class ResUsers(models.Model):
 
     def _get_company_public_user(self):
         all_public = self.with_context(active_test=False).search([]).filtered(lambda x: x._is_public())
-        company_public_users = all_public.filtered(lambda x: x.company_id == self.env.company_id.id)
+        company_public_users = all_public.filtered(lambda x: x.company_id == self.env.company)
         return company_public_users or all_public[0]
 
     def _l10n_ar_update_user_tax_group(self):
@@ -52,15 +52,14 @@ class ResUsers(models.Model):
 
         portal_and_public_users = self.filtered(lambda x: x._l10n_ar_is_portal_public())
         public_user = self._get_company_public_user()
-        print(" ---- public user %s" % public_user.name)
 
         for user in portal_and_public_users:
-            final_consumer = (user.l10n_ar_afip_responsibility_type_id or public_user.l10n_ar_afip_responsibility_type_id) == self.env.ref('l10n_ar.res_CF')
-            if company_tax_config == 'tax_included' or (company_tax_config == 'responsibility_type' and final_consumer):
+            b2c = (user.l10n_ar_afip_responsibility_type_id or public_user.l10n_ar_afip_responsibility_type_id) == self.env.ref('l10n_ar.res_CF')
+            if company_tax_config == 'tax_included' or (company_tax_config == 'responsibility_type' and b2c):
                 tax_excluded.users -= user
                 tax_included.users |= user
             else:
                 # company_tax_config == 'tax_excluded' or (company_tax_config == 'responsibility_type'
-                # and not final_consumer)
+                # and not b2c)
                 tax_included.users -= user
                 tax_excluded.users |= user

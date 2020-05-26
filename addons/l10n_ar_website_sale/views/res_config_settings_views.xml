@@ -21,7 +21,11 @@
                                 <field name="l10n_ar_tax_groups" class="o_light_label" widget="radio"/>
                             </div>
                         </div>
+
+                        <button name="l10n_ar_default_responsibility" icon="fa-arrow-right" type="object" string="Manage Default Responsibility" class="btn-link o_web_settings_access_rights"/>
                     </div>
+
+
                 </div>
             </xpath>
         </field>

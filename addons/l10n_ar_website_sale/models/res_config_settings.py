@@ -1,5 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 
 
 class ResConfigSettings(models.TransientModel):
@@ -26,3 +26,8 @@ class ResConfigSettings(models.TransientModel):
         """ Only run onchange when we are not in Argentinian Company """
         if self.env.company.country_id != self.env.ref('base.ar'):
             super()._onchange_sale_tax()
+
+    def l10n_ar_default_responsibility(self):
+        public_user = self.env['res.users']._get_company_public_user()
+        if public_user:
+            return public_user.partner_id.get_formview_action()

@@ -15,8 +15,7 @@ class L10nARWebsiteSale(WebsiteSale):
 
     @route()
     def address(self, **kw):
-        """Extend to send information about the identification types and AFIP responsibility to show in the address
-        form"""
+        """Extend to send information about the identification types and AFIP responsibility to show in the address form"""
         response = super().address(**kw)
         if request.website.sudo().company_id.country_id == request.env.ref('base.ar'):
             response.qcontext.update({'identification_types': request.env['l10n_latam.identification.type'].sudo().search([]),

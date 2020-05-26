@@ -10,7 +10,6 @@ class L10nARCustomerPortal(CustomerPortal):
     OPTIONAL_BILLING_FIELDS = CustomerPortal.OPTIONAL_BILLING_FIELDS + [
         "l10n_latam_identification_type_id", "l10n_ar_afip_responsibility_type_id"]
 
-    # TODO test if it is working in portal my account
     @route()
     def account(self, redirect=None, **post):
         """Extend in order to add information about the identification types and AFI responsibility show in portal"""
