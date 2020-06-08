@@ -159,6 +159,14 @@ class AccountMove(models.Model):
                     partner_type, journal_type)
                 raise RedirectWarning(msg, action.id, _('Go to Journals'))
 
+    @api.model
+    def create(self, values):
+        """ When invoice is created from a website sale order then we need to fix the journal to use: local journal vs exportation journals """
+        res = super().create(values)
+        arg_invoices = self.filtered(lambda x: x.company_id.country_id == self.env.ref('base.ar'))
+        arg_invoices._onchange_partner_journal()
+        return res
+
     def post(self):
         ar_invoices = self.filtered(lambda x: x.company_id.country_id == self.env.ref('base.ar') and x.l10n_latam_use_documents)
         for rec in ar_invoices:

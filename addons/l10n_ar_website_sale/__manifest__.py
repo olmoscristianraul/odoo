@@ -16,9 +16,9 @@
         'l10n_ar',
     ],
     'data': [
+        'data/ir_model_fields.xml',
         'views/templates.xml',
         'views/res_config_settings_views.xml',
-        'data/data.xml',
         'demo/demo.xml',
     ],
     'installable': True,
