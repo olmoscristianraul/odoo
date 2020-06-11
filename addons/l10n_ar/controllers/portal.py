@@ -33,7 +33,7 @@ class L10nARCustomerPortal(CustomerPortal):
 
     def _vat_validation(self, data, error, error_message):
         """ If Argentinian Company Do the vat validation taking into account the identification_type """
-        if request.env.company.country_id != request.env.ref('base.ar'):
+        if not self.is_argentinian_company():
             return super()._vat_validation(data, error, error_message)
 
         partner = request.env.user.partner_id
