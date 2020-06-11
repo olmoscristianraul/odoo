@@ -7,10 +7,11 @@ class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     l10n_ar_tax_groups = fields.Selection([
-        ('responsibility_type', 'Regarding Responsibility Type'),
+        ('responsibility_type_b2b', 'Regarding Responsibility Type (default B2B)'),
+        ('responsibility_type_bcb', 'Regarding Responsibility Type (default B2B)'),
         ('tax_excluded', 'Tax-Excluded (B2B)'),
         ('tax_included', 'Tax-Included (B2C)')],
-        string="Portal and Public Users Default Tax Display", default='responsibility_type',
+        string="Portal and Public Users Default Tax Display", default='tax_included',
         config_parameter='l10n_ar_website_sale.l10n_ar_tax_groups')
 
     def set_values(self):
@@ -26,8 +27,3 @@ class ResConfigSettings(models.TransientModel):
         """ Only run onchange when we are not in Argentinian Company """
         if self.env.company.country_id != self.env.ref('base.ar'):
             super()._onchange_sale_tax()
-
-    def l10n_ar_default_responsibility(self):
-        public_user = self.env['res.users']._get_company_public_user()
-        if public_user:
-            return public_user.partner_id.get_formview_action()

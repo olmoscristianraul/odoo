@@ -48,14 +48,16 @@ class ResUsers(models.Model):
         tax_included = self.env.ref('account.group_show_line_subtotals_tax_included')
         tax_excluded = self.env.ref('account.group_show_line_subtotals_tax_excluded')
         company_tax_config = self.env['ir.config_parameter'].sudo().get_param(
-            'l10n_ar_website_sale.l10n_ar_tax_groups') or 'responsibility_type'
+            'l10n_ar_website_sale.l10n_ar_tax_groups') or 'responsibility_type_b2c'
 
         portal_and_public_users = self.filtered(lambda x: x._l10n_ar_is_portal_public())
-        public_user = self._get_company_public_user()
-
         for user in portal_and_public_users:
-            b2c = (user.l10n_ar_afip_responsibility_type_id or public_user.l10n_ar_afip_responsibility_type_id) == self.env.ref('l10n_ar.res_CF')
-            if company_tax_config == 'tax_included' or (company_tax_config == 'responsibility_type' and b2c):
+            # TODO need to test this
+            b2c = user.l10n_ar_afip_responsibility_type_id and \
+                user.l10n_ar_afip_responsibility_type_id == self.env.ref('l10n_ar.res_CF') or \
+                company_tax_config == 'responsibility_type_b2c'
+
+            if company_tax_config == 'tax_included' or ('responsibility_type' in company_tax_config and b2c):
                 tax_excluded.users -= user
                 tax_included.users |= user
             else:
