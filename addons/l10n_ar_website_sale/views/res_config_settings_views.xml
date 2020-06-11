@@ -22,10 +22,8 @@
                             </div>
                         </div>
 
-                        <button name="l10n_ar_default_responsibility" icon="fa-arrow-right" type="object" string="Manage Default Responsibility" class="btn-link o_web_settings_access_rights"/>
+                        <button name="l10n_ar_default_responsibility" icon="fa-arrow-right" type="object" string="Manage Default Responsibility" class="btn-link o_web_settings_access_rights" attrs="{'invisible': [('l10n_ar_tax_groups', '!=', 'responsibility_type')]"/>
                     </div>
-
-
                 </div>
             </xpath>
         </field>
