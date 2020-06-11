@@ -10,10 +10,13 @@ class L10nARCustomerPortal(CustomerPortal):
     OPTIONAL_BILLING_FIELDS = CustomerPortal.OPTIONAL_BILLING_FIELDS + [
         "l10n_latam_identification_type_id", "l10n_ar_afip_responsibility_type_id"]
 
+    def is_argentinian_company(self, redirect=None, **post):
+        return request.env.company.country_id == request.env.ref('base.ar')
+
     @route()
     def account(self, redirect=None, **post):
         """Extend in order to add information about the identification types and AFI responsibility show in portal"""
-        if request.env.company.country_id != request.env.ref('base.ar'):
+        if not self.is_argentinian_company():
             return super().account(redirect=redirect, **post)
 
         if post and request.httprequest.method == 'POST':
