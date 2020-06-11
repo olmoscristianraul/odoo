@@ -26,14 +26,14 @@ class ResUsers(models.Model):
         """ If user type has been change then update the user tax group """
         res = super().write(values)
         if self.is_user_type() in values:
-            self._l10n_ar_update_user_tax_group()
+            self._l10n_ar_update_portal_public_user_tax_group()
         return res
 
     @api.model
     def create(self, values):
         """ when a user is created re compute the tax groups """
         res = super().create(values)
-        res._l10n_ar_update_user_tax_group()
+        res._l10n_ar_update_portal_public_user_tax_group()
         return res
 
     def _get_company_public_user(self):
@@ -41,7 +41,7 @@ class ResUsers(models.Model):
         company_public_users = all_public.filtered(lambda x: x.company_id == self.env.company)
         return company_public_users or all_public[0]
 
-    def _l10n_ar_update_user_tax_group(self):
+    def _l10n_ar_update_portal_public_user_tax_group(self):
         """ Will move the user to the correspond tax group depending of the configuration defined in the global settings
         NOTE: This will only applies to portal and public users """
 
