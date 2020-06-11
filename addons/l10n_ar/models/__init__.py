@@ -16,4 +16,3 @@ from . import uom_uom
 from . import account_chart_template
 from . import account_move
 from . import ir_sequence
-from . import res_config_settings

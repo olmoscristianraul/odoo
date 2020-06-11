@@ -161,7 +161,11 @@ class AccountMove(models.Model):
 
     @api.model
     def create(self, values):
-        """ When invoice is created from a website sale order then we need to fix the journal to use: local journal vs exportation journals """
+        """ When create invoice fix the journal to the proper one depending on the AFIP responsibility: use local
+        journal vs exportation journals.
+
+        This is required to avoid middle modules in order to ensure that the invoice has been porperly created when is
+        created from different places as: sale, subscriptions, website, etc. """
         res = super().create(values)
         arg_invoices = self.filtered(lambda x: x.company_id.country_id == self.env.ref('base.ar'))
         arg_invoices._onchange_partner_journal()

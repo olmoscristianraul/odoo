@@ -49,5 +49,5 @@ class L10nARCustomerPortal(CustomerPortal):
                         error["vat"] = 'error'
                         error_message.append(exception.name)
             else:
-                error_message.append(_('Changing VAT number and Identification type is not allowed once document(s) have been issued for your account. Please contact us directly for this operation.'))
+                error_message.append(_('Changing Number and Identification type is not allowed once document(s) have been issued for your account. Please contact us directly for this operation.'))
         return error, error_message
