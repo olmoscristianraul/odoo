@@ -161,13 +161,13 @@ class AccountMove(models.Model):
 
     @api.model
     def create(self, values):
-        """ When create invoice fix the journal to the proper one depending on the AFIP responsibility: use local
-        journal vs exportation journals.
+        """ When create an argentina invoice fix the journal to the proper one depending on the AFIP responsibility:
+        use local journal vs exportation journals.
 
         This is required to avoid middle modules in order to ensure that the invoice has been porperly created when is
         created from different places as: sale, subscriptions, website, etc. """
         res = super().create(values)
-        arg_invoices = self.filtered(lambda x: x.company_id.country_id == self.env.ref('base.ar'))
+        arg_invoices = self.filtered(lambda x: x.company_id.country_id == self.env.ref('base.ar') and x.l10n_latam_use_documents)
         arg_invoices._onchange_partner_journal()
         return res
 
