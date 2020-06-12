@@ -7,8 +7,8 @@ class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     l10n_ar_tax_groups = fields.Selection([
+        ('responsibility_type_b2c', 'Regarding Responsibility Type (default B2C)'),
         ('responsibility_type_b2b', 'Regarding Responsibility Type (default B2B)'),
-        ('responsibility_type_bcb', 'Regarding Responsibility Type (default B2B)'),
         ('tax_excluded', 'Tax-Excluded (B2B)'),
         ('tax_included', 'Tax-Included (B2C)')],
         string="Portal and Public Users Default Tax Display", default='tax_included',

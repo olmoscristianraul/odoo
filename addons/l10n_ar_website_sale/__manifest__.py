@@ -24,4 +24,5 @@
     'installable': True,
     'auto_install': True,
     'application': False,
+    'post_init_hook': '_set_default_tax_group_for_public_portal_users',
 }

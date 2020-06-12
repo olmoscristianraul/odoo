@@ -33,35 +33,33 @@ class ResUsers(models.Model):
     def create(self, values):
         """ when a user is created re compute the tax groups """
         res = super().create(values)
+
+        # TODO temporal fix until Odoo fix the problem of new login to main company instead of current company
+        res.company_ids |= self.env.company
+        res.company_id |= self.env.company
+
         res._l10n_ar_update_portal_public_user_tax_group()
         return res
 
-    def _get_company_public_user(self):
-        all_public = self.with_context(active_test=False).search([]).filtered(lambda x: x._is_public())
-        company_public_users = all_public.filtered(lambda x: x.company_id == self.env.company)
-        return company_public_users or all_public[0]
-
     def _l10n_ar_update_portal_public_user_tax_group(self):
         """ Will move the user to the correspond tax group depending of the configuration defined in the global settings
-        NOTE: This will only applies to portal and public users """
+        NOTE: This will only applies to portal and public users for argentinian companies """
+        portal_and_public_users = self.filtered(lambda x: x._l10n_ar_is_portal_public())
 
         tax_included = self.env.ref('account.group_show_line_subtotals_tax_included')
         tax_excluded = self.env.ref('account.group_show_line_subtotals_tax_excluded')
         company_tax_config = self.env['ir.config_parameter'].sudo().get_param(
-            'l10n_ar_website_sale.l10n_ar_tax_groups') or 'responsibility_type_b2c'
+            'l10n_ar_website_sale.l10n_ar_tax_groups') or 'tax_included'
 
-        portal_and_public_users = self.filtered(lambda x: x._l10n_ar_is_portal_public())
         for user in portal_and_public_users:
-            # TODO need to test this
-            b2c = user.l10n_ar_afip_responsibility_type_id and \
-                user.l10n_ar_afip_responsibility_type_id == self.env.ref('l10n_ar.res_CF') or \
-                company_tax_config == 'responsibility_type_b2c'
+            b2c = user.l10n_ar_afip_responsibility_type_id == self.env.ref('l10n_ar.res_CF') \
+                if user.l10n_ar_afip_responsibility_type_id else company_tax_config in ['responsibility_type_b2c', 'tax_included']
+
+            # clean up all the groups for the user
+            tax_included.users -= user
+            tax_excluded.users -= user
 
             if company_tax_config == 'tax_included' or ('responsibility_type' in company_tax_config and b2c):
-                tax_excluded.users -= user
                 tax_included.users |= user
             else:
-                # company_tax_config == 'tax_excluded' or (company_tax_config == 'responsibility_type'
-                # and not b2c)
-                tax_included.users -= user
                 tax_excluded.users |= user
