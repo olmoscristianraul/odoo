@@ -35,8 +35,9 @@ class ResUsers(models.Model):
         res = super().create(values)
 
         # TODO temporal fix until Odoo fix the problem of new login to main company instead of current company
-        res.company_ids |= self.env.company
-        res.company_id |= self.env.company
+        # import pdb; pdb.set_trace()
+        # res.company_ids |= self.env.company
+        # res.company_id |= self.env.company
 
         res._l10n_ar_update_portal_public_user_tax_group()
         return res
