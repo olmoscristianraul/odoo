@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <function model="res.users" name="write">
+        <value eval="[ref('base.public_user')]"/>
+        <value eval="{'company_ids': [(4, ref('l10n_ar.company_ri')), (4, ref('l10n_ar.company_mono')), (4, ref('l10n_ar.company_exento'))]}"/>
+    </function>
+
+    <record id="portal_ri_user" model="res.users">
+        <field name="login">portal-ri</field>
+        <field name="password">portal</field>
+        <field name="currency_id" ref="base.ARS"/>
+        <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
+        <field name="company_ids" eval="[(6, 0, [ref('l10n_ar.company_ri'), ref('l10n_ar.company_mono'), ref('l10n_ar.company_exento')])]"/>
+        <field name="company_id" ref="l10n_ar.company_ri"/>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_portal')])]"/>
+    </record>
+
+    <record id="portal_cfa_user" model="res.users">
+        <field name="login">portal-cfa</field>
+        <field name="password">portal</field>
+        <field name="partner_id" ref="l10n_ar.par_cfa"/>
+        <field name="company_ids" eval="[(6, 0, [ref('l10n_ar.company_ri'), ref('l10n_ar.company_mono'), ref('l10n_ar.company_exento')])]"/>
+        <field name="company_id" ref="l10n_ar.company_ri"/>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_portal')])]"/>
+    </record>
+
+    <record id="portal_foreign_user" model="res.users">
+        <field name="login">portal-foreign</field>
+        <field name="password">portal</field>
+        <field name="partner_id" ref="l10n_ar.res_partner_expresso"/>
+        <field name="company_ids" eval="[(6, 0, [ref('l10n_ar.company_ri'), ref('l10n_ar.company_mono'), ref('l10n_ar.company_exento')])]"/>
+        <field name="company_id" ref="l10n_ar.company_ri"/>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_portal')])]"/>
+    </record>
+
+    <record id="portal_wo_resp_user" model="res.users">
+        <field name="name">portal Without Responsibility</field>
+        <field name="login">portal-wo-resp</field>
+        <field name="password">portal</field>
+        <field name="company_ids" eval="[(6, 0, [ref('l10n_ar.company_ri'), ref('l10n_ar.company_mono'), ref('l10n_ar.company_exento')])]"/>
+        <field name="company_id" ref="l10n_ar.company_ri"/>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_portal')])]"/>
+    </record>
+
+</odoo>
