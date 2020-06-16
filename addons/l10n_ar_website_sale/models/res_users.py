@@ -29,6 +29,19 @@ class ResUsers(models.Model):
             self._l10n_ar_update_portal_public_user_tax_group()
         return res
 
+    @api.returns('self', lambda value: value.id)
+    def copy(self, default=None):
+        """ When copy public and portal users from argentinian company avoid error of have both tax groups that is auto
+        compute by odoo with the implied groups when duplicating the user """
+        default = default or {}
+        if self._l10n_ar_is_portal_public() or self.env.ref('base.public_user'):
+            new_groups = self.groups_id
+            new_groups -= self.env.ref('account.group_show_line_subtotals_tax_included')
+            new_groups -= self.env.ref('account.group_show_line_subtotals_tax_excluded')
+            if new_groups:
+                default.update({'groups_id': [(6, 0, new_groups.ids)]})
+        return super().copy(default=default)
+
     @api.model
     def create(self, values):
         """ when a user is created re compute the tax groups """
