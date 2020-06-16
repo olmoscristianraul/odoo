@@ -20,6 +20,7 @@
         'views/templates.xml',
         'views/res_config_settings_views.xml',
         'demo/demo.xml',
+        'demo/res_users_demo.xml',
     ],
     'installable': True,
     'auto_install': True,
