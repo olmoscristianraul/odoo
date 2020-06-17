@@ -19,7 +19,7 @@
         'data/ir_model_fields.xml',
         'views/templates.xml',
         'views/res_config_settings_views.xml',
-        'demo/demo.xml',
+        'demo/website_demo.xml',
         'demo/res_users_demo.xml',
     ],
     'installable': True,
