@@ -6,5 +6,6 @@ from odoo import api, SUPERUSER_ID
 
 
 def _set_default_tax_group_for_public_portal_users(cr, registry):
+    """ Needed to fix all the portal and public users groups to set the default one when we install this module """
     env = api.Environment(cr, SUPERUSER_ID, {})
     env['res.users'].with_context(active_test=False).search([])._l10n_ar_update_portal_public_user_tax_group()

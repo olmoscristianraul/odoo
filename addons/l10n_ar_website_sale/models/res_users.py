@@ -46,12 +46,6 @@ class ResUsers(models.Model):
     def create(self, values):
         """ when a user is created re compute the tax groups """
         res = super().create(values)
-
-        # TODO temporal fix until Odoo fix the problem of new login to main company instead of current company
-        # import pdb; pdb.set_trace()
-        # res.company_ids |= self.env.company
-        # res.company_id |= self.env.company
-
         res._l10n_ar_update_portal_public_user_tax_group()
         return res
 
