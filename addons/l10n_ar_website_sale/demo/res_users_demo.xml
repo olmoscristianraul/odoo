@@ -7,8 +7,8 @@
     </function>
 
     <record id="portal_ri_user" model="res.users">
-        <field name="login">portal-ri</field>
-        <field name="password">portal</field>
+        <field name="login">responsable</field>
+        <field name="password">responsable</field>
         <field name="currency_id" ref="base.ARS"/>
         <field name="partner_id" ref="l10n_ar.res_partner_adhoc"/>
         <field name="company_ids" eval="[(6, 0, [ref('l10n_ar.company_ri'), ref('l10n_ar.company_mono'), ref('l10n_ar.company_exento')])]"/>
@@ -26,8 +26,8 @@
     </record>
 
     <record id="portal_foreign_user" model="res.users">
-        <field name="login">portal-foreign</field>
-        <field name="password">portal</field>
+        <field name="login">extranjero</field>
+        <field name="password">extranjero</field>
         <field name="partner_id" ref="l10n_ar.res_partner_expresso"/>
         <field name="company_ids" eval="[(6, 0, [ref('l10n_ar.company_ri')])]"/>
         <field name="company_id" ref="l10n_ar.company_ri"/>
@@ -35,9 +35,9 @@
     </record>
 
     <record id="portal_wo_resp_user" model="res.users">
-        <field name="name">portal Without Responsibility</field>
-        <field name="login">portal-wo-resp</field>
-        <field name="password">portal</field>
+        <field name="name">Sin Resposabilidad</field>
+        <field name="login">sin-resposabilidad</field>
+        <field name="password">sin-resposabilidad</field>
         <field name="company_ids" eval="[(6, 0, [ref('l10n_ar.company_ri')])]"/>
         <field name="company_id" ref="l10n_ar.company_ri"/>
         <field name="groups_id" eval="[(6, 0, [ref('base.group_portal')])]"/>
