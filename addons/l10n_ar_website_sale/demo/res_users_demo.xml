@@ -16,10 +16,10 @@
         <field name="groups_id" eval="[(6, 0, [ref('base.group_portal')])]"/>
     </record>
 
-    <record id="portal_cfa_user" model="res.users">
-        <field name="login">portal-cfa</field>
-        <field name="password">portal</field>
-        <field name="partner_id" ref="l10n_ar.par_cfa"/>
+    <record id="portal_cf_user" model="res.users">
+        <field name="name">Consumidor Final</field>
+        <field name="login">consumidor</field>
+        <field name="password">consumidor</field>
         <field name="company_ids" eval="[(6, 0, [ref('l10n_ar.company_ri')])]"/>
         <field name="company_id" ref="l10n_ar.company_ri"/>
         <field name="groups_id" eval="[(6, 0, [ref('base.group_portal')])]"/>
