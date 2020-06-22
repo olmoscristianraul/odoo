@@ -177,16 +177,6 @@ class AccountMove(models.Model):
         self._set_afip_service_dates()
         return res
 
-    def _reverse_moves(self, default_values_list=None, cancel=False):
-        if not default_values_list:
-            default_values_list = [{} for move in self]
-        for move, default_values in zip(self, default_values_list):
-            default_values.update({
-                'l10n_ar_afip_service_start': move.l10n_ar_afip_service_start,
-                'l10n_ar_afip_service_end': move.l10n_ar_afip_service_end,
-            })
-        return super()._reverse_moves(default_values_list=default_values_list, cancel=cancel)
-
     def _l10n_ar_get_amounts(self, company_currency=False):
         """ Method used to prepare data to present amounts and taxes related amounts when creating an
         electronic invoice for argentinian and the txt files for digital VAT books. Only take into account the argentinian taxes """
@@ -243,3 +233,13 @@ class AccountMove(models.Model):
             res += [{'Id': '3', 'BaseImp': vat_base_0, 'Importe': 0.0}]
 
         return res if res else []
+
+    def _reverse_moves(self, default_values_list=None, cancel=False):
+        if not default_values_list:
+            default_values_list = [{} for move in self]
+        for move, default_values in zip(self, default_values_list):
+            default_values.update({
+                'l10n_ar_afip_service_start': move.l10n_ar_afip_service_start,
+                'l10n_ar_afip_service_end': move.l10n_ar_afip_service_end,
+            })
+        return super()._reverse_moves(default_values_list=default_values_list, cancel=cancel)
